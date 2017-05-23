@@ -1,0 +1,16 @@
+#make file 
+server: Board.o GLserver.o
+	g++ -O3 -lglut -lGLU -lGL  GLserver.o Board.o -o reversi.out   -fpermissive
+
+GLserver.o: GLserver.cpp Reversi.h Board.h GameMaster.h
+	g++ -c  -lglut -lGLU -lGL  GLserver.cpp -fpermissive
+
+Board.o: Board.cpp Reversi.h Board.h
+	g++ -c Board.cpp -fpermissive
+
+all: Board.cpp Board.h Reversi.h server_tcp.cpp  GameMaster.h
+	g++ -O3  -o reversi.out  Board.cpp server_tcp.cpp  -fpermissive
+
+
+clean:
+	rm -f server_tcp.o Board.o reversi.out

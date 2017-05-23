@@ -1,0 +1,132 @@
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+
+#include <string.h>
+
+//wata
+#include <string>
+#include <unistd.h>
+#include <iostream>
+
+#include <GL/glut.h> 
+#include <math.h>
+
+//#define M_PI 3.14159265358979 // 円周率
+#define PART 36 // 分割数
+#define SQUARESIZE 50
+#define BLACKSPACE 100
+#define WINDOWSIZE 1000
+//void draw_circle(int x, int y);
+
+using namespace std;
+
+
+void draw_circle(int xpos, int ypos){
+ 
+  int r = 0.5;
+  float x,y, rate;
+  //座標変換
+  xpos = xpos * SQUARESIZE + BLACKSPACE -(SQUARESIZE/2);  
+  ypos = ypos * SQUARESIZE + BLACKSPACE -(SQUARESIZE/2);
+  glColor3f(1,1,1);
+  glBegin(GL_POLYGON); // ポリゴンの描画
+  // 円を描画
+  for (int i = 0; i < PART; i++) {
+    // 座標を計算
+    rate = (double)i / PART;
+    x = (SQUARESIZE/2) * cos(2.0 * M_PI * rate);
+    y = (SQUARESIZE/2) * sin(2.0 * M_PI * rate);
+    glVertex2f(x+xpos, y+ypos); // 頂点座標を指定
+  }
+  glEnd();
+}
+
+
+void display(void)
+{	
+
+
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  //ラインを描く
+  glColor3f(0,0,0);
+  glLineWidth(3);//線幅の指定。省略可。指定しなければ1。
+  glBegin(GL_LINES);
+  for(int i=0;i<13;i++){
+    glVertex2i(BLACKSPACE + SQUARESIZE*i,700);//
+    glVertex2i(BLACKSPACE + SQUARESIZE*i,BLACKSPACE);//
+    glVertex2i(BLACKSPACE, BLACKSPACE+SQUARESIZE*i);//
+    glVertex2i(700,BLACKSPACE + SQUARESIZE*i);//
+  }
+  glEnd();
+  
+  //点を5箇所描く
+  glColor3f(0,0,0);
+  glPointSize(10);
+  glBegin(GL_POINTS);
+  glVertex2i(250,250);
+  glVertex2i(250,550);
+  glVertex2i(550,250);
+  glVertex2i(550,550);
+  glVertex2i(400,400);
+  glEnd();
+  
+  //4隅を壁に クロしかく
+  glBegin(GL_POLYGON);
+  glVertex2i(700, 700);
+  glVertex2i(650, 700);
+  glVertex2i(650, 650);
+  glVertex2i(700, 650);
+  glEnd();
+  
+  glBegin(GL_POLYGON);
+  glVertex2i(100, 100);
+  glVertex2i(100, 150);
+  glVertex2i(150, 150);
+  glVertex2i(150, 100);
+  glEnd();
+  
+  glBegin(GL_POLYGON);
+  glVertex2i(100, 650);
+  glVertex2i(100, 700);
+  glVertex2i(150, 700);
+  glVertex2i(150, 650);
+  glEnd();
+  
+  glBegin(GL_POLYGON);
+  glVertex2i(650, 100);
+  glVertex2i(650, 150);
+  glVertex2i(700, 150);
+  glVertex2i(700, 100);
+  glEnd();
+  ////////////////////
+  
+  // 円を描画
+
+  //for(int y=0;y<BOARDSIZE;y++){
+    //for(int x=0;x<BOARDSIZE;x++){
+      //if(pos(x,y) != empty)
+  draw_circle(2,3);//(1.1.color);
+      // }
+    // }
+   glutSwapBuffers();
+    
+}
+
+int main(int argc, char *argv[])
+{
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);	
+	glutInitWindowSize(WINDOWSIZE, WINDOWSIZE);//ウィンドウの画面の幅と高さを指定
+	glutInitWindowPosition(0, 0);//ウィンドウの場所を指定
+	glutCreateWindow("reversi");//ウィンドウの名前
+	glClearColor( 0 , 0.7, 0, 1);//オセロ盤の色
+	gluOrtho2D(0, 800, 800,0);//座標系の設定
+	glutDisplayFunc(display);//描画関数を指定
+	glutMainLoop();
+	cout<<"hogehoge"<<endl; 
+	return 0;
+}

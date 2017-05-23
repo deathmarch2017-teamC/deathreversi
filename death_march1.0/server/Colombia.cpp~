@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
+
+int main(){
+
+
+  cout<<"　 　 　 　　　　　　　 　　　　　　　　　　 　　　 ,.へ"<<endl;
+  cout<<"　　___ 　　　　　　　 　 　 　 　　　　　 　　　　ﾑ　　i"<<endl;
+  cout<<"「 ﾋ_i〉　　　 　 　　　　　　 　　　　　　 　　　 ゝ　〈"<<endl;
+  cout<<"ﾄ　ノ 　　　　　　　　　　　　　　　　　　　 　　　iニ(()"<<endl;
+  cout<<"i 　{ 　 　　　　　　　 　　　＿＿＿_ 　 　　　　　| 　ヽ"<<endl;
+  cout<<"i　　i　　　 　　　　　 　／__,　 , ‐-＼  　  　 　i  　}"<<endl;
+  cout<<"|　　 i　　　　　　 　　／（●) 　 ( ● ) ＼　　　   {､　 λ"<<endl;
+  cout<<"　ト－┤.　　　　　  　／ 　 （__人__）  　＼　　 ,ノ　￣,!"<<endl;
+  cout<<"　i　　　ゝ､_ 　　　　|　　　  ´￣` 　 　 　|　,. '´ﾊ　,!"<<endl;
+  cout<<".　ヽ、 　　　｀`　､,__＼ 　　 　 　　　　 ／\"　＼ 　／"<<endl;
+  cout<<"　　　＼ノ　ﾉ　　　ﾊ￣r/:::r―--―/::７　　 ﾉ　　   ／"<<endl;
+  cout<<"　 　　 ヽ_　　　　　　ヽ::〈'::. :'|::/        /　　　,."<<endl;
+  cout<<"　         `ｰ ､　     ＼ヽ::. ;::：|/　  　ｒ'\""<<endl;
+  cout<<"　　　　　／￣二二二二二二二二二二二二二二二二ヽ"<<endl;
+  cout<<"　　　　　| 答 |　　　  　　"<<"000"<<"               │|"<<endl;
+  cout<<"　　　　　＼＿二二二二二二二二二二二二二二二二ノ"<<endl;
+  cout<<""<<endl;
+  cout<<""<<endl;
+
+  return 0;
+}

@@ -1,0 +1,4 @@
+test: test.cpp libGL.so.1
+	g++ libglut.so libGLU.so.1 libGL.so.1 test.cpp -o gl.out
+clean:
+	rm gl.out
