@@ -14,6 +14,7 @@
 Reversi_AI_Random::Reversi_AI_Random()
 {
   Berserker_Soul = false;
+  MT_FLAG = false;
   srand(time(NULL));
 }
 
@@ -25,7 +26,7 @@ Reversi_AI_Random::Reversi_AI_Random()
  @param[out] flagout サーバへ送信するフラグ情報
 */
 
-void Reversi_AI_Random::return_move(Board board, int flagin, int *x, int *y, int *flagout)
+void Reversi_AI_Random::return_move(Board board, int flagin, int &x, int &y, int &flagout)
 {
   if((flagin & ACFLAG) == 0){
     // branch by movable position
@@ -34,27 +35,27 @@ void Reversi_AI_Random::return_move(Board board, int flagin, int *x, int *y, int
     if(movablePosNum == 0)
     {
       // pass
-      *x = 0;
-      *y = 0;
-      *flagout = PSFLAG;
+      x = 0;
+      y = 0;
+      flagout = PSFLAG;
     }
     else{
       // decides a random move
       std::vector<Point> points = board.getMovablePos();
       Point p = points[rand() % points.size()];
-      *x = p.x;
-      *y = p.y;
+      x = p.x;
+      y = p.y;
 
       // MTFLAG option
       if(Berserker_Soul == false && board.getTurns() >= 10)
       {
         // use MT with 5%
-        *flagout = (rand() % 20 == 0) ? MTFLAG : 0;
-	Berserker_Soul = ((*flagout & MTFLAG) != 0) ? true : false;
+        flagout = (rand() % 20 == 0) ? MTFLAG : 0;
+	Berserker_Soul = ((flagout & MTFLAG) != 0) ? true : false;
       }
       else{
         // player can use MT once time in a game.
-        *flagout = 0;
+        flagout = 0;
       }
     }
   }
@@ -77,8 +78,9 @@ void Reversi_AI_Random::return_move(Board board, int flagin, int *x, int *y, int
 
     // decides a random move
     Point p = points[rand() % points.size()];
-    *x = p.x;
-    *y = p.y;
-    *flagout = 0;
+    x = p.x;
+    y = p.y;
+    flagout = 0;
   }
 }
+
