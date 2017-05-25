@@ -14,7 +14,6 @@
 Reversi_AI_Random::Reversi_AI_Random()
 {
   Berserker_Soul = false;
-  MT_FLAG = false;
   srand(time(NULL));
 }
 
