@@ -15,6 +15,8 @@
 #include <netinet/in.h>
 #define PORT 12345
 
+
+//送信する関数
 int send_func(char BUF[3]){
 
   int sock0;

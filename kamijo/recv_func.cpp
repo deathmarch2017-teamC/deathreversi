@@ -1,5 +1,3 @@
-//データ受信用関数
-//5/24作成　上條
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -16,11 +14,11 @@
 
 #define PORT 12345
 
-char *recv_func(){
+//受信する関数
+char recv_func(char buf[5]){
   struct sockaddr_in server;
   int sock;  
   int n;
-  char *buf = (char*) malloc(sizeof(char) * 5);
 
   //ソケットの生成
   sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -41,16 +39,15 @@ char *recv_func(){
 
   //socketの終了
   close(sock);
-
-  return buf;
 }
 
 
-int main(){
-  int A;
-  char *BUF;
-  BUF = recv_func();
-  printf("%s",BUF);
 
+
+
+int main(){
+  char BUF[5];
+  recv_func(BUF);
+  printf("%s",BUF);
   return 0;
 }
