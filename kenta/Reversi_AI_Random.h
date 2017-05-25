@@ -15,7 +15,6 @@ class Reversi_AI_Random{
   public:
     Reversi_AI_Random();
     void return_move(Board b, int flagin, int &x, int &y, int &flagout);
-    bool MT_Checker(Board b);
   private:
     bool Berserker_Soul;
 };
