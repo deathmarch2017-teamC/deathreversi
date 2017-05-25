@@ -15,8 +15,10 @@ class Reversi_AI_Random{
   public:
     Reversi_AI_Random();
     void return_move(Board b, int flagin, int &x, int &y, int &flagout);
+    bool check_to_use_MT(Board b);
   private:
     bool Berserker_Soul;
+    bool use_of_MT;
 };
 
 #endif

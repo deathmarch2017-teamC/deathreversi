@@ -14,6 +14,7 @@
 Reversi_AI_Random::Reversi_AI_Random()
 {
   Berserker_Soul = false;
+  use_of_MT = false;
   srand(time(NULL));
 }
 
@@ -83,3 +84,10 @@ void Reversi_AI_Random::return_move(Board board, int flagin, int &x, int &y, int
   }
 }
 
+/*! @brief MTを使うべきか判定する関数
+ @param[in] board 盤面情報
+ @return MTを使うべきかをbool値で返す．trueなら使うべきと判定
+*/
+bool check_to_use_MT(Board b){
+
+}
