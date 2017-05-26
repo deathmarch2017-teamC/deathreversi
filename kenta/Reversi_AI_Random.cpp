@@ -91,18 +91,26 @@ void Reversi_AI_Random::return_move(Board board, int flagin, int &x, int &y, int
  @return MTを使うべきかをbool値で返す．trueなら使うべきと判定
 */
 bool check_to_use_MT(Board b, Point &first_point, Point &second_point){
+  // get movable position
   std::vector<Point> first_movable_pos = board.getMovablePos();
 
+  // search for a position which you win
   for(int i = 0; i < first_movable_pos.size(); i++)
   {
+    // first move
     first_movable_pos(i).flag = MTFLAG;
     board.move(first_movable_pos(i));
+    // then, get movable position
     std::vector<Point> second_movable_pos = board.getMovablePos();
+    // search for a move which you get all discs
     for(int j = 0; j < second_movable_pos.size(); j++)
     {
+      // second move
       board.move(second_movable_pos(j));
+      // judge if you get all discs
       if(board.getMovablePos().size() == 0)
       {
+        // if you do, return the following data
         first_point.x  = first_movable_pos(i).x;
         first_point.y  = first_movable_pos(i).y;
 	first_point.flag = MTFLAG;
@@ -111,9 +119,11 @@ bool check_to_use_MT(Board b, Point &first_point, Point &second_point){
 	first_point.flag = 0;
 	return true;
       }
-      board.undo(second_movable_pos(j));
+      // if second move isn't suitable, undo the board
+      board.undo();
     }
-    board.undo(first_movable_pos(i));
+    // if first move is'nt suitable, undo the board
+    board.undo();
   }
 
   return false;
