@@ -76,7 +76,7 @@ void Reversi_AI_Random::return_move(Board board, int flagin, int &x, int &y, int
       }
     }
 
-    // decides a random move
+    // decides a move with random
     Point p = points[rand() % points.size()];
     x = p.x;
     y = p.y;
@@ -86,8 +86,36 @@ void Reversi_AI_Random::return_move(Board board, int flagin, int &x, int &y, int
 
 /*! @brief MTを使うべきか判定する関数
  @param[in] board 盤面情報
+ @param[out] firstPoint 最初の手における座標
+ @param[out] secondPoint MTにおける座標
  @return MTを使うべきかをbool値で返す．trueなら使うべきと判定
 */
-bool check_to_use_MT(Board b){
+bool check_to_use_MT(Board b, Point &first_point, Point &second_point){
+  std::vector<Point> first_movable_pos = board.getMovablePos();
 
+  for(int i = 0; i < first_movable_pos.size(); i++)
+  {
+    first_movable_pos(i).flag = MTFLAG;
+    board.move(first_movable_pos(i));
+    std::vector<Point> second_movable_pos = board.getMovablePos();
+    for(int j = 0; j < second_movable_pos.size(); j++)
+    {
+      board.move(second_movable_pos(j));
+      if(board.getMovablePos().size() == 0)
+      {
+        first_point.x  = first_movable_pos(i).x;
+        first_point.y  = first_movable_pos(i).y;
+	first_point.flag = MTFLAG;
+        second_point.x = second_movable_pos(i).x;
+        second_point.y = second_movable_pos(i).y;
+	first_point.flag = 0;
+	return true;
+      }
+      board.undo(second_movable_pos(j));
+    }
+    board.undo(first_movable_pos(i));
+  }
+
+  return false;
 }
+
