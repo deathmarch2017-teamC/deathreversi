@@ -90,7 +90,7 @@ void Reversi_AI_Random::return_move(Board board, int flagin, int &x, int &y, int
  @param[out] secondPoint MTにおける座標
  @return MTを使うべきかをbool値で返す．trueなら使うべきと判定
 */
-bool check_to_use_MT(Board b, Point &first_point, Point &second_point){
+bool Reversi_AI_Random::check_to_use_MT(Board b, Point &first_point, Point &second_point){
   // get movable position
   std::vector<Point> first_movable_pos = board.getMovablePos();
 
