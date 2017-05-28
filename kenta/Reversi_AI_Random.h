@@ -1,6 +1,6 @@
 /*! @file
- @brief $B%i%s%@%`(BAI
- @author $B?70f(B
+ @brief ランダムAI
+ @author 新井
  @date 2017.5.23
 */
 
@@ -9,7 +9,7 @@
 
 #include "Board.h"
 
-/*! @brief AI$B$N%/%i%9(B
+/*! @brief AIのクラス
 */
 class Reversi_AI_Random{
   public:

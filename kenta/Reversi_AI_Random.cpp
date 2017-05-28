@@ -1,6 +1,6 @@
 /* @file
- @brief $B%i%s%@%`(BAI
- @author $B?70f(B
+ @brief ランダムAI
+ @author 新井
  @date 2017.5.23
 */
 
@@ -8,7 +8,7 @@
 #include <ctime>
 #include <cstdlib>
 
-/*! @brief $B%3%s%9%H%i%/%?(B
+/*! @brief コンストラクタ
 */
 
 Reversi_AI_Random::Reversi_AI_Random()
@@ -18,12 +18,12 @@ Reversi_AI_Random::Reversi_AI_Random()
   srand(time(NULL));
 }
 
-/*! @brief $B<!$N<j$rJV$94X?t(B
- @param[in] board $BHWLL>pJs(B
- @param[in] flagin $B%5!<%P$+$i<u?.$7$?%U%i%0(B
- @param[out] x $B<!$N<j$N(Bx$B:BI8(B
- @param[out] y $B<!$N<j$N(By$B:BI8(B
- @param[out] flagout $B%5!<%P$XAw?.$9$k%U%i%0>pJs(B
+/*! @brief 次の手を返す関数
+ @param[in] board 盤面情報
+ @param[in] flagin サーバから受信したフラグ
+ @param[out] x 次の手のx座標
+ @param[out] y 次の手のy座標
+ @param[out] flagout サーバへ送信するフラグ情報
 */
 
 void Reversi_AI_Random::return_move(Board board, int flagin, int &x, int &y, int &flagout)
@@ -84,11 +84,11 @@ void Reversi_AI_Random::return_move(Board board, int flagin, int &x, int &y, int
   }
 }
 
-/*! @brief MT$B$r;H$&$Y$-$+H=Dj$9$k4X?t(B
- @param[in] board $BHWLL>pJs(B
- @param[out] firstPoint $B:G=i$N<j$K$*$1$k:BI8(B
- @param[out] secondPoint MT$B$K$*$1$k:BI8(B
- @return MT$B$r;H$&$Y$-$+$r(Bbool$BCM$GJV$9!%(Btrue$B$J$i;H$&$Y$-$HH=Dj(B
+/*! @brief MTを使うべきか判定する関数
+ @param[in] board 盤面情報
+ @param[out] firstPoint 最初の手における座標
+ @param[out] secondPoint MTにおける座標
+ @return MTを使うべきかをbool値で返す．trueなら使うべきと判定
 */
 bool check_to_use_MT(Board b, Point &first_point, Point &second_point){
   // get movable position
