@@ -11,7 +11,8 @@
 
 /*! @brief AIのクラス
 */
-class Reversi_AI_Random{
+class Reversi_AI_Random
+{
   public:
     Reversi_AI_Random();
     void return_move(Board b, int flagin, int &x, int &y, int &flagout);
@@ -19,6 +20,9 @@ class Reversi_AI_Random{
   private:
     bool Berserker_Soul;
     bool use_of_MT;
+    bool opponent_MT_FLAG;
+    Point tp;
+    bool set_tp;
 };
 
 #endif
