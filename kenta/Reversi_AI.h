@@ -11,13 +11,13 @@
 
 /*! @brief AIのクラス
 */
-class Reversi_AI_Random
+class Reversi_AI
 {
   public:
-    Reversi_AI_Random();
+    Reversi_AI();
     void return_move(Board b, int flagin, int &x, int &y, int &flagout);
-    bool check_to_use_MT(Board b, Point &first_Point, Point &second_Point);
   private:
+    bool check_to_use_MT(Board b, Point &first_Point, Point &second_Point);
     bool Berserker_Soul;
     bool use_of_MT;
     bool opponent_MT_FLAG;
