@@ -1,5 +1,5 @@
 /* @file
- @brief ランダムAI
+ @brief MinimaxAI
  @author 新井
  @date 2017.5.23
 */
@@ -7,6 +7,8 @@
 #include "Reversi_AI.h"
 #include <ctime>
 #include <cstdlib>
+
+#define DEPTH 3
 
 /*! @brief コンストラクタ
 */
@@ -17,7 +19,23 @@ Reversi_AI::Reversi_AI()
   use_of_MT = false;
   opponent_MT_FLAG = false;
   set_tp = false;
+  init_eval_board();
   srand(time(NULL));
+}
+
+/*! @brief eval_boardの初期化
+*/
+void Reversi_AI::eval_board()
+{
+  eval_board = {{0, 100, -80, 80, 20, 5, 5, 20, 80, -80, 100, 0},
+                {},
+		{},
+		{},
+		{},
+		{},
+		{},
+		{},
+		{}};
 }
 
 /*! @brief 相手がMTを使用したことを通知する関数
@@ -107,6 +125,23 @@ void Reversi_AI::return_move(Board board, int flagin, int &x, int &y, int &flago
     flagout = 0;
   }
 }
+/*! @brief Minimax法による座標決定
+ @param[in] board 盤面情報
+ @param[in] depth 探索する深さ
+ @return 評価値
+*/
+int Minimax(Board b, int depth)
+{
+  
+}
+/*! @brief 評価値の計算
+ @param[in] board 盤面情報
+ @return 評価値
+*/
+int evaluate_board(Board b)
+{
+  
+
 
 /*! @brief MTを使うべきか判定する関数
  @param[in] board 盤面情報
