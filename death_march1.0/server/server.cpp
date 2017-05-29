@@ -90,9 +90,9 @@ void colombia(string answer){
 
 ostream& operator<<(ostream& os, const Point& p)
 {
-	string s = p;
-	os << s;
-	return os;
+  string s = p;
+  os << s;
+  return os;
 }
 
 void assign_stringtochar(string input, char *output){
@@ -222,8 +222,8 @@ bool attack_chance(int current_color, ConsoleBoard &board, string premove){
     if(TIME_LIMIT == send(dstSocket[BLACKSOCKET], send_data,strlen(send_data)+1,0)) time_out(current_color);
     if(TIME_LIMIT == recv(dstSocket[BLACKSOCKET], buffer, BUFFER_SIZE, 0)) time_out(current_color);
   }else{
-     if(TIME_LIMIT == send(dstSocket[WHITESOCKET], send_data,strlen(send_data)+1,0)) time_out(current_color);
-     if(TIME_LIMIT == recv(dstSocket[WHITESOCKET], buffer, BUFFER_SIZE, 0)) time_out(current_color);
+    if(TIME_LIMIT == send(dstSocket[WHITESOCKET], send_data,strlen(send_data)+1,0)) time_out(current_color);
+    if(TIME_LIMIT == recv(dstSocket[WHITESOCKET], buffer, BUFFER_SIZE, 0)) time_out(current_color);
   }
   assign_chartostring(buffer, in);
   cout<<"revese Disk:"<<in<<endl;
@@ -242,7 +242,7 @@ bool attack_chance(int current_color, ConsoleBoard &board, string premove){
   if(board.getColor(p) != (-current_color)){
     cout<<"Against the rules"<<endl;
     against_rules(current_color);
-    }
+  }
   else{//相手の石があったら
     colombia(in);
     board.Reverse_disk(p, current_color);
@@ -358,101 +358,102 @@ main() {
 
   while(true){
 
+    board.print();
+    cout << "Black Disk:" << board.countDisc(BLACK) << " ";
+    cout << "White Disk:" << board.countDisc(WHITE) << " ";
+    cout << "Empty:" << board.countDisc(EMPTY) << endl;
+		
+    int current_color =  board.getCurrentColor();
+    if(current_color == BLACK){
+      cout<<"Black Turn("<<TeamName[BLACKSOCKET]<<")"<<endl; 
+    }
+    else{
+      cout<<"White Turn("<<TeamName[WHITESOCKET]<<")"<<endl;
+    }
+  
+		
+    cout << endl << endl;
+
+    //特殊ルールの追加 attack cance
+    //残りますが10以下 かつ 20石以上負けている アタックチャンスが起こっていない
+    if( (board.countDisc(EMPTY) <= 10) && ( (board.countDisc(-current_color)-board.countDisc(current_color) ) >= ATTACKNUM) && (attack_cahnce_status == false ) ){
+      kodama();
+      attack_cahnce_status = true;
+      attack_chance(current_color, board, premove);
+	
       board.print();
       cout << "Black Disk:" << board.countDisc(BLACK) << " ";
       cout << "White Disk:" << board.countDisc(WHITE) << " ";
       cout << "Empty:" << board.countDisc(EMPTY) << endl;
-		
-      int current_color =  board.getCurrentColor();
+	
       if(current_color == BLACK){
-	cout<<"Black Turn("<<TeamName[BLACKSOCKET]<<")"<<endl; 
+	cout<<"Black Turn"<<endl; 
       }
       else{
-	cout<<"White Turn("<<TeamName[WHITESOCKET]<<")"<<endl;
+	cout<<"White Turn"<<endl;
       }
-  
-		
-      cout << endl << endl;
-
-      //特殊ルールの追加 attack cance
-      //残りますが10以下 かつ 20石以上負けている アタックチャンスが起こっていない
-      if( (board.countDisc(EMPTY) <= 10) && ( (board.countDisc(-current_color)-board.countDisc(current_color) ) >= ATTACKNUM) && (attack_cahnce_status == false ) ){
-	kodama();
-	attack_cahnce_status = true;
-	attack_chance(current_color, board, premove);
-	
-	board.print();
-	cout << "Black Disk:" << board.countDisc(BLACK) << " ";
-	cout << "White Disk:" << board.countDisc(WHITE) << " ";
-	cout << "Empty:" << board.countDisc(EMPTY) << endl;
-	
-	if(current_color == BLACK){
-	  cout<<"Black Turn"<<endl; 
-	}
-	else{
-	  cout<<"White Turn"<<endl;
-	}
-	premove[0]='0';
-	premove[1]='0';
-	premove[2]='0';
-	}
+      premove[0]='0';
+      premove[1]='0';
+      premove[2]='0';
+    }
       
-	cout << "input your move: ";
-	Point p;
+    cout << "input your move: ";
+    Point p;
 	
-	string in(DATASIZE,0);
+    string in(DATASIZE,0);
 
-	//**********************通信ポイント*******************
-	//send data to player and recieve data from player
-	premove[3] = 0;
-	if(flagforPS == true)  premove[3] = premove[3] | PSFLAG;
-	char send_data[DATASIZE];
-	assign_stringtochar(premove, send_data);
-	if(current_color == BLACK){
-	  if(TIME_LIMIT == send(dstSocket[BLACKSOCKET], send_data,strlen(send_data)+1,0)) time_out(current_color);
-	  if(TIME_LIMIT == recv(dstSocket[BLACKSOCKET], buffer, BUFFER_SIZE,0)) time_out(current_color);
+    //**********************通信ポイント*******************
+    //send data to player and recieve data from player
+    premove[3] = 0;
+    if(flagforPS == true)  premove[3] = premove[3] | PSFLAG;
+    char send_data[DATASIZE];
+    assign_stringtochar(premove, send_data);
+    cout << "send_data:" << send_data << endl;
+    if(current_color == BLACK){
+      if(TIME_LIMIT == send(dstSocket[BLACKSOCKET], send_data,strlen(send_data)+1,0)) time_out(current_color);
+      if(TIME_LIMIT == recv(dstSocket[BLACKSOCKET], buffer, BUFFER_SIZE,0)) time_out(current_color);
+    }else {
+      if(TIME_LIMIT ==  send(dstSocket[WHITESOCKET], send_data,strlen(send_data)+1,0)) time_out(current_color);
+      if(TIME_LIMIT ==  recv(dstSocket[WHITESOCKET], buffer, BUFFER_SIZE, 0)) time_out(current_color);
+    } 
+    flagforPS  = false;
+    assign_chartostring(buffer, in);
+    cout<<in<<endl;
+    cout<<"in0"<<in[0]<<endl;
+    cout<<"in1"<<in[1]<<endl;
+    cout<<"in2"<<in[2]<<endl;
+    cout<<"in3"<<hex<<in[3]<<endl;
+    /**********************************************************/
+      
+
+    //手判断
+    //パスなら
+    if(in[0] == 'p')
+      {
+	// パス
+	if(!board.pass()){
+	  cerr << "you can't pass " << endl;
+	  against_rules(current_color);
 	}else {
-	  if(TIME_LIMIT ==  send(dstSocket[WHITESOCKET], send_data,strlen(send_data)+1,0)) time_out(current_color);
-	  if(TIME_LIMIT ==  recv(dstSocket[WHITESOCKET], buffer, BUFFER_SIZE, 0)) time_out(current_color);
-	} 
-	flagforPS  = false;
-	assign_chartostring(buffer, in);
-	cout<<in<<endl;
-	cout<<"in0"<<in[0]<<endl;
-	cout<<"in1"<<in[1]<<endl;
-	cout<<"in2"<<in[2]<<endl;
-	cout<<"in3"<<hex<<in[3]<<endl;
-      /**********************************************************/
-      
-
-	//手判断
-	//パスなら
-      if(in[0] == 'p')
-	{
-	  // パス
-	  if(!board.pass()){
-	    cerr << "you can't pass " << endl;
-	    against_rules(current_color);
-	  }else {
-	    cout<<"PASS"<<endl;
-	    flagforPS= true;
-	    premove[0]='0';
-	    premove[1]='0';
-	    premove[2]='0';   
-	  }
-	  if(board.isGameOver())
-	    { board.print();
-	      cout << "Black Disk:" << board.countDisc(BLACK) << " ";
-	      cout << "White Disk:" << board.countDisc(WHITE) << " ";
-	      cout << "Empty:" << board.countDisc(EMPTY) << endl;
-	      GFprocess(board);
-	      break;
-	    }
-	  
-	  continue;
+	  cout<<"PASS"<<endl;
+	  flagforPS= true;
+	  premove[0]='0';
+	  premove[1]='0';
+	  premove[2]='0';   
 	}
+	if(board.isGameOver())
+	  { board.print();
+	    cout << "Black Disk:" << board.countDisc(BLACK) << " ";
+	    cout << "White Disk:" << board.countDisc(WHITE) << " ";
+	    cout << "Empty:" << board.countDisc(EMPTY) << endl;
+	    GFprocess(board);
+	    break;
+	  }
+	  
+	continue;
+      }
 	
-      //point に変換
+    //point に変換
       try
 	{
 	  Point parse(in);

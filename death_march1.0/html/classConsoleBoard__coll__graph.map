@@ -1,0 +1,4 @@
+<map id="ConsoleBoard" name="ConsoleBoard">
+<area shape="rect" id="node2" href="$classBoard.html" title="{Board\n|&#45; RawBoard\l&#45; Turns\l&#45; CurrentColor\l&#45; UpdateLog\l&#45; MovablePos\l&#45; MovableDir\l&#45; Liberty\l&#45; NONE\l&#45; UPPER\l&#45; UPPER_LEFT\l&#45; LEFT\l&#45; LOWER_LEFT\l&#45; LOWER\l&#45; LOWER_RIGHT\l&#45; RIGHT\l&#45; UPPER_RIGHT\l|+ Board()\l+ init()\l+ move()\l+ pass()\l+ undo()\l+ isGameOver()\l+ countDisc()\l+ getColor()\l+ getMovablePos()\l+ getUpdate()\land 20 more...\l&#45; flipDiscs()\l&#45; checkMobility()\l&#45; initMovable()\l&#45; flipDiscs()\l&#45; checkMobility()\l&#45; initMovable()\l}" alt="" coords="26,222,157,754"/>
+<area shape="rect" id="node3" href="$classColorStorage.html" title="{ColorStorage\&lt; unsigned \&gt;\n|&#45; data\l|+ operator[]()\l+ operator[]()\l+ operator[]()\l+ operator[]()\l+ operator+=()\l+ operator+=()\l}" alt="" coords="5,6,179,157"/>
+</map>

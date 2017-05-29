@@ -1,0 +1,4950 @@
+%!PS-Adobe-3.0
+%%BoundingBox: 38 24 574 768
+%%Title: Enscript Output
+%%For: Kouta Shigenobu
+%%Creator: GNU Enscript 1.6.6
+%%CreationDate: Sun May 28 03:00:58 2017
+%%Orientation: Landscape
+%%Pages: (atend)
+%%DocumentMedia: Letter 612 792 0 () ()
+%%DocumentNeededResources: (atend)
+%%EndComments
+%%BeginProlog
+%%BeginResource: procset Enscript-Prolog 1.6 6
+%
+% Procedures.
+%
+
+/_S {	% save current state
+  /_s save def
+} def
+/_R {	% restore from saved state
+  _s restore
+} def
+
+/S {	% showpage protecting gstate
+  gsave
+  showpage
+  grestore
+} bind def
+
+/MF {	% fontname newfontname -> -	make a new encoded font
+  /newfontname exch def
+  /fontname exch def
+
+  /fontdict fontname findfont def
+  /newfont fontdict maxlength dict def
+
+  fontdict {
+    exch
+    dup /FID eq {
+      % skip FID pair
+      pop pop
+    } {
+      % copy to the new font dictionary
+      exch newfont 3 1 roll put
+    } ifelse
+  } forall
+
+  newfont /FontName newfontname put
+
+  % insert only valid encoding vectors
+  encoding_vector length 256 eq {
+    newfont /Encoding encoding_vector put
+  } if
+
+  newfontname newfont definefont pop
+} def
+
+/MF_PS { % fontname newfontname -> -	make a new font preserving its enc
+  /newfontname exch def
+  /fontname exch def
+
+  /fontdict fontname findfont def
+  /newfont fontdict maxlength dict def
+
+  fontdict {
+    exch
+    dup /FID eq {
+      % skip FID pair
+      pop pop
+    } {
+      % copy to the new font dictionary
+      exch newfont 3 1 roll put
+    } ifelse
+  } forall
+
+  newfont /FontName newfontname put
+
+  newfontname newfont definefont pop
+} def
+
+/SF { % fontname width height -> -	set a new font
+  /height exch def
+  /width exch def
+
+  findfont
+  [width 0 0 height 0 0] makefont setfont
+} def
+
+/SUF { % fontname width height -> -	set a new user font
+  /height exch def
+  /width exch def
+
+  /F-gs-user-font MF
+  /F-gs-user-font width height SF
+} def
+
+/SUF_PS { % fontname width height -> -	set a new user font preserving its enc
+  /height exch def
+  /width exch def
+
+  /F-gs-user-font MF_PS
+  /F-gs-user-font width height SF
+} def
+
+/M {moveto} bind def
+/s {show} bind def
+
+/Box {	% x y w h -> -			define box path
+  /d_h exch def /d_w exch def /d_y exch def /d_x exch def
+  d_x d_y  moveto
+  d_w 0 rlineto
+  0 d_h rlineto
+  d_w neg 0 rlineto
+  closepath
+} def
+
+/bgs {	% x y height blskip gray str -> -	show string with bg color
+  /str exch def
+  /gray exch def
+  /blskip exch def
+  /height exch def
+  /y exch def
+  /x exch def
+
+  gsave
+    x y blskip sub str stringwidth pop height Box
+    gray setgray
+    fill
+  grestore
+  x y M str s
+} def
+
+/bgcs { % x y height blskip red green blue str -> -  show string with bg color
+  /str exch def
+  /blue exch def
+  /green exch def
+  /red exch def
+  /blskip exch def
+  /height exch def
+  /y exch def
+  /x exch def
+
+  gsave
+    x y blskip sub str stringwidth pop height Box
+    red green blue setrgbcolor
+    fill
+  grestore
+  x y M str s
+} def
+
+% Highlight bars.
+/highlight_bars {	% nlines lineheight output_y_margin gray -> -
+  gsave
+    setgray
+    /ymarg exch def
+    /lineheight exch def
+    /nlines exch def
+
+    % This 2 is just a magic number to sync highlight lines to text.
+    0 d_header_y ymarg sub 2 sub translate
+
+    /cw d_output_w cols div def
+    /nrows d_output_h ymarg 2 mul sub lineheight div cvi def
+
+    % for each column
+    0 1 cols 1 sub {
+      cw mul /xp exch def
+
+      % for each rows
+      0 1 nrows 1 sub {
+        /rn exch def
+        rn lineheight mul neg /yp exch def
+        rn nlines idiv 2 mod 0 eq {
+	  % Draw highlight bar.  4 is just a magic indentation.
+	  xp 4 add yp cw 8 sub lineheight neg Box fill
+	} if
+      } for
+    } for
+
+  grestore
+} def
+
+% Line highlight bar.
+/line_highlight {	% x y width height gray -> -
+  gsave
+    /gray exch def
+    Box gray setgray fill
+  grestore
+} def
+
+% Column separator lines.
+/column_lines {
+  gsave
+    .1 setlinewidth
+    0 d_footer_h translate
+    /cw d_output_w cols div def
+    1 1 cols 1 sub {
+      cw mul 0 moveto
+      0 d_output_h rlineto stroke
+    } for
+  grestore
+} def
+
+% Column borders.
+/column_borders {
+  gsave
+    .1 setlinewidth
+    0 d_footer_h moveto
+    0 d_output_h rlineto
+    d_output_w 0 rlineto
+    0 d_output_h neg rlineto
+    closepath stroke
+  grestore
+} def
+
+% Do the actual underlay drawing
+/draw_underlay {
+  ul_style 0 eq {
+    ul_str true charpath stroke
+  } {
+    ul_str show
+  } ifelse
+} def
+
+% Underlay
+/underlay {	% - -> -
+  gsave
+    0 d_page_h translate
+    d_page_h neg d_page_w atan rotate
+
+    ul_gray setgray
+    ul_font setfont
+    /dw d_page_h dup mul d_page_w dup mul add sqrt def
+    ul_str stringwidth pop dw exch sub 2 div ul_h_ptsize -2 div moveto
+    draw_underlay
+  grestore
+} def
+
+/user_underlay {	% - -> -
+  gsave
+    ul_x ul_y translate
+    ul_angle rotate
+    ul_gray setgray
+    ul_font setfont
+    0 0 ul_h_ptsize 2 div sub moveto
+    draw_underlay
+  grestore
+} def
+
+% Page prefeed
+/page_prefeed {		% bool -> -
+  statusdict /prefeed known {
+    statusdict exch /prefeed exch put
+  } {
+    pop
+  } ifelse
+} def
+
+% Wrapped line markers
+/wrapped_line_mark {	% x y charwith charheight type -> -
+  /type exch def
+  /h exch def
+  /w exch def
+  /y exch def
+  /x exch def
+
+  type 2 eq {
+    % Black boxes (like TeX does)
+    gsave
+      0 setlinewidth
+      x w 4 div add y M
+      0 h rlineto w 2 div 0 rlineto 0 h neg rlineto
+      closepath fill
+    grestore
+  } {
+    type 3 eq {
+      % Small arrows
+      gsave
+        .2 setlinewidth
+        x w 2 div add y h 2 div add M
+        w 4 div 0 rlineto
+        x w 4 div add y lineto stroke
+
+        x w 4 div add w 8 div add y h 4 div add M
+        x w 4 div add y lineto
+	w 4 div h 8 div rlineto stroke
+      grestore
+    } {
+      % do nothing
+    } ifelse
+  } ifelse
+} def
+
+% EPSF import.
+
+/BeginEPSF {
+  /b4_Inc_state save def    		% Save state for cleanup
+  /dict_count countdictstack def	% Count objects on dict stack
+  /op_count count 1 sub def		% Count objects on operand stack
+  userdict begin
+  /showpage { } def
+  0 setgray 0 setlinecap
+  1 setlinewidth 0 setlinejoin
+  10 setmiterlimit [ ] 0 setdash newpath
+  /languagelevel where {
+    pop languagelevel
+    1 ne {
+      false setstrokeadjust false setoverprint
+    } if
+  } if
+} bind def
+
+/EndEPSF {
+  count op_count sub { pos } repeat	% Clean up stacks
+  countdictstack dict_count sub { end } repeat
+  b4_Inc_state restore
+} bind def
+
+% Check PostScript language level.
+/languagelevel where {
+  pop /gs_languagelevel languagelevel def
+} {
+  /gs_languagelevel 1 def
+} ifelse
+%%EndResource
+%%BeginResource: procset Enscript-Encoding-88591 1.6 6
+/encoding_vector [
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/space        	/exclam       	/quotedbl     	/numbersign   	
+/dollar       	/percent      	/ampersand    	/quoteright   	
+/parenleft    	/parenright   	/asterisk     	/plus         	
+/comma        	/hyphen       	/period       	/slash        	
+/zero         	/one          	/two          	/three        	
+/four         	/five         	/six          	/seven        	
+/eight        	/nine         	/colon        	/semicolon    	
+/less         	/equal        	/greater      	/question     	
+/at           	/A            	/B            	/C            	
+/D            	/E            	/F            	/G            	
+/H            	/I            	/J            	/K            	
+/L            	/M            	/N            	/O            	
+/P            	/Q            	/R            	/S            	
+/T            	/U            	/V            	/W            	
+/X            	/Y            	/Z            	/bracketleft  	
+/backslash    	/bracketright 	/asciicircum  	/underscore   	
+/quoteleft    	/a            	/b            	/c            	
+/d            	/e            	/f            	/g            	
+/h            	/i            	/j            	/k            	
+/l            	/m            	/n            	/o            	
+/p            	/q            	/r            	/s            	
+/t            	/u            	/v            	/w            	
+/x            	/y            	/z            	/braceleft    	
+/bar          	/braceright   	/tilde        	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/space        	/exclamdown   	/cent         	/sterling     	
+/currency     	/yen          	/brokenbar    	/section      	
+/dieresis     	/copyright    	/ordfeminine  	/guillemotleft	
+/logicalnot   	/hyphen       	/registered   	/macron       	
+/degree       	/plusminus    	/twosuperior  	/threesuperior	
+/acute        	/mu           	/paragraph    	/bullet       	
+/cedilla      	/onesuperior  	/ordmasculine 	/guillemotright	
+/onequarter   	/onehalf      	/threequarters	/questiondown 	
+/Agrave       	/Aacute       	/Acircumflex  	/Atilde       	
+/Adieresis    	/Aring        	/AE           	/Ccedilla     	
+/Egrave       	/Eacute       	/Ecircumflex  	/Edieresis    	
+/Igrave       	/Iacute       	/Icircumflex  	/Idieresis    	
+/Eth          	/Ntilde       	/Ograve       	/Oacute       	
+/Ocircumflex  	/Otilde       	/Odieresis    	/multiply     	
+/Oslash       	/Ugrave       	/Uacute       	/Ucircumflex  	
+/Udieresis    	/Yacute       	/Thorn        	/germandbls   	
+/agrave       	/aacute       	/acircumflex  	/atilde       	
+/adieresis    	/aring        	/ae           	/ccedilla     	
+/egrave       	/eacute       	/ecircumflex  	/edieresis    	
+/igrave       	/iacute       	/icircumflex  	/idieresis    	
+/eth          	/ntilde       	/ograve       	/oacute       	
+/ocircumflex  	/otilde       	/odieresis    	/divide       	
+/oslash       	/ugrave       	/uacute       	/ucircumflex  	
+/udieresis    	/yacute       	/thorn        	/ydieresis    	
+] def
+%%EndResource
+%%EndProlog
+%%BeginSetup
+%%IncludeResource: font Courier-Bold
+%%IncludeResource: font Courier
+/HFpt_w 10 def
+/HFpt_h 10 def
+/Courier-Bold /HF-gs-font MF
+/HF /HF-gs-font findfont [HFpt_w 0 0 HFpt_h 0 0] makefont def
+/Courier /F-gs-font MF
+/F-gs-font 7 7 SF
+/#copies 1 def
+% Pagedevice definitions:
+gs_languagelevel 1 gt {
+  <<
+    /PageSize [612 792] 
+  >> setpagedevice
+} if
+%%BeginResource: procset Enscript-Header-enscript 1.6 6
+%%IncludeResource: font Times-Bold
+%%IncludeResource: font Times-Roman
+
+% Fonts.
+/Times-Bold /HeaderFont-Bold MF
+/HeaderDateF /HeaderFont-Bold findfont 12 scalefont def
+
+/Times-Roman /HeaderFont-Times MF
+/HeaderHDRF /HeaderFont-Times findfont 14 scalefont def
+
+/HeaderPageNumF /Helvetica-Bold findfont 28.8 scalefont def
+
+/do_header {	% print enscript header
+  gsave
+    d_header_x d_header_y translate
+
+    % light bar
+    0 0 d_header_w d_header_h 2 div Box
+    .95 setgray fill
+
+    % dark gray boxes
+    /dbw d_header_h 2 mul def	% dark box width
+    /dbc .7 def			% dark box color
+
+    % left dark box.
+    0 0 dbw d_header_h Box
+    dbc setgray fill
+
+    0 setgray 
+    HeaderDateF setfont
+    moddatestr dup stringwidth pop dbw exch sub 2 div 
+    d_header_h 2 div 2 add moveto show
+    modtimestr dup stringwidth pop dbw exch sub 2 div 
+    d_header_h 5 div moveto show
+
+    % right dark box
+    d_header_w dbw sub 0 dbw d_header_h Box
+    dbc setgray fill
+
+    HeaderPageNumF setfont
+    1 setgray
+    pagenumstr dup
+    stringwidth pop dbw exch sub 2 div d_header_w dbw sub add
+    d_header_h .2 mul moveto show
+
+    % filename
+    0 setgray 
+    HeaderHDRF setfont
+    d_header_w fname stringwidth pop sub 2 div d_header_h 8 div moveto
+    fname show
+
+    % user supplied header string.
+    user_header_p {
+      /h d_header_h 8 div 5 mul def
+
+      % Implement strict enscript compatibility.
+      user_header_center_str () eq user_header_right_str () eq and {
+        d_header_w user_header_left_str stringwidth pop sub 2 div 
+        h moveto user_header_left_str show
+      } {
+        dbw 5 add h moveto user_header_left_str show
+
+        d_header_w user_header_center_str stringwidth pop sub 2 div 
+        h moveto user_header_center_str show
+
+	d_header_w dbw sub 5 sub user_header_right_str stringwidth pop
+	sub h moveto user_header_right_str show
+      } ifelse
+    } if
+
+  grestore
+} def
+%%EndResource
+/d_page_w 744 def
+/d_page_h 536 def
+/d_header_x 0 def
+/d_header_y 500 def
+/d_header_w 744 def
+/d_header_h 36 def
+/d_footer_x 0 def
+/d_footer_y 0 def
+/d_footer_w 744 def
+/d_footer_h 0 def
+/d_output_w 744 def
+/d_output_h 500 def
+/cols 2 def
+%%EndSetup
+%%Page: (1) 1
+%%BeginPageSetup
+_S
+90 rotate
+24 -574 translate
+/pagenum 1 def
+/fname (server.cpp) def
+/fdir (.) def
+/ftail (server.cpp) def
+% User defined strings:
+/pagenumstr (1) def
+/moddatestr (05/23/17) def
+/modtimestr (12:10:08) def
+/user_header_p false def
+/user_footer_p false def
+%%EndPageSetup
+column_lines
+do_header
+22.8 490 M (1:) s
+35.4 490 M
+(#) s
+/Courier-Bold 7 7 SUF
+0.372549 0.619608 0.627451 setrgbcolor
+39.6 490 M
+(include) s
+/F-gs-font 7 7 SF
+0 setgray
+69 490 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+73.2 490 M
+(<stdio.h>) s
+/F-gs-font 7 7 SF
+0 setgray
+22.8 482 M (2:) s
+35.4 482 M
+(#) s
+/Courier-Bold 7 7 SUF
+0.372549 0.619608 0.627451 setrgbcolor
+39.6 482 M
+(include) s
+/F-gs-font 7 7 SF
+0 setgray
+69 482 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+73.2 482 M
+(<sys/types.h>) s
+/F-gs-font 7 7 SF
+0 setgray
+22.8 474 M (3:) s
+35.4 474 M
+(#) s
+/Courier-Bold 7 7 SUF
+0.372549 0.619608 0.627451 setrgbcolor
+39.6 474 M
+(include) s
+/F-gs-font 7 7 SF
+0 setgray
+69 474 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+73.2 474 M
+(<sys/socket.h>) s
+/F-gs-font 7 7 SF
+0 setgray
+22.8 466 M (4:) s
+35.4 466 M
+(#) s
+/Courier-Bold 7 7 SUF
+0.372549 0.619608 0.627451 setrgbcolor
+39.6 466 M
+(include) s
+/F-gs-font 7 7 SF
+0 setgray
+69 466 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+73.2 466 M
+(<netinet/in.h>) s
+/F-gs-font 7 7 SF
+0 setgray
+22.8 458 M (5:) s
+35.4 458 M
+(#) s
+/Courier-Bold 7 7 SUF
+0.372549 0.619608 0.627451 setrgbcolor
+39.6 458 M
+(include) s
+/F-gs-font 7 7 SF
+0 setgray
+69 458 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+73.2 458 M
+(<arpa/inet.h>) s
+/F-gs-font 7 7 SF
+0 setgray
+22.8 450 M (6:) s
+35.4 450 M
+(#) s
+/Courier-Bold 7 7 SUF
+0.372549 0.619608 0.627451 setrgbcolor
+39.6 450 M
+(include) s
+/F-gs-font 7 7 SF
+0 setgray
+69 450 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+73.2 450 M
+(<netdb.h>) s
+/F-gs-font 7 7 SF
+0 setgray
+22.8 442 M (7:) s
+22.8 434 M (8:) s
+35.4 434 M
+(#) s
+/Courier-Bold 7 7 SUF
+0.372549 0.619608 0.627451 setrgbcolor
+39.6 434 M
+(include) s
+/F-gs-font 7 7 SF
+0 setgray
+69 434 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+73.2 434 M
+(<string.h>) s
+/F-gs-font 7 7 SF
+0 setgray
+22.8 426 M (9:) s
+18.6 418 M (10:) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+35.4 418 M
+(//wata) s
+/F-gs-font 7 7 SF
+18.6 410 M (11:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 410 M
+(#) s
+/Courier-Bold 7 7 SUF
+0.372549 0.619608 0.627451 setrgbcolor
+39.6 410 M
+(include) s
+/F-gs-font 7 7 SF
+0 setgray
+69 410 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+73.2 410 M
+(<string>) s
+/F-gs-font 7 7 SF
+0 setgray
+18.6 402 M (12:) s
+35.4 402 M
+(#) s
+/Courier-Bold 7 7 SUF
+0.372549 0.619608 0.627451 setrgbcolor
+39.6 402 M
+(include) s
+/F-gs-font 7 7 SF
+0 setgray
+69 402 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+73.2 402 M
+(<unistd.h>) s
+/F-gs-font 7 7 SF
+0 setgray
+18.6 394 M (13:) s
+35.4 394 M
+(#) s
+/Courier-Bold 7 7 SUF
+0.372549 0.619608 0.627451 setrgbcolor
+39.6 394 M
+(include) s
+/F-gs-font 7 7 SF
+0 setgray
+69 394 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+73.2 394 M
+(<iostream>) s
+/F-gs-font 7 7 SF
+0 setgray
+18.6 386 M (14:) s
+18.6 378 M (15:) s
+18.6 370 M (16:) s
+35.4 370 M
+(#) s
+/Courier-Bold 7 7 SUF
+0.372549 0.619608 0.627451 setrgbcolor
+39.6 370 M
+(include) s
+/F-gs-font 7 7 SF
+0 setgray
+69 370 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+73.2 370 M
+("GameMaster.h") s
+/F-gs-font 7 7 SF
+0 setgray
+18.6 362 M (17:) s
+35.4 362 M
+(#) s
+/Courier-Bold 7 7 SUF
+0.372549 0.619608 0.627451 setrgbcolor
+39.6 362 M
+(include) s
+/F-gs-font 7 7 SF
+0 setgray
+69 362 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+73.2 362 M
+("Board.h") s
+/F-gs-font 7 7 SF
+0 setgray
+18.6 354 M (18:) s
+18.6 346 M (19:) s
+35.4 346 M
+(using namespace std;) s
+18.6 338 M (20:) s
+18.6 330 M (21:) s
+35.4 330 M
+(#) s
+/Courier-Bold 7 7 SUF
+0.372549 0.619608 0.627451 setrgbcolor
+39.6 330 M
+(define) s
+/F-gs-font 7 7 SF
+0 setgray
+64.8 330 M
+( ) s
+/Courier 7 7 SUF
+0.721569 0.52549 0.043137 setrgbcolor
+69 330 M
+(PLAYERNUM) s
+/F-gs-font 7 7 SF
+0 setgray
+106.8 330 M
+( 2) s
+18.6 322 M (22:) s
+35.4 322 M
+(#) s
+/Courier-Bold 7 7 SUF
+0.372549 0.619608 0.627451 setrgbcolor
+39.6 322 M
+(define) s
+/F-gs-font 7 7 SF
+0 setgray
+64.8 322 M
+( ) s
+/Courier 7 7 SUF
+0.721569 0.52549 0.043137 setrgbcolor
+69 322 M
+(BUFFER_SIZE) s
+/F-gs-font 7 7 SF
+0 setgray
+115.2 322 M
+( 256) s
+18.6 314 M (23:) s
+35.4 314 M
+(#) s
+/Courier-Bold 7 7 SUF
+0.372549 0.619608 0.627451 setrgbcolor
+39.6 314 M
+(define) s
+/F-gs-font 7 7 SF
+0 setgray
+64.8 314 M
+( ) s
+/Courier 7 7 SUF
+0.721569 0.52549 0.043137 setrgbcolor
+69 314 M
+(DATASIZE) s
+/F-gs-font 7 7 SF
+0 setgray
+102.6 314 M
+( 4//\344\270\\200\345\272\246\343\\201\253\343\\202\\204\343\\202\\212\343\\201\250\343\\202\\212\343\\201\\225\343) s
+5 306 M
+(\\202\\214\343\\202\\213\343\\203\\207\343\\203\274\343\\202\277\343\\201\256\346\\225\260) s
+18.6 298 M (24:) s
+35.4 298 M
+(#) s
+/Courier-Bold 7 7 SUF
+0.372549 0.619608 0.627451 setrgbcolor
+39.6 298 M
+(define) s
+/F-gs-font 7 7 SF
+0 setgray
+64.8 298 M
+( ) s
+/Courier 7 7 SUF
+0.721569 0.52549 0.043137 setrgbcolor
+69 298 M
+(TIME_LIMIT) s
+/F-gs-font 7 7 SF
+0 setgray
+111 298 M
+( -1) s
+18.6 290 M (25:) s
+35.4 290 M
+(#) s
+/Courier-Bold 7 7 SUF
+0.372549 0.619608 0.627451 setrgbcolor
+39.6 290 M
+(define) s
+/F-gs-font 7 7 SF
+0 setgray
+64.8 290 M
+( ) s
+/Courier 7 7 SUF
+0.721569 0.52549 0.043137 setrgbcolor
+69 290 M
+(BLACKSOCKET) s
+/F-gs-font 7 7 SF
+0 setgray
+115.2 290 M
+( 0) s
+18.6 282 M (26:) s
+35.4 282 M
+(#) s
+/Courier-Bold 7 7 SUF
+0.372549 0.619608 0.627451 setrgbcolor
+39.6 282 M
+(define) s
+/F-gs-font 7 7 SF
+0 setgray
+64.8 282 M
+( ) s
+/Courier 7 7 SUF
+0.721569 0.52549 0.043137 setrgbcolor
+69 282 M
+(WHITESOCKET) s
+/F-gs-font 7 7 SF
+0 setgray
+115.2 282 M
+( 1) s
+18.6 274 M (27:) s
+18.6 266 M (28:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+35.4 266 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+48 266 M
+( flagforPS =0;) s
+18.6 258 M (29:) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+35.4 258 M
+(/* \343\\203\\235\343\\203\274\343\\203\\210\347\\225\252\345\\217\267\343\\200\\201\343\\202\275\343\\202\261\343\\203\\203\343\\203\\210) s
+5 250 M
+( */) s
+/F-gs-font 7 7 SF
+0 setgray
+18.6 242 M (30:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+35.4 242 M
+(char) s
+/F-gs-font 7 7 SF
+0 setgray
+52.2 242 M
+( ClientIP[PLAYERNUM][80]={) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+161.4 242 M
+("160.12.172.5") s
+/F-gs-font 7 7 SF
+0 setgray
+220.2 242 M
+(,) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+224.4 242 M
+("160.12.172.5") s
+/F-gs-font 7 7 SF
+0 setgray
+283.2 242 M
+(};) s
+18.6 234 M (31:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+35.4 234 M
+(unsigned) s
+/F-gs-font 7 7 SF
+0 setgray
+69 234 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+73.2 234 M
+(short) s
+/F-gs-font 7 7 SF
+0 setgray
+94.2 234 M
+( port[2]={9800,9810};) s
+18.6 226 M (32:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+35.4 226 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+48 226 M
+( dstSocket[PLAYERNUM];  ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+148.8 226 M
+(// \347\\233\270\346\\211\\213) s
+/F-gs-font 7 7 SF
+18.6 218 M (33:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+35.4 218 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+48 218 M
+( status[PLAYERNUM];) s
+18.6 210 M (34:) s
+18.6 202 M (35:) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+35.4 202 M
+(/* sockaddr_in \346\247\\213\351\\200\240\344\275\\223 */) s
+/F-gs-font 7 7 SF
+0 setgray
+18.6 194 M (36:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+35.4 194 M
+(struct) s
+/F-gs-font 7 7 SF
+0 setgray
+60.6 194 M
+( sockaddr_in dstAddr[PLAYERNUM];) s
+18.6 186 M (37:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+35.4 186 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+48 186 M
+( dstAddrSize[PLAYERNUM];) s
+18.6 178 M (38:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+35.4 178 M
+(char) s
+/F-gs-font 7 7 SF
+0 setgray
+52.2 178 M
+( Teaminfo[20];) s
+18.6 170 M (39:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+35.4 170 M
+(char) s
+/F-gs-font 7 7 SF
+0 setgray
+52.2 170 M
+( TeamName[PLAYERNUM][40];) s
+18.6 162 M (40:) s
+18.6 154 M (41:) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+35.4 154 M
+(/* \345\\220\\204\347\250\256\343\\203\\221\343\\203\251\343\\203\241\343\\203\274\343\\202\277 */) s
+/F-gs-font 7 7 SF
+0 setgray
+18.6 146 M (42:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+35.4 146 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+48 146 M
+( numrcv[PLAYERNUM];) s
+18.6 138 M (43:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+35.4 138 M
+(char) s
+/F-gs-font 7 7 SF
+0 setgray
+52.2 138 M
+( buffer[BUFFER_SIZE];) s
+18.6 130 M (44:) s
+18.6 122 M (45:) s
+18.6 114 M (46:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+35.4 114 M
+(void) s
+/F-gs-font 7 7 SF
+0 setgray
+52.2 114 M
+( ) s
+/Courier-Bold 7 7 SUF
+0 0 1 setrgbcolor
+56.4 114 M
+(kodama) s
+/F-gs-font 7 7 SF
+0 setgray
+81.6 114 M
+(\(\){) s
+18.6 106 M (47:) s
+18.6 98 M (48:) s
+35.4 98 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+69 98 M
+("\343\\202\242\343\\202\277\343\\203\\203\343\\202\257\343\\203\\201\343\\203\243\343\\203\274\343\\203\263\343\\202\271!!") s
+/F-gs-font 7 7 SF
+0 setgray
+337.8 98 M
+(<<endl) s
+5 90 M
+(;) s
+18.6 82 M (49:) s
+35.4 82 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+69 82 M
+("\343\\200\\200\343\\200\\200\343\\200\\200\357\274\\217\357\277\243\357\277\243\357\277\243\343\\203\275") s
+/F-gs-font 7 7 SF
+0 setgray
+279 82 M
+(<<endl;) s
+18.6 74 M (50:) s
+35.4 74 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+69 74 M
+("\343\\200\\200\343\\200\\200\357\274\\217\357\274\\217\343\\203\276\357\275\277\)\)\357\276\\230\)i\357\274\274") s
+/F-gs-font 7 7 SF
+0 setgray
+295.8 74 M
+(<<endl;) s
+18.6 66 M (51:) s
+35.4 66 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+69 66 M
+("\343\\200\\200 /\\"\345\275\241`\343\\203\276\357\276\\204\357\275\277\357\276\\202\343\\203\\216\343\\203\\237\357\275\\234") s
+/F-gs-font 7 7 SF
+0 setgray
+337.8 66 M
+(<<endl) s
+5 58 M
+(;) s
+18.6 50 M (52:) s
+35.4 50 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+69 50 M
+("\343\\200\\200\357\275\\234\345\275\241\343\\200\\200 _ \357\274\277\343\\200\\200 \357\276\\220\357\275\\234") s
+/F-gs-font 7 7 SF
+0 setgray
+308.4 50 M
+(<<endl;) s
+18.6 42 M (53:) s
+35.4 42 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+69 42 M
+("\343\\200\\200 \357\276\\232\345\275\241 \357\274\277_\343\\200\\200 \357\274\277\343\\203\275/") s
+/F-gs-font 7 7 SF
+0 setgray
+262.2 42 M
+(<<endl;) s
+18.6 34 M (54:) s
+35.4 34 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+69 34 M
+("\343\\200\\200\(6\357\275\262\343\\200\\200\343\\202\243o\343\\200\\201 \357\275\250o\357\275\244\342\\210\245") s
+/F-gs-font 7 7 SF
+0 setgray
+300 34 M
+(<<endl;) s
+18.6 26 M (55:) s
+35.4 26 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+69 26 M
+("\343\\200\\200\343\\203\275|\343\\200\\200\357\275\244\357\274\277\357\276\\211 i\357\275\244_ \357\275\\234") s
+/F-gs-font 7 7 SF
+0 setgray
+287.4 26 M
+(<<endl;) s
+18.6 18 M (56:) s
+35.4 18 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+69 18 M
+("\343\\200\\200 \357\275\\234\357\274\277\343\\200\\200r\357\275\244_\357\275\\202\343\\203\275/") s
+/F-gs-font 7 7 SF
+0 setgray
+270.6 18 M
+(<<endl;) s
+18.6 10 M (57:) s
+35.4 10 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+69 10 M
+("\357\274\277\357\274\\217r\344\270\\211\357\276\\220D\343\\203\274-\342\\206\\222\343\\202\275") s
+/F-gs-font 7 7 SF
+0 setgray
+266.4 10 M
+(<<endl;  ) s
+18.6 2 M (58:) s
+35.4 2 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+69 2 M
+("\343\\200\\200|\357\275\\234^ rj \357\274\277\\"\343\\203\\216-\343\\200\\201") s
+/F-gs-font 7 7 SF
+0 setgray
+266.4 2 M
+(<<endl;) s
+390.6 490 M (59:) s
+407.4 490 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+441 490 M
+("\343\\200\\200`\357\276\\211\343\\200\\200 \)\343\\203\275_/|\357\274\274\343\\200\\200\343\\203\275") s
+/F-gs-font 7 7 SF
+0 setgray
+676.2 490 M
+(<<endl;) s
+390.6 482 M (60:) s
+407.4 482 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+441 482 M
+("\343\\200\\200\342\\210\247 _\342\\210\247 /\343\\203\275|\343\\200\\200\343\\203\275 |") s
+/F-gs-font 7 7 SF
+0 setgray
+655.2 482 M
+(<<endl;) s
+390.6 474 M (61:) s
+407.4 474 M
+(  ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+415.8 474 M
+(//sleep\(3\);) s
+/F-gs-font 7 7 SF
+390.6 466 M (62:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+407.4 466 M
+(}) s
+390.6 458 M (63:) s
+390.6 450 M (64:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+407.4 450 M
+(void) s
+/F-gs-font 7 7 SF
+0 setgray
+424.2 450 M
+( ) s
+/Courier-Bold 7 7 SUF
+0 0 1 setrgbcolor
+428.4 450 M
+(colombia) s
+/F-gs-font 7 7 SF
+0 setgray
+462 450 M
+(\(string answer\){) s
+390.6 442 M (65:) s
+390.6 434 M (66:) s
+390.6 426 M (67:) s
+407.4 426 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+441 426 M
+("\343\\200\\200 \343\\200\\200 \343\\200\\200 \343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\343) s
+377 418 M
+(\\200\\200\343\\200\\200\343\\200\\200 \343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\343\\200) s
+377 410 M
+(\\200\343\\200\\200\343\\200\\200\343\\200\\200 \343\\200\\200\343\\200\\200\343\\200\\200 ,.\343\\201\270") s
+/F-gs-font 7 7 SF
+0 setgray
+666.8 410 M
+(<<endl;) s
+390.6 402 M (68:) s
+407.4 402 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+441 402 M
+("\343\\200\\200\343\\200\\200___ \343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\343) s
+377 394 M
+(\\200\\200\343\\200\\200 \343\\200\\200 \343\\200\\200 \343\\200\\200 \343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\343) s
+377 386 M
+(\\200\\200 \343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\357\276\\221\343\\200\\200\343\\200\\200i") s
+/F-gs-font 7 7 SF
+0 setgray
+675.2 386 M
+(<<endl;) s
+390.6 378 M (69:) s
+407.4 378 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+441 378 M
+("\343\\200\\214 \357\276\\213_i\343\\200\\211\343\\200\\200\343\\200\\200\343\\200\\200 \343\\200\\200 \343) s
+377 370 M
+(\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200 \343\\200\\200\343\\200\\200\343\\200\\200\343\\200) s
+377 362 M
+(\\200\343\\200\\200\343\\200\\200 \343\\200\\200\343\\200\\200\343\\200\\200 \343\\202\\235\343\\200\\200\343\\200\\210") s
+/F-gs-font 7 7 SF
+0 setgray
+708.8 362 M
+(<<endl;) s
+390.6 354 M (70:) s
+407.4 354 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+441 354 M
+("\357\276\\204\343\\200\\200\343\\203\\216 \343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\343\\200) s
+377 346 M
+(\\200\343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\343) s
+377 338 M
+(\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200 \343\\200\\200\343\\200\\200\343\\200\\200i\343\\203\\213\(\(\)") s
+/F-gs-font 7 7 SF
+0 setgray
+738.2 338 M
+() s
+377 330 M
+(<<endl;) s
+390.6 322 M (71:) s
+407.4 322 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+441 322 M
+("i \343\\200\\200{ \343\\200\\200 \343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\343) s
+377 314 M
+(\\200\\200\343\\200\\200 \343\\200\\200\343\\200\\200\343\\200\\200\357\274\277\357\274\277\357\274\277_ \343\\200\\200 \343\\200\\200\343\\200\\200\343) s
+377 306 M
+(\\200\\200\343\\200\\200\343\\200\\200| \343\\200\\200\343\\203\275") s
+/F-gs-font 7 7 SF
+0 setgray
+561.8 306 M
+(<<endl;) s
+390.6 298 M (72:) s
+407.4 298 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+441 298 M
+("i\343\\200\\200\343\\200\\200i\343\\200\\200\343\\200\\200\343\\200\\200 \343\\200\\200\343\\200\\200\343) s
+377 290 M
+(\\200\\200\343\\200\\200\343\\200\\200 \343\\200\\200\357\274\\217__,\343\\200\\200 , \342\\200\\220-\357\274\274  \343\\200\\200  \343) s
+377 282 M
+(\\200\\200 \343\\200\\200i  \343\\200\\200}") s
+/F-gs-font 7 7 SF
+0 setgray
+511.4 282 M
+(<<endl;) s
+390.6 274 M (73:) s
+407.4 274 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+441 274 M
+("|\343\\200\\200\343\\200\\200 i\343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\343) s
+377 266 M
+(\\200\\200 \343\\200\\200\343\\200\\200\357\274\\217\357\274\\210\342\\227\\217\) \343\\200\\200 \( \342\\227\\217 \) \357\274\274\343\\200\\200) s
+377 258 M
+(\343\\200\\200\343\\200\\200   {\357\275\244\343\\200\\200 \316\273") s
+/F-gs-font 7 7 SF
+0 setgray
+536.6 258 M
+(<<endl;) s
+390.6 250 M (74:) s
+407.4 250 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+441 250 M
+("\343\\200\\200\343\\203\\210\357\274\\215\342\\224\244.\343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\343) s
+377 242 M
+(\\200\\200  \343\\200\\200\357\274\\217 \343\\200\\200 \357\274\\210__\344\272\272__\357\274\\211  \343\\200\\200\357\274\274\343\\200\\200\343\\200) s
+377 234 M
+(\\200 ,\343\\203\\216\343\\200\\200\357\277\243,!") s
+/F-gs-font 7 7 SF
+0 setgray
+503 234 M
+(<<endl;) s
+390.6 226 M (75:) s
+407.4 226 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+441 226 M
+("\343\\200\\200i\343\\200\\200\343\\200\\200\343\\200\\200\343\\202\\235\357\275\244_ \343\\200\\200\343\\200\\200) s
+377 218 M
+(\343\\200\\200\343\\200\\200|\343\\200\\200\343\\200\\200\343\\200\\200  \302\264\357\277\243` \343\\200\\200 \343\\200\\200 \343\\200\\200|\343) s
+377 210 M
+(\\200\\200,. '\302\264\357\276\\212\343\\200\\200,!") s
+/F-gs-font 7 7 SF
+0 setgray
+511.4 210 M
+(<<endl;) s
+390.6 202 M (76:) s
+407.4 202 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+441 202 M
+(".\343\\200\\200\343\\203\275\343\\200\\201 \343\\200\\200\343\\200\\200\343\\200\\200\357\275\\200`\343\\200\\200) s
+377 194 M
+(\357\275\244,__\357\274\274 \343\\200\\200\343\\200\\200 \343\\200\\200 \343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200 \357\274\\217\\"\343) s
+377 186 M
+(\\200\\200\357\274\274 \343\\200\\200\357\274\\217") s
+/F-gs-font 7 7 SF
+0 setgray
+494.6 186 M
+(<<endl;) s
+390.6 178 M (77:) s
+407.4 178 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+441 178 M
+("\343\\200\\200\343\\200\\200\343\\200\\200\357\274\274\343\\203\\216\343\\200\\200\357\276\\211\343\\200\\200\343\\200) s
+377 170 M
+(\\200\343\\200\\200\357\276\\212\357\277\243r/:::r\342\\200\\225--\342\\200\\225/::\357\274\\227\343\\200\\200\343\\200\\200 \357\276\\211\343) s
+377 162 M
+(\\200\\200\343\\200\\200   \357\274\\217") s
+/F-gs-font 7 7 SF
+0 setgray
+490.4 162 M
+(<<endl;) s
+390.6 154 M (78:) s
+407.4 154 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+441 154 M
+("\343\\200\\200 \343\\200\\200\343\\200\\200 \343\\203\275_\343\\200\\200\343\\200\\200\343\\200\\200\343\\200) s
+377 146 M
+(\\200\343\\200\\200\343\\200\\200\343\\203\275::\343\\200\\210'::. :'|::/        /\343\\200\\200\343\\200\\200\343\\200\\200) s
+377 138 M
+(,.") s
+/F-gs-font 7 7 SF
+0 setgray
+389.6 138 M
+(<<endl;) s
+390.6 130 M (79:) s
+407.4 130 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+441 130 M
+("\343\\200\\200         `\357\275\260 \357\275\244\343\\200\\200     \357\274\274\343\\203\275::. ;::\357\274\\232|/\343\\200) s
+377 122 M
+(\\200  \343\\200\\200\357\275\\222'\\"") s
+/F-gs-font 7 7 SF
+0 setgray
+482 122 M
+(<<endl;) s
+390.6 114 M (80:) s
+407.4 114 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+441 114 M
+("\343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\357\274\\217\357\277\243\344\272\\214\344\272\\214\344\272) s
+377 106 M
+(\\214\344\272\\214\344\272\\214\344\272\\214\344\272\\214\344\272\\214\344\272\\214\344\272\\214\344\272\\214\344\272\\214\344\272\\214\344\272\\214\344\272\\214\344\272\\214\343) s
+377 98 M
+(\\203\275") s
+/F-gs-font 7 7 SF
+0 setgray
+402.2 98 M
+(<<endl;) s
+390.6 90 M (81:) s
+407.4 90 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+441 90 M
+("          | \347\255\\224 |           ") s
+/F-gs-font 7 7 SF
+0 setgray
+579.6 90 M
+(<<answer<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+621.6 90 M
+("                \342\\224\\202|) s
+377 82 M
+(") s
+/F-gs-font 7 7 SF
+0 setgray
+381.2 82 M
+(<<endl;) s
+390.6 74 M (82:) s
+407.4 74 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+441 74 M
+("\343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\343\\200\\200\357\274\274\357\274\277\344\272\\214\344\272\\214\344\272\\214) s
+377 66 M
+(\344\272\\214\344\272\\214\344\272\\214\344\272\\214\344\272\\214\344\272\\214\344\272\\214\344\272\\214\344\272\\214\344\272\\214\344\272\\214\344\272\\214\344\272\\214\343\\203) s
+377 58 M
+(\\216") s
+/F-gs-font 7 7 SF
+0 setgray
+398 58 M
+(<<endl;) s
+390.6 50 M (83:) s
+407.4 50 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+441 50 M
+("") s
+/F-gs-font 7 7 SF
+0 setgray
+449.4 50 M
+(<<endl;) s
+390.6 42 M (84:) s
+407.4 42 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+441 42 M
+("") s
+/F-gs-font 7 7 SF
+0 setgray
+449.4 42 M
+(<<endl;) s
+390.6 34 M (85:) s
+407.4 34 M
+(  ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+415.8 34 M
+(//sleep\(3\);) s
+/F-gs-font 7 7 SF
+390.6 26 M (86:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+407.4 26 M
+(}) s
+390.6 18 M (87:) s
+390.6 10 M (88:) s
+390.6 2 M (89:) s
+_R
+S
+%%Page: (2) 2
+%%BeginPageSetup
+_S
+90 rotate
+24 -574 translate
+/pagenum 2 def
+/fname (server.cpp) def
+/fdir (.) def
+/ftail (server.cpp) def
+% User defined strings:
+/pagenumstr (2) def
+/moddatestr (05/23/17) def
+/modtimestr (12:10:08) def
+/user_header_p false def
+/user_footer_p false def
+%%EndPageSetup
+column_lines
+do_header
+18.6 490 M (90:) s
+18.6 482 M (91:) s
+35.4 482 M
+(ostream& ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+73.2 482 M
+(operator) s
+/F-gs-font 7 7 SF
+0 setgray
+106.8 482 M
+(<<\(ostream& os, ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+174 482 M
+(const) s
+/F-gs-font 7 7 SF
+0 setgray
+195 482 M
+( Point& p\)) s
+18.6 474 M (92:) s
+35.4 474 M
+({) s
+18.6 466 M (93:) s
+35.4 466 M
+(        string s = p;) s
+18.6 458 M (94:) s
+35.4 458 M
+(        os << s;) s
+18.6 450 M (95:) s
+35.4 450 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+69 450 M
+(return) s
+/F-gs-font 7 7 SF
+0 setgray
+94.2 450 M
+( os;) s
+18.6 442 M (96:) s
+35.4 442 M
+(}) s
+18.6 434 M (97:) s
+18.6 426 M (98:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+35.4 426 M
+(void) s
+/F-gs-font 7 7 SF
+0 setgray
+52.2 426 M
+( ) s
+/Courier-Bold 7 7 SUF
+0 0 1 setrgbcolor
+56.4 426 M
+(assign_stringtochar) s
+/F-gs-font 7 7 SF
+0 setgray
+136.2 426 M
+(\(string input, ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+199.2 426 M
+(char) s
+/F-gs-font 7 7 SF
+0 setgray
+216 426 M
+( *output\){) s
+18.6 418 M (99:) s
+35.4 418 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+43.8 418 M
+(for) s
+/F-gs-font 7 7 SF
+0 setgray
+56.4 418 M
+(\() s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+60.6 418 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+73.2 418 M
+( i=0;i<DATASIZE;i++\){) s
+14.4 410 M (100:) s
+35.4 410 M
+(    output[i]=input[i];) s
+14.4 402 M (101:) s
+35.4 402 M
+(  }) s
+14.4 394 M (102:) s
+35.4 394 M
+(}) s
+14.4 386 M (103:) s
+14.4 378 M (104:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+35.4 378 M
+(void) s
+/F-gs-font 7 7 SF
+0 setgray
+52.2 378 M
+( ) s
+/Courier-Bold 7 7 SUF
+0 0 1 setrgbcolor
+56.4 378 M
+(assign_chartostring) s
+/F-gs-font 7 7 SF
+0 setgray
+136.2 378 M
+(\() s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+140.4 378 M
+(char) s
+/F-gs-font 7 7 SF
+0 setgray
+157.2 378 M
+( *input, string &output\){) s
+14.4 370 M (105:) s
+35.4 370 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+43.8 370 M
+(for) s
+/F-gs-font 7 7 SF
+0 setgray
+56.4 370 M
+(\() s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+60.6 370 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+73.2 370 M
+( i=0;i<DATASIZE;i++\){) s
+14.4 362 M (106:) s
+35.4 362 M
+(    output[i]=input[i];) s
+14.4 354 M (107:) s
+35.4 354 M
+(  }) s
+14.4 346 M (108:) s
+35.4 346 M
+(}) s
+14.4 338 M (109:) s
+14.4 330 M (110:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+35.4 330 M
+(void) s
+/F-gs-font 7 7 SF
+0 setgray
+52.2 330 M
+( ) s
+/Courier-Bold 7 7 SUF
+0 0 1 setrgbcolor
+56.4 330 M
+(assign_char) s
+/F-gs-font 7 7 SF
+0 setgray
+102.6 330 M
+(\() s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+106.8 330 M
+(char) s
+/F-gs-font 7 7 SF
+0 setgray
+123.6 330 M
+( *input, ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+161.4 330 M
+(char) s
+/F-gs-font 7 7 SF
+0 setgray
+178.2 330 M
+( *output\){) s
+14.4 322 M (111:) s
+35.4 322 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+43.8 322 M
+(for) s
+/F-gs-font 7 7 SF
+0 setgray
+56.4 322 M
+(\() s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+60.6 322 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+73.2 322 M
+( i=0;i<DATASIZE;i++\){) s
+14.4 314 M (112:) s
+35.4 314 M
+(    output[i]=input[i];) s
+14.4 306 M (113:) s
+35.4 306 M
+(  }) s
+14.4 298 M (114:) s
+35.4 298 M
+(}) s
+14.4 290 M (115:) s
+14.4 282 M (116:) s
+14.4 274 M (117:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+35.4 274 M
+(void) s
+/F-gs-font 7 7 SF
+0 setgray
+52.2 274 M
+( ) s
+/Courier-Bold 7 7 SUF
+0 0 1 setrgbcolor
+56.4 274 M
+(GFprocess) s
+/F-gs-font 7 7 SF
+0 setgray
+94.2 274 M
+(\(ConsoleBoard &board\){      ) s
+14.4 266 M (118:) s
+35.4 266 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+43.8 266 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+52.2 266 M
+(\(board.countDisc\(BLACK\)>board.countDisc\(WHITE\)\){) s
+14.4 258 M (119:) s
+35.4 258 M
+(    cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+77.4 258 M
+("WINER is BLACK") s
+/F-gs-font 7 7 SF
+0 setgray
+144.6 258 M
+(<<endl;) s
+14.4 250 M (120:) s
+35.4 250 M
+(  }) s
+14.4 242 M (121:) s
+35.4 242 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+43.8 242 M
+(else) s
+/F-gs-font 7 7 SF
+0 setgray
+60.6 242 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+64.8 242 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+73.2 242 M
+(\(board.countDisc\(BLACK\)<board.countDisc\(WHITE\)\){) s
+14.4 234 M (122:) s
+35.4 234 M
+(    cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+77.4 234 M
+("WINER is WHITE") s
+/F-gs-font 7 7 SF
+0 setgray
+144.6 234 M
+(<<endl;   ) s
+14.4 226 M (123:) s
+35.4 226 M
+(  }) s
+14.4 218 M (124:) s
+35.4 218 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+43.8 218 M
+(else) s
+/F-gs-font 7 7 SF
+0 setgray
+60.6 218 M
+({) s
+14.4 210 M (125:) s
+35.4 210 M
+(    cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+77.4 210 M
+("DRAW") s
+/F-gs-font 7 7 SF
+0 setgray
+102.6 210 M
+(<<endl;) s
+14.4 202 M (126:) s
+35.4 202 M
+(  }) s
+14.4 194 M (127:) s
+35.4 194 M
+(  cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+77.4 194 M
+("----------------Game Finish----------------") s
+/F-gs-font 7 7 SF
+0 setgray
+266.4 194 M
+( << endl;) s
+14.4 186 M (128:) s
+35.4 186 M
+(  ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+43.8 186 M
+(//**********************\351\\200\\232\344\277\241\343\\203\\235\343\\202\244\343\\203\263\343\\203\\210**********) s
+5 178 M
+(*********) s
+/F-gs-font 7 7 SF
+14.4 170 M (129:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 170 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+43.8 170 M
+(char) s
+/F-gs-font 7 7 SF
+0 setgray
+60.6 170 M
+( send_data[DATASIZE];) s
+14.4 162 M (130:) s
+35.4 162 M
+(  send_data[0]=) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+98.4 162 M
+('0') s
+/F-gs-font 7 7 SF
+0 setgray
+111 162 M
+(;) s
+14.4 154 M (131:) s
+35.4 154 M
+(  send_data[1]=) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+98.4 154 M
+('0') s
+/F-gs-font 7 7 SF
+0 setgray
+111 154 M
+(;) s
+14.4 146 M (132:) s
+35.4 146 M
+(  send_data[2]=) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+98.4 146 M
+('0') s
+/F-gs-font 7 7 SF
+0 setgray
+111 146 M
+(;) s
+14.4 138 M (133:) s
+35.4 138 M
+(  send_data[3]=GFFLAG;) s
+14.4 130 M (134:) s
+35.4 130 M
+(  ) s
+14.4 122 M (135:) s
+35.4 122 M
+(  send\(dstSocket[0], send_data,strlen\(send_data\)+1,0\);) s
+14.4 114 M (136:) s
+35.4 114 M
+(  send\(dstSocket[1], send_data,strlen\(send_data\)+1,0\);) s
+14.4 106 M (137:) s
+35.4 106 M
+(}) s
+14.4 98 M (138:) s
+14.4 90 M (139:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+35.4 90 M
+(void) s
+/F-gs-font 7 7 SF
+0 setgray
+52.2 90 M
+( ) s
+/Courier-Bold 7 7 SUF
+0 0 1 setrgbcolor
+56.4 90 M
+(time_out) s
+/F-gs-font 7 7 SF
+0 setgray
+90 90 M
+(\(Color current_color\){) s
+14.4 82 M (140:) s
+14.4 74 M (141:) s
+35.4 74 M
+(  string in;) s
+14.4 66 M (142:) s
+14.4 58 M (143:) s
+35.4 58 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+43.8 58 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+52.2 58 M
+(\(current_color == BLACK\){) s
+14.4 50 M (144:) s
+35.4 50 M
+(    cout  << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+90 50 M
+("time out") s
+/F-gs-font 7 7 SF
+0 setgray
+132 50 M
+( <<endl;) s
+14.4 42 M (145:) s
+35.4 42 M
+(    cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+85.8 42 M
+("LOSER is BLACK ") s
+/F-gs-font 7 7 SF
+0 setgray
+157.2 42 M
+(<<endl;) s
+14.4 34 M (146:) s
+35.4 34 M
+(    cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+85.8 34 M
+("please input any character and push Enter key") s
+/F-gs-font 7 7 SF
+0 setgray
+283.2 34 M
+(<<endl;) s
+14.4 26 M (147:) s
+35.4 26 M
+(    cin>>in;) s
+14.4 18 M (148:) s
+35.4 18 M
+(  }) s
+14.4 10 M (149:) s
+35.4 10 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+43.8 10 M
+(else) s
+/F-gs-font 7 7 SF
+0 setgray
+60.6 10 M
+({) s
+14.4 2 M (150:) s
+35.4 2 M
+(    cout  << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+90 2 M
+(" time out") s
+/F-gs-font 7 7 SF
+0 setgray
+136.2 2 M
+( <<endl;) s
+386.4 490 M (151:) s
+407.4 490 M
+(    cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+457.8 490 M
+("LOSER is WHITE") s
+/F-gs-font 7 7 SF
+0 setgray
+525 490 M
+(<<endl;) s
+386.4 482 M (152:) s
+407.4 482 M
+(    cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+457.8 482 M
+("please input any character and push Enter key") s
+/F-gs-font 7 7 SF
+0 setgray
+655.2 482 M
+(<<endl;) s
+386.4 474 M (153:) s
+407.4 474 M
+(    cin>>in;) s
+386.4 466 M (154:) s
+407.4 466 M
+(  }) s
+386.4 458 M (155:) s
+407.4 458 M
+(  ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+415.8 458 M
+(//**********************\351\\200\\232\344\277\241\343\\203\\235\343\\202\244\343\\203\263\343\\203\\210**********) s
+377 450 M
+(*********) s
+/F-gs-font 7 7 SF
+386.4 442 M (156:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+407.4 442 M
+(  ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+415.8 442 M
+(//client \343\\201\257\345\\213\\235\346\\211\\213\343\\201\253\347\265\\202\344\272\\206?) s
+/F-gs-font 7 7 SF
+386.4 434 M (157:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+407.4 434 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+415.8 434 M
+(char) s
+/F-gs-font 7 7 SF
+0 setgray
+432.6 434 M
+( send_data[DATASIZE];) s
+386.4 426 M (158:) s
+407.4 426 M
+(  send_data[0]=) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+470.4 426 M
+('0') s
+/F-gs-font 7 7 SF
+0 setgray
+483 426 M
+(;) s
+386.4 418 M (159:) s
+407.4 418 M
+(  send_data[1]=) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+470.4 418 M
+('0') s
+/F-gs-font 7 7 SF
+0 setgray
+483 418 M
+(;) s
+386.4 410 M (160:) s
+407.4 410 M
+(  send_data[2]=) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+470.4 410 M
+('0') s
+/F-gs-font 7 7 SF
+0 setgray
+483 410 M
+(;) s
+386.4 402 M (161:) s
+407.4 402 M
+(  send_data[3]=GFFLAG;) s
+386.4 394 M (162:) s
+407.4 394 M
+(  ) s
+386.4 386 M (163:) s
+407.4 386 M
+(  send\(dstSocket[0], send_data,strlen\(send_data\)+1,0\);) s
+386.4 378 M (164:) s
+407.4 378 M
+(  send\(dstSocket[1], send_data,strlen\(send_data\)+1,0\);) s
+386.4 370 M (165:) s
+407.4 370 M
+(  exit\(0\);) s
+386.4 362 M (166:) s
+407.4 362 M
+(}) s
+386.4 354 M (167:) s
+386.4 346 M (168:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+407.4 346 M
+(void) s
+/F-gs-font 7 7 SF
+0 setgray
+424.2 346 M
+( ) s
+/Courier-Bold 7 7 SUF
+0 0 1 setrgbcolor
+428.4 346 M
+(against_rules) s
+/F-gs-font 7 7 SF
+0 setgray
+483 346 M
+(\(Color current_color\){) s
+386.4 338 M (169:) s
+386.4 330 M (170:) s
+407.4 330 M
+(  string in;) s
+386.4 322 M (171:) s
+386.4 314 M (172:) s
+407.4 314 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+415.8 314 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+424.2 314 M
+(\(current_color == BLACK\){) s
+386.4 306 M (173:) s
+407.4 306 M
+(    cout  << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+462 306 M
+("you against the rule") s
+/F-gs-font 7 7 SF
+0 setgray
+554.4 306 M
+( <<endl;) s
+386.4 298 M (174:) s
+407.4 298 M
+(    cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+457.8 298 M
+("LOSER is BLACK ") s
+/F-gs-font 7 7 SF
+0 setgray
+529.2 298 M
+(<<endl;) s
+386.4 290 M (175:) s
+407.4 290 M
+(    cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+457.8 290 M
+("please input any character and push Enter key") s
+/F-gs-font 7 7 SF
+0 setgray
+655.2 290 M
+(<<endl;) s
+386.4 282 M (176:) s
+407.4 282 M
+(    cin>>in;) s
+386.4 274 M (177:) s
+407.4 274 M
+(  }) s
+386.4 266 M (178:) s
+407.4 266 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+415.8 266 M
+(else) s
+/F-gs-font 7 7 SF
+0 setgray
+432.6 266 M
+({) s
+386.4 258 M (179:) s
+407.4 258 M
+(    cout  << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+462 258 M
+("you against the rule") s
+/F-gs-font 7 7 SF
+0 setgray
+554.4 258 M
+( <<endl;) s
+386.4 250 M (180:) s
+407.4 250 M
+(    cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+457.8 250 M
+("LOSER is WHITE") s
+/F-gs-font 7 7 SF
+0 setgray
+525 250 M
+(<<endl;) s
+386.4 242 M (181:) s
+407.4 242 M
+(    cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+457.8 242 M
+("please input any character and push Enter key") s
+/F-gs-font 7 7 SF
+0 setgray
+655.2 242 M
+(<<endl;) s
+386.4 234 M (182:) s
+407.4 234 M
+(    cin>>in;) s
+386.4 226 M (183:) s
+407.4 226 M
+(  }) s
+386.4 218 M (184:) s
+407.4 218 M
+(  ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+415.8 218 M
+(//**********************\351\\200\\232\344\277\241\343\\203\\235\343\\202\244\343\\203\263\343\\203\\210**********) s
+377 210 M
+(*********) s
+/F-gs-font 7 7 SF
+386.4 202 M (185:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+407.4 202 M
+(  ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+415.8 202 M
+(//client \343\\201\257\345\\213\\235\346\\211\\213\343\\201\253\347\265\\202\344\272\\206?) s
+/F-gs-font 7 7 SF
+386.4 194 M (186:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+407.4 194 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+415.8 194 M
+(char) s
+/F-gs-font 7 7 SF
+0 setgray
+432.6 194 M
+( send_data[DATASIZE];) s
+386.4 186 M (187:) s
+407.4 186 M
+(  send_data[0]=) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+470.4 186 M
+('0') s
+/F-gs-font 7 7 SF
+0 setgray
+483 186 M
+(;) s
+386.4 178 M (188:) s
+407.4 178 M
+(  send_data[1]=) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+470.4 178 M
+('0') s
+/F-gs-font 7 7 SF
+0 setgray
+483 178 M
+(;) s
+386.4 170 M (189:) s
+407.4 170 M
+(  send_data[2]=) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+470.4 170 M
+('0') s
+/F-gs-font 7 7 SF
+0 setgray
+483 170 M
+(;) s
+386.4 162 M (190:) s
+407.4 162 M
+(  send_data[3]=GFFLAG;) s
+386.4 154 M (191:) s
+407.4 154 M
+(  ) s
+386.4 146 M (192:) s
+407.4 146 M
+(  send\(dstSocket[BLACKSOCKET], send_data,strlen\(send_data\)+1,0\);) s
+386.4 138 M (193:) s
+407.4 138 M
+(  send\(dstSocket[WHITESOCKET], send_data,strlen\(send_data\)+1,0\);) s
+386.4 130 M (194:) s
+407.4 130 M
+(  exit\(0\);) s
+386.4 122 M (195:) s
+407.4 122 M
+(}) s
+386.4 114 M (196:) s
+386.4 106 M (197:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+407.4 106 M
+(bool) s
+/F-gs-font 7 7 SF
+0 setgray
+424.2 106 M
+( ) s
+/Courier-Bold 7 7 SUF
+0 0 1 setrgbcolor
+428.4 106 M
+(attack_chance) s
+/F-gs-font 7 7 SF
+0 setgray
+483 106 M
+(\() s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+487.2 106 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+499.8 106 M
+( current_color, ConsoleBoard &board, string premove\){) s
+386.4 98 M (198:) s
+386.4 90 M (199:) s
+407.4 90 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+415.8 90 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+424.2 90 M
+(\(current_color == BLACK\){) s
+386.4 82 M (200:) s
+407.4 82 M
+(    cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+457.8 82 M
+("So, Black, What number?") s
+/F-gs-font 7 7 SF
+0 setgray
+562.8 82 M
+(<<endl;) s
+386.4 74 M (201:) s
+386.4 66 M (202:) s
+407.4 66 M
+(  }) s
+386.4 58 M (203:) s
+407.4 58 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+415.8 58 M
+(else) s
+/F-gs-font 7 7 SF
+0 setgray
+432.6 58 M
+({) s
+386.4 50 M (204:) s
+407.4 50 M
+(    cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+457.8 50 M
+("So, White, What number?") s
+/F-gs-font 7 7 SF
+0 setgray
+562.8 50 M
+(<<endl;) s
+386.4 42 M (205:) s
+407.4 42 M
+(  }) s
+386.4 34 M (206:) s
+386.4 26 M (207:) s
+386.4 18 M (208:) s
+407.4 18 M
+(  string in\(DATASIZE,0\);) s
+386.4 10 M (209:) s
+407.4 10 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+415.8 10 M
+(char) s
+/F-gs-font 7 7 SF
+0 setgray
+432.6 10 M
+( buffer[BUFFER_SIZE];) s
+386.4 2 M (210:) s
+407.4 2 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+415.8 2 M
+(char) s
+/F-gs-font 7 7 SF
+0 setgray
+432.6 2 M
+( send_data[DATASIZE];) s
+_R
+S
+%%Page: (3) 3
+%%BeginPageSetup
+_S
+90 rotate
+24 -574 translate
+/pagenum 3 def
+/fname (server.cpp) def
+/fdir (.) def
+/ftail (server.cpp) def
+% User defined strings:
+/pagenumstr (3) def
+/moddatestr (05/23/17) def
+/modtimestr (12:10:08) def
+/user_header_p false def
+/user_footer_p false def
+%%EndPageSetup
+column_lines
+do_header
+14.4 490 M (211:) s
+14.4 482 M (212:) s
+14.4 474 M (213:) s
+14.4 466 M (214:) s
+35.4 466 M
+(  ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+43.8 466 M
+(//**********************\351\\200\\232\344\277\241\343\\203\\235\343\\202\244\343\\203\263\343\\203\\210**********) s
+5 458 M
+(*********) s
+/F-gs-font 7 7 SF
+14.4 450 M (215:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+14.4 442 M (216:) s
+35.4 442 M
+(  premove[3] = ACFLAG;) s
+14.4 434 M (217:) s
+35.4 434 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+43.8 434 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+52.2 434 M
+(\(flagforPS ==true\){) s
+14.4 426 M (218:) s
+35.4 426 M
+(    premove[3]= premove[3] | PSFLAG;) s
+14.4 418 M (219:) s
+35.4 418 M
+(  }) s
+14.4 410 M (220:) s
+35.4 410 M
+(  assign_stringtochar\(premove, send_data\);) s
+14.4 402 M (221:) s
+35.4 402 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+43.8 402 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+52.2 402 M
+(\(current_color==BLACK\){) s
+14.4 394 M (222:) s
+35.4 394 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+52.2 394 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+60.6 394 M
+(\(TIME_LIMIT == send\(dstSocket[BLACKSOCKET], send_data,strlen\(send_data\)+) s
+5 386 M
+(1,0\)\) time_out\(current_color\);) s
+14.4 378 M (223:) s
+35.4 378 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+52.2 378 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+60.6 378 M
+(\(TIME_LIMIT == recv\(dstSocket[BLACKSOCKET], buffer, BUFFER_SIZE, 0\)\) tim) s
+5 370 M
+(e_out\(current_color\);) s
+14.4 362 M (224:) s
+35.4 362 M
+(  }) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+48 362 M
+(else) s
+/F-gs-font 7 7 SF
+0 setgray
+64.8 362 M
+({) s
+14.4 354 M (225:) s
+35.4 354 M
+(     ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+56.4 354 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+64.8 354 M
+(\(TIME_LIMIT == send\(dstSocket[WHITESOCKET], send_data,strlen\(send_data\)) s
+5 346 M
+(+1,0\)\) time_out\(current_color\);) s
+14.4 338 M (226:) s
+35.4 338 M
+(     ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+56.4 338 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+64.8 338 M
+(\(TIME_LIMIT == recv\(dstSocket[WHITESOCKET], buffer, BUFFER_SIZE, 0\)\) ti) s
+5 330 M
+(me_out\(current_color\);) s
+14.4 322 M (227:) s
+35.4 322 M
+(  }) s
+14.4 314 M (228:) s
+35.4 314 M
+(  assign_chartostring\(buffer, in\);) s
+14.4 306 M (229:) s
+35.4 306 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+69 306 M
+("revese Disk:") s
+/F-gs-font 7 7 SF
+0 setgray
+127.8 306 M
+(<<in<<endl;) s
+14.4 298 M (230:) s
+35.4 298 M
+(  ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+43.8 298 M
+(//****************************************************) s
+/F-gs-font 7 7 SF
+14.4 290 M (231:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+14.4 282 M (232:) s
+14.4 274 M (233:) s
+35.4 274 M
+(  ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+43.8 274 M
+(//debug) s
+/F-gs-font 7 7 SF
+14.4 266 M (234:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 266 M
+(  ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+43.8 266 M
+(//cout<<"char to string buffer0"<<buffer<<endl;) s
+/F-gs-font 7 7 SF
+14.4 258 M (235:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 258 M
+(  ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+43.8 258 M
+(//cout<<"char to string buffer1"<<buffer<<endl;) s
+/F-gs-font 7 7 SF
+14.4 250 M (236:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 250 M
+(  ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+43.8 250 M
+(//cout<<"char to string buffer2"<<buffer<<endl;) s
+/F-gs-font 7 7 SF
+14.4 242 M (237:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 242 M
+(  ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+43.8 242 M
+(//cout<<"char to string buffer3"<<hex<<\(int\)buffer<<endl;) s
+/F-gs-font 7 7 SF
+14.4 234 M (238:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 234 M
+(  ) s
+14.4 226 M (239:) s
+35.4 226 M
+(  Point p\(in\);) s
+14.4 218 M (240:) s
+14.4 210 M (241:) s
+35.4 210 M
+(  ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+43.8 210 M
+(//\343\\202\\202\343\\201\\227\346\\214\\207\345\256\\232\343\\201\276\343\\201\\231\343\\201\253\347\\233\270\346\\211\\213\343\\201) s
+5 202 M
+(\256\347\\237\263\343\\201\\214\343\\201\252\343\\201\\213\343\\201\243\343\\201\\237\343\\202\\211) s
+/F-gs-font 7 7 SF
+14.4 194 M (242:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 194 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+43.8 194 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+52.2 194 M
+(\(board.getColor\(p\) != \(-current_color\)\){) s
+14.4 186 M (243:) s
+35.4 186 M
+(    cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+77.4 186 M
+("Against the rules") s
+/F-gs-font 7 7 SF
+0 setgray
+157.2 186 M
+(<<endl;) s
+14.4 178 M (244:) s
+35.4 178 M
+(    against_rules\(current_color\);) s
+14.4 170 M (245:) s
+35.4 170 M
+(    }) s
+14.4 162 M (246:) s
+35.4 162 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+43.8 162 M
+(else) s
+/F-gs-font 7 7 SF
+0 setgray
+60.6 162 M
+({) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+64.8 162 M
+(//\347\\233\270\346\\211\\213\343\\201\256\347\\237\263\343\\201\\214\343\\201\\202\343\\201\243\343\\201\\237\343\\202\\211) s
+/F-gs-font 7 7 SF
+14.4 154 M (247:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 154 M
+(    colombia\(in\);) s
+14.4 146 M (248:) s
+35.4 146 M
+(    board.Reverse_disk\(p, current_color\);) s
+14.4 138 M (249:) s
+35.4 138 M
+(    assign_char\(buffer, send_data\);) s
+14.4 130 M (250:) s
+35.4 130 M
+(    send_data[3]=ARFLAG;) s
+14.4 122 M (251:) s
+35.4 122 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+52.2 122 M
+(//**********************\351\\200\\232\344\277\241\343\\203\\235\343\\202\244\343\\203\263\343\\203\\210********) s
+5 114 M
+(***********) s
+/F-gs-font 7 7 SF
+14.4 106 M (252:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 106 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+52.2 106 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+60.6 106 M
+(\(current_color==BLACK\){) s
+14.4 98 M (253:) s
+35.4 98 M
+(      ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+60.6 98 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+69 98 M
+(\(TIME_LIMIT == send\(dstSocket[WHITESOCKET], send_data,strlen\(send_data) s
+5 90 M
+(\)+1,0\)\) time_out\(current_color\);) s
+14.4 82 M (254:) s
+35.4 82 M
+(    }) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+56.4 82 M
+(else) s
+/F-gs-font 7 7 SF
+0 setgray
+73.2 82 M
+({) s
+14.4 74 M (255:) s
+35.4 74 M
+(      ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+60.6 74 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+69 74 M
+(\(TIME_LIMIT == send\(dstSocket[BLACKSOCKET], send_data,strlen\(send_data) s
+5 66 M
+(\)+1,0\)\) time_out\(current_color\);) s
+14.4 58 M (256:) s
+35.4 58 M
+(    }) s
+14.4 50 M (257:) s
+35.4 50 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+52.2 50 M
+(//****************************************************************) s
+/F-gs-font 7 7 SF
+14.4 42 M (258:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 42 M
+(  }) s
+14.4 34 M (259:) s
+35.4 34 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+43.8 34 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+52.2 34 M
+(\(board.isGameOver\(\)\){) s
+14.4 26 M (260:) s
+35.4 26 M
+(    board.print\(\);) s
+14.4 18 M (261:) s
+35.4 18 M
+(    cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+85.8 18 M
+("Black Disk:") s
+/F-gs-font 7 7 SF
+0 setgray
+140.4 18 M
+( << board.countDisc\(BLACK\) << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+266.4 18 M
+(" ") s
+/F-gs-font 7 7 SF
+0 setgray
+279 18 M
+(;) s
+14.4 10 M (262:) s
+35.4 10 M
+(    cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+85.8 10 M
+("White Disk:") s
+/F-gs-font 7 7 SF
+0 setgray
+140.4 10 M
+( << board.countDisc\(WHITE\) << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+266.4 10 M
+(" ") s
+/F-gs-font 7 7 SF
+0 setgray
+279 10 M
+(;) s
+14.4 2 M (263:) s
+35.4 2 M
+(    cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+85.8 2 M
+("Empty:") s
+/F-gs-font 7 7 SF
+0 setgray
+119.4 2 M
+( << board.countDisc\(EMPTY\) << endl;) s
+386.4 490 M (264:) s
+407.4 490 M
+(    GFprocess\(board\);) s
+386.4 482 M (265:) s
+407.4 482 M
+(  }) s
+386.4 474 M (266:) s
+407.4 474 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+415.8 474 M
+(return) s
+/F-gs-font 7 7 SF
+0 setgray
+441 474 M
+( true;) s
+386.4 466 M (267:) s
+407.4 466 M
+(}) s
+386.4 458 M (268:) s
+386.4 450 M (269:) s
+386.4 442 M (270:) s
+386.4 434 M (271:) s
+386.4 426 M (272:) s
+386.4 418 M (273:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+407.4 418 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+386.4 410 M (274:) s
+/Courier-Bold 7 7 SUF
+0 0 1 setrgbcolor
+407.4 410 M
+(main) s
+/F-gs-font 7 7 SF
+0 setgray
+424.2 410 M
+(\(\) {) s
+386.4 402 M (275:) s
+407.4 402 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+415.8 402 M
+(for) s
+/F-gs-font 7 7 SF
+0 setgray
+428.4 402 M
+(\() s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+432.6 402 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+445.2 402 M
+( i=0;i<PLAYERNUM;i++\){) s
+386.4 394 M (276:) s
+407.4 394 M
+(    dstAddrSize[i]  = ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+499.8 394 M
+(sizeof) s
+/F-gs-font 7 7 SF
+0 setgray
+525 394 M
+(\(dstAddr\);) s
+386.4 386 M (277:) s
+407.4 386 M
+(  }) s
+386.4 378 M (278:) s
+386.4 370 M (279:) s
+407.4 370 M
+(  ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+415.8 370 M
+(/************************************************************/) s
+/F-gs-font 7 7 SF
+0 setgray
+386.4 362 M (280:) s
+407.4 362 M
+(  ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+415.8 362 M
+(/* \347\\233\270\346\\211\\213\345\\205\\210\343\\202\242\343\\203\\211\343\\203\254\343\\202\271\343\\201\256\345\\205\245\345\\212\\233 ) s
+377 354 M
+(*/) s
+/F-gs-font 7 7 SF
+0 setgray
+386.4 346 M (281:) s
+407.4 346 M
+( ) s
+386.4 338 M (282:) s
+407.4 338 M
+(  ) s
+386.4 330 M (283:) s
+407.4 330 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+441 330 M
+("BLACK IP address :") s
+/F-gs-font 7 7 SF
+0 setgray
+525 330 M
+(;) s
+386.4 322 M (284:) s
+407.4 322 M
+(  cin>>ClientIP[BLACKSOCKET];) s
+386.4 314 M (285:) s
+386.4 306 M (286:) s
+407.4 306 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+441 306 M
+("BLACK port :") s
+/F-gs-font 7 7 SF
+0 setgray
+499.8 306 M
+(;) s
+386.4 298 M (287:) s
+407.4 298 M
+(  cin>>port[BLACKSOCKET];) s
+386.4 290 M (288:) s
+386.4 282 M (289:) s
+407.4 282 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+441 282 M
+("WHITE IP adrress :") s
+/F-gs-font 7 7 SF
+0 setgray
+525 282 M
+(;) s
+386.4 274 M (290:) s
+407.4 274 M
+(  cin>>ClientIP[WHITESOCKET];) s
+386.4 266 M (291:) s
+407.4 266 M
+(  ) s
+386.4 258 M (292:) s
+407.4 258 M
+(  cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+441 258 M
+("WHITE port :") s
+/F-gs-font 7 7 SF
+0 setgray
+499.8 258 M
+(;) s
+386.4 250 M (293:) s
+407.4 250 M
+(  cin>>port[WHITESOCKET];) s
+386.4 242 M (294:) s
+386.4 234 M (295:) s
+407.4 234 M
+(  ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+415.8 234 M
+(/************************************************************/) s
+/F-gs-font 7 7 SF
+0 setgray
+386.4 226 M (296:) s
+407.4 226 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+415.8 226 M
+(for) s
+/F-gs-font 7 7 SF
+0 setgray
+428.4 226 M
+(\() s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+432.6 226 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+445.2 226 M
+( i=0;i<PLAYERNUM;i++\){) s
+386.4 218 M (297:) s
+407.4 218 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+424.2 218 M
+(/* sockaddr_in \346\247\\213\351\\200\240\344\275\\223\343\\201\256\343\\202\273\343\\203\\203\343\\203\\210 */) s
+/F-gs-font 7 7 SF
+0 setgray
+386.4 210 M (298:) s
+407.4 210 M
+(    memset\(&dstAddr[i], 0, ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+520.8 210 M
+(sizeof) s
+/F-gs-font 7 7 SF
+0 setgray
+546 210 M
+(\(dstAddr\)\);) s
+386.4 202 M (299:) s
+407.4 202 M
+(    dstAddr[i].sin_port = htons\(port[i]\);) s
+386.4 194 M (300:) s
+407.4 194 M
+(    dstAddr[i].sin_family = AF_INET;) s
+386.4 186 M (301:) s
+407.4 186 M
+(    dstAddr[i].sin_addr.s_addr = htonl\(INADDR_ANY\);) s
+386.4 178 M (302:) s
+407.4 178 M
+(    ) s
+386.4 170 M (303:) s
+407.4 170 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+424.2 170 M
+(/* \343\\202\275\343\\202\261\343\\203\\203\343\\203\\210\343\\201\256\347\\224\\237\346\\210\\220 */) s
+/F-gs-font 7 7 SF
+0 setgray
+386.4 162 M (304:) s
+407.4 162 M
+(    dstSocket[i] = socket\(AF_INET, SOCK_STREAM, 0\);) s
+386.4 154 M (305:) s
+386.4 146 M (306:) s
+407.4 146 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+424.2 146 M
+(/* \343\\202\275\343\\202\261\343\\203\\203\343\\203\\210\343\\201\256\343\\203\\220\343\\202\244\343\\203\263\343\\203\\211 */) s
+/F-gs-font 7 7 SF
+0 setgray
+386.4 138 M (307:) s
+407.4 138 M
+(    bind\(dstSocket[i], \() s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+508.2 138 M
+(struct) s
+/F-gs-font 7 7 SF
+0 setgray
+533.4 138 M
+( sockaddr *\) &dstAddr[i], ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+642.6 138 M
+(sizeof) s
+/F-gs-font 7 7 SF
+0 setgray
+667.8 138 M
+(\(dstAddr[i]\)\);) s
+386.4 130 M (308:) s
+386.4 122 M (309:) s
+407.4 122 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+424.2 122 M
+(/* \346\\216\245\347\266\\232\343\\201\256\350\250\261\345\\217\257 */) s
+/F-gs-font 7 7 SF
+0 setgray
+386.4 114 M (310:) s
+407.4 114 M
+(    listen\(dstSocket[i], 1\);) s
+386.4 106 M (311:) s
+386.4 98 M (312:) s
+407.4 98 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+424.2 98 M
+(/* \346\\216\245\347\266\\232\343\\201\256\345\\217\\227\344\273\\230\343\\201\\221 */) s
+/F-gs-font 7 7 SF
+0 setgray
+386.4 90 M (313:) s
+407.4 90 M
+(    printf\() s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+453.6 90 M
+("Waiting for connection ...\\n") s
+/F-gs-font 7 7 SF
+0 setgray
+579.6 90 M
+(\);) s
+386.4 82 M (314:) s
+407.4 82 M
+(    dstSocket[i] = accept\(dstSocket[i], \() s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+579.6 82 M
+(struct) s
+/F-gs-font 7 7 SF
+0 setgray
+604.8 82 M
+( sockaddr *\) &dstAddr[i], &dstA) s
+377 74 M
+(ddrSize[i]\);) s
+386.4 66 M (315:) s
+407.4 66 M
+(    printf\() s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+453.6 66 M
+("Connected from %s\\n") s
+/F-gs-font 7 7 SF
+0 setgray
+541.8 66 M
+(, inet_ntoa\(dstAddr[i].sin_addr\)\);) s
+386.4 58 M (316:) s
+386.4 50 M (317:) s
+407.4 50 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+424.2 50 M
+(/* \343\\203\\221\343\\202\261\343\\203\\203\343\\203\\210\345\\217\\227\344\277\241 */) s
+/F-gs-font 7 7 SF
+0 setgray
+386.4 42 M (318:) s
+407.4 42 M
+(    numrcv[i] = recv\(dstSocket[i], buffer, BUFFER_SIZE, 0\); ) s
+386.4 34 M (319:) s
+407.4 34 M
+(    cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+449.4 34 M
+("received:") s
+/F-gs-font 7 7 SF
+0 setgray
+495.6 34 M
+(<<buffer<<endl;) s
+386.4 26 M (320:) s
+407.4 26 M
+(    ) s
+386.4 18 M (321:) s
+407.4 18 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+424.2 18 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+432.6 18 M
+(\(i==0\){) s
+386.4 10 M (322:) s
+407.4 10 M
+(      strcpy\(Teaminfo,) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+499.8 10 M
+("Black") s
+/F-gs-font 7 7 SF
+0 setgray
+529.2 10 M
+(\);) s
+386.4 2 M (323:) s
+407.4 2 M
+(      ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+432.6 2 M
+(//\345\\220\\215\345\\211\\215\347\\231\273\351\\214\262\345\\207\246\347\\220\\206) s
+_R
+S
+%%Page: (4) 4
+%%BeginPageSetup
+_S
+90 rotate
+24 -574 translate
+/pagenum 4 def
+/fname (server.cpp) def
+/fdir (.) def
+/ftail (server.cpp) def
+/Courier-Oblique 7 7 SUF
+% User defined strings:
+/pagenumstr (4) def
+/moddatestr (05/23/17) def
+/modtimestr (12:10:08) def
+/user_header_p false def
+/user_footer_p false def
+%%EndPageSetup
+column_lines
+do_header
+0.698039 0.133333 0.133333 setrgbcolor
+/F-gs-font 7 7 SF
+14.4 490 M (324:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 490 M
+(      strcpy\(TeamName[i],buffer\);) s
+14.4 482 M (325:) s
+35.4 482 M
+(      cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+85.8 482 M
+("Black's Team name : ") s
+/F-gs-font 7 7 SF
+0 setgray
+178.2 482 M
+(<<TeamName[i]<<endl; ) s
+14.4 474 M (326:) s
+35.4 474 M
+(    }) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+56.4 474 M
+(else) s
+/F-gs-font 7 7 SF
+0 setgray
+73.2 474 M
+( {) s
+14.4 466 M (327:) s
+35.4 466 M
+(      strcpy\(Teaminfo,) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+127.8 466 M
+("White") s
+/F-gs-font 7 7 SF
+0 setgray
+157.2 466 M
+(\);) s
+14.4 458 M (328:) s
+35.4 458 M
+(      ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+60.6 458 M
+(//\345\\220\\215\345\\211\\215\347\\231\273\351\\214\262\345\\207\246\347\\220\\206) s
+/F-gs-font 7 7 SF
+14.4 450 M (329:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 450 M
+(      strcpy\(TeamName[i],buffer\);) s
+14.4 442 M (330:) s
+35.4 442 M
+(      cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+85.8 442 M
+("White's Team name : ") s
+/F-gs-font 7 7 SF
+0 setgray
+178.2 442 M
+(<<TeamName[i]<<endl;) s
+14.4 434 M (331:) s
+35.4 434 M
+(    }) s
+14.4 426 M (332:) s
+14.4 418 M (333:) s
+35.4 418 M
+(    send\(dstSocket[i], Teaminfo,strlen\(Teaminfo\)+1, 0\);) s
+14.4 410 M (334:) s
+35.4 410 M
+(  }) s
+14.4 402 M (335:) s
+14.4 394 M (336:) s
+14.4 386 M (337:) s
+35.4 386 M
+(  ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+43.8 386 M
+(/*\343\\202\262\343\\203\274\343\\203\240\343\\202\271\343\\202\277\343\\203\274\343\\203\\210*/) s
+/F-gs-font 7 7 SF
+0 setgray
+14.4 378 M (338:) s
+35.4 378 M
+(  ConsoleBoard board;) s
+14.4 370 M (339:) s
+35.4 370 M
+(  ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+43.8 370 M
+(//watanabe wrote 2017/3/31) s
+/F-gs-font 7 7 SF
+14.4 362 M (340:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 362 M
+(  string premove\(DATASIZE,0\);) s
+14.4 354 M (341:) s
+35.4 354 M
+(  premove[0]=) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+90 354 M
+('0') s
+/F-gs-font 7 7 SF
+0 setgray
+102.6 354 M
+(;) s
+14.4 346 M (342:) s
+35.4 346 M
+(  premove[1]=) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+90 346 M
+('0') s
+/F-gs-font 7 7 SF
+0 setgray
+102.6 346 M
+(;) s
+14.4 338 M (343:) s
+35.4 338 M
+(  premove[2]=) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+90 338 M
+('0') s
+/F-gs-font 7 7 SF
+0 setgray
+102.6 338 M
+(;) s
+14.4 330 M (344:) s
+35.4 330 M
+(  premove[3] = 0;) s
+14.4 322 M (345:) s
+35.4 322 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+43.8 322 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+56.4 322 M
+( attack_cahnce_status=false;) s
+14.4 314 M (346:) s
+35.4 314 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+43.8 314 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+56.4 314 M
+( mt_status_BLACK=false;) s
+14.4 306 M (347:) s
+35.4 306 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+43.8 306 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+56.4 306 M
+( mt_status_WHITE=false;) s
+14.4 298 M (348:) s
+35.4 298 M
+(  ) s
+14.4 290 M (349:) s
+35.4 290 M
+(  ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+43.8 290 M
+(//\345\\210\266\351\\231\\220\346\\231\\202\351\\226\\223) s
+/F-gs-font 7 7 SF
+14.4 282 M (350:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 282 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+43.8 282 M
+(struct) s
+/F-gs-font 7 7 SF
+0 setgray
+69 282 M
+( timeval limit_tv;) s
+14.4 274 M (351:) s
+35.4 274 M
+(  limit_tv.tv_sec  = 1;) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+132 274 M
+(//sec) s
+/F-gs-font 7 7 SF
+14.4 266 M (352:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 266 M
+(  limit_tv.tv_usec = 0;) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+132 266 M
+(//usec) s
+/F-gs-font 7 7 SF
+14.4 258 M (353:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 258 M
+(  ) s
+14.4 250 M (354:) s
+35.4 250 M
+(  ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+43.8 250 M
+(//\343\\202\275\343\\202\261\343\\203\\203\343\\203\\210\343\\201\256\343\\202\277\343\\202\244\343\\203\240\343\\202\242\343\\202\246\343\\203) s
+5 242 M
+(\\210\350\250\255\345\256\\232) s
+/F-gs-font 7 7 SF
+14.4 234 M (355:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 234 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+43.8 234 M
+(for) s
+/F-gs-font 7 7 SF
+0 setgray
+56.4 234 M
+(\() s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+60.6 234 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+73.2 234 M
+( i=0;i<PLAYERNUM;i++\){) s
+14.4 226 M (356:) s
+35.4 226 M
+(    setsockopt\(dstSocket[i], SOL_SOCKET, SO_SNDTIMEO, \() s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+266.4 226 M
+(char) s
+/F-gs-font 7 7 SF
+0 setgray
+283.2 226 M
+( *\)&limit_tv, ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+342 226 M
+(sizeo) s
+5 218 M
+(f) s
+/F-gs-font 7 7 SF
+0 setgray
+9.2 218 M
+(\(limit_tv\)\);) s
+14.4 210 M (357:) s
+35.4 210 M
+(  }) s
+14.4 202 M (358:) s
+14.4 194 M (359:) s
+35.4 194 M
+(  ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+43.8 194 M
+(while) s
+/F-gs-font 7 7 SF
+0 setgray
+64.8 194 M
+(\(true\){) s
+14.4 186 M (360:) s
+14.4 178 M (361:) s
+35.4 178 M
+(      board.print\(\);) s
+14.4 170 M (362:) s
+35.4 170 M
+(      cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+94.2 170 M
+("Black Disk:") s
+/F-gs-font 7 7 SF
+0 setgray
+148.8 170 M
+( << board.countDisc\(BLACK\) << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+274.8 170 M
+(" ") s
+/F-gs-font 7 7 SF
+0 setgray
+287.4 170 M
+(;) s
+14.4 162 M (363:) s
+35.4 162 M
+(      cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+94.2 162 M
+("White Disk:") s
+/F-gs-font 7 7 SF
+0 setgray
+148.8 162 M
+( << board.countDisc\(WHITE\) << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+274.8 162 M
+(" ") s
+/F-gs-font 7 7 SF
+0 setgray
+287.4 162 M
+(;) s
+14.4 154 M (364:) s
+35.4 154 M
+(      cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+94.2 154 M
+("Empty:") s
+/F-gs-font 7 7 SF
+0 setgray
+127.8 154 M
+( << board.countDisc\(EMPTY\) << endl;) s
+14.4 146 M (365:) s
+35.4 146 M
+(                ) s
+14.4 138 M (366:) s
+35.4 138 M
+(      ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+60.6 138 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+73.2 138 M
+( current_color =  board.getCurrentColor\(\);) s
+14.4 130 M (367:) s
+35.4 130 M
+(      ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+60.6 130 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+69 130 M
+(\(current_color == BLACK\){) s
+14.4 122 M (368:) s
+35.4 122 M
+(        cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+94.2 122 M
+("Black Turn\(") s
+/F-gs-font 7 7 SF
+0 setgray
+148.8 122 M
+(<<TeamName[BLACKSOCKET]<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+253.8 122 M
+("\)") s
+/F-gs-font 7 7 SF
+0 setgray
+266.4 122 M
+(<<endl; ) s
+14.4 114 M (369:) s
+35.4 114 M
+(      }) s
+14.4 106 M (370:) s
+35.4 106 M
+(      ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+60.6 106 M
+(else) s
+/F-gs-font 7 7 SF
+0 setgray
+77.4 106 M
+({) s
+14.4 98 M (371:) s
+35.4 98 M
+(        cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+94.2 98 M
+("White Turn\(") s
+/F-gs-font 7 7 SF
+0 setgray
+148.8 98 M
+(<<TeamName[WHITESOCKET]<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+253.8 98 M
+("\)") s
+/F-gs-font 7 7 SF
+0 setgray
+266.4 98 M
+(<<endl;) s
+14.4 90 M (372:) s
+35.4 90 M
+(      }) s
+14.4 82 M (373:) s
+35.4 82 M
+(  ) s
+14.4 74 M (374:) s
+35.4 74 M
+(                ) s
+14.4 66 M (375:) s
+35.4 66 M
+(      cout << endl << endl;) s
+14.4 58 M (376:) s
+14.4 50 M (377:) s
+35.4 50 M
+(      ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+60.6 50 M
+(//\347\\211\271\346\256\\212\343\\203\253\343\\203\274\343\\203\253\343\\201\256\350\277\275\345\\212\240 attack cance) s
+/F-gs-font 7 7 SF
+14.4 42 M (378:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 42 M
+(      ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+60.6 42 M
+(//\346\256\\213\343\\202\\212\343\\201\276\343\\201\\231\343\\201\\21410\344\273\245\344\270\\213 \343\\201\\213\343\\201\244 20\347) s
+5 34 M
+(\\237\263\344\273\245\344\270\\212\350\262\240\343\\201\\221\343\\201\246\343\\201\\204\343\\202\\213 \343\\202\242\343\\202\277\343\\203\\203\343\\202\257\343\\203) s
+5 26 M
+(\\201\343\\203\243\343\\203\263\343\\202\271\343\\201\\214\350\265\267\343\\201\\223\343\\201\243\343\\201\246\343\\201\\204\343\\201\252\343\\201\\204) s
+/F-gs-font 7 7 SF
+14.4 18 M (379:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 18 M
+(      ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+60.6 18 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+69 18 M
+(\( \(board.countDisc\(EMPTY\) <= 10\) && \( \(board.countDisc\(-current_color\)) s
+5 10 M
+(-board.countDisc\(current_color\) \) >= ATTACKNUM\) && \(attack_cahnce_status == false \) \){) s
+14.4 2 M (380:) s
+35.4 2 M
+(        kodama\(\);) s
+386.4 490 M (381:) s
+407.4 490 M
+(        attack_cahnce_status = true;) s
+386.4 482 M (382:) s
+407.4 482 M
+(        attack_chance\(current_color, board, premove\);) s
+386.4 474 M (383:) s
+407.4 474 M
+(        ) s
+386.4 466 M (384:) s
+407.4 466 M
+(        board.print\(\);) s
+386.4 458 M (385:) s
+407.4 458 M
+(        cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+474.6 458 M
+("Black Disk:") s
+/F-gs-font 7 7 SF
+0 setgray
+529.2 458 M
+( << board.countDisc\(BLACK\) << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+655.2 458 M
+(" ") s
+/F-gs-font 7 7 SF
+0 setgray
+667.8 458 M
+(;) s
+386.4 450 M (386:) s
+407.4 450 M
+(        cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+474.6 450 M
+("White Disk:") s
+/F-gs-font 7 7 SF
+0 setgray
+529.2 450 M
+( << board.countDisc\(WHITE\) << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+655.2 450 M
+(" ") s
+/F-gs-font 7 7 SF
+0 setgray
+667.8 450 M
+(;) s
+386.4 442 M (387:) s
+407.4 442 M
+(        cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+474.6 442 M
+("Empty:") s
+/F-gs-font 7 7 SF
+0 setgray
+508.2 442 M
+( << board.countDisc\(EMPTY\) << endl;) s
+386.4 434 M (388:) s
+407.4 434 M
+(        ) s
+386.4 426 M (389:) s
+407.4 426 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+441 426 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+449.4 426 M
+(\(current_color == BLACK\){) s
+386.4 418 M (390:) s
+407.4 418 M
+(          cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+474.6 418 M
+("Black Turn") s
+/F-gs-font 7 7 SF
+0 setgray
+525 418 M
+(<<endl; ) s
+386.4 410 M (391:) s
+407.4 410 M
+(        }) s
+386.4 402 M (392:) s
+407.4 402 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+441 402 M
+(else) s
+/F-gs-font 7 7 SF
+0 setgray
+457.8 402 M
+({) s
+386.4 394 M (393:) s
+407.4 394 M
+(          cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+474.6 394 M
+("White Turn") s
+/F-gs-font 7 7 SF
+0 setgray
+525 394 M
+(<<endl;) s
+386.4 386 M (394:) s
+407.4 386 M
+(        }) s
+386.4 378 M (395:) s
+407.4 378 M
+(        premove[0]=) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+487.2 378 M
+('0') s
+/F-gs-font 7 7 SF
+0 setgray
+499.8 378 M
+(;) s
+386.4 370 M (396:) s
+407.4 370 M
+(        premove[1]=) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+487.2 370 M
+('0') s
+/F-gs-font 7 7 SF
+0 setgray
+499.8 370 M
+(;) s
+386.4 362 M (397:) s
+407.4 362 M
+(        premove[2]=) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+487.2 362 M
+('0') s
+/F-gs-font 7 7 SF
+0 setgray
+499.8 362 M
+(;) s
+386.4 354 M (398:) s
+407.4 354 M
+(        }) s
+386.4 346 M (399:) s
+407.4 346 M
+(      ) s
+386.4 338 M (400:) s
+407.4 338 M
+(        cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+474.6 338 M
+("input your move: ") s
+/F-gs-font 7 7 SF
+0 setgray
+554.4 338 M
+(;) s
+386.4 330 M (401:) s
+407.4 330 M
+(        Point p;) s
+386.4 322 M (402:) s
+407.4 322 M
+(        ) s
+386.4 314 M (403:) s
+407.4 314 M
+(        string in\(DATASIZE,0\);) s
+386.4 306 M (404:) s
+386.4 298 M (405:) s
+407.4 298 M
+(        ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+441 298 M
+(//**********************\351\\200\\232\344\277\241\343\\203\\235\343\\202\244\343\\203\263\343\\203\\210****) s
+377 290 M
+(***************) s
+/F-gs-font 7 7 SF
+386.4 282 M (406:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+407.4 282 M
+(        ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+441 282 M
+(//send data to player and recieve data from player) s
+/F-gs-font 7 7 SF
+386.4 274 M (407:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+407.4 274 M
+(        premove[3] = 0;) s
+386.4 266 M (408:) s
+407.4 266 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+441 266 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+449.4 266 M
+(\(flagforPS == true\)  premove[3] = premove[3] | PSFLAG;) s
+386.4 258 M (409:) s
+407.4 258 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+441 258 M
+(char) s
+/F-gs-font 7 7 SF
+0 setgray
+457.8 258 M
+( send_data[DATASIZE];) s
+386.4 250 M (410:) s
+407.4 250 M
+(        assign_stringtochar\(premove, send_data\);) s
+386.4 242 M (411:) s
+407.4 242 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+441 242 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+449.4 242 M
+(\(current_color == BLACK\){) s
+386.4 234 M (412:) s
+407.4 234 M
+(          ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+449.4 234 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+457.8 234 M
+(\(TIME_LIMIT == send\(dstSocket[BLACKSOCKET], send_data,strlen\(send_) s
+377 226 M
+(data\)+1,0\)\) time_out\(current_color\);) s
+386.4 218 M (413:) s
+407.4 218 M
+(          ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+449.4 218 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+457.8 218 M
+(\(TIME_LIMIT == recv\(dstSocket[BLACKSOCKET], buffer, BUFFER_SIZE,0\)) s
+377 210 M
+(\) time_out\(current_color\);) s
+386.4 202 M (414:) s
+407.4 202 M
+(        }) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+445.2 202 M
+(else) s
+/F-gs-font 7 7 SF
+0 setgray
+462 202 M
+( {) s
+386.4 194 M (415:) s
+407.4 194 M
+(          ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+449.4 194 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+457.8 194 M
+(\(TIME_LIMIT ==  send\(dstSocket[WHITESOCKET], send_data,strlen\(send) s
+377 186 M
+(_data\)+1,0\)\) time_out\(current_color\);) s
+386.4 178 M (416:) s
+407.4 178 M
+(          ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+449.4 178 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+457.8 178 M
+(\(TIME_LIMIT ==  recv\(dstSocket[WHITESOCKET], buffer, BUFFER_SIZE, ) s
+377 170 M
+(0\)\) time_out\(current_color\);) s
+386.4 162 M (417:) s
+407.4 162 M
+(        } ) s
+386.4 154 M (418:) s
+407.4 154 M
+(        flagforPS  = false;) s
+386.4 146 M (419:) s
+407.4 146 M
+(        assign_chartostring\(buffer, in\);) s
+386.4 138 M (420:) s
+407.4 138 M
+(        cout<<in<<endl;) s
+386.4 130 M (421:) s
+407.4 130 M
+(        cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+466.2 130 M
+("in0") s
+/F-gs-font 7 7 SF
+0 setgray
+487.2 130 M
+(<<in[0]<<endl;) s
+386.4 122 M (422:) s
+407.4 122 M
+(        cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+466.2 122 M
+("in1") s
+/F-gs-font 7 7 SF
+0 setgray
+487.2 122 M
+(<<in[1]<<endl;) s
+386.4 114 M (423:) s
+407.4 114 M
+(        cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+466.2 114 M
+("in2") s
+/F-gs-font 7 7 SF
+0 setgray
+487.2 114 M
+(<<in[2]<<endl;) s
+386.4 106 M (424:) s
+407.4 106 M
+(        cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+466.2 106 M
+("in3") s
+/F-gs-font 7 7 SF
+0 setgray
+487.2 106 M
+(<<hex<<in[3]<<endl;) s
+386.4 98 M (425:) s
+407.4 98 M
+(      ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+432.6 98 M
+(/**********************************************************/) s
+/F-gs-font 7 7 SF
+0 setgray
+386.4 90 M (426:) s
+407.4 90 M
+(      ) s
+386.4 82 M (427:) s
+386.4 74 M (428:) s
+407.4 74 M
+(        ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+441 74 M
+(//\346\\211\\213\345\\210\244\346\\226\255) s
+/F-gs-font 7 7 SF
+386.4 66 M (429:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+407.4 66 M
+(        ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+441 66 M
+(//\343\\203\\221\343\\202\271\343\\201\252\343\\202\\211) s
+/F-gs-font 7 7 SF
+386.4 58 M (430:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+407.4 58 M
+(      ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+432.6 58 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+441 58 M
+(\(in[0] == ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+483 58 M
+('p') s
+/F-gs-font 7 7 SF
+0 setgray
+495.6 58 M
+(\)) s
+386.4 50 M (431:) s
+407.4 50 M
+(        {) s
+386.4 42 M (432:) s
+407.4 42 M
+(          ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+449.4 42 M
+(// \343\\203\\221\343\\202\271) s
+/F-gs-font 7 7 SF
+386.4 34 M (433:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+407.4 34 M
+(          ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+449.4 34 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+457.8 34 M
+(\(!board.pass\(\)\){) s
+386.4 26 M (434:) s
+407.4 26 M
+(            cerr << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+491.4 26 M
+("you can't pass ") s
+/F-gs-font 7 7 SF
+0 setgray
+562.8 26 M
+( << endl;) s
+386.4 18 M (435:) s
+407.4 18 M
+(            against_rules\(current_color\);) s
+386.4 10 M (436:) s
+407.4 10 M
+(          }) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+453.6 10 M
+(else) s
+/F-gs-font 7 7 SF
+0 setgray
+470.4 10 M
+( {) s
+386.4 2 M (437:) s
+407.4 2 M
+(            cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+483 2 M
+("PASS") s
+/F-gs-font 7 7 SF
+0 setgray
+508.2 2 M
+(<<endl;) s
+_R
+S
+%%Page: (5) 5
+%%BeginPageSetup
+_S
+90 rotate
+24 -574 translate
+/pagenum 5 def
+/fname (server.cpp) def
+/fdir (.) def
+/ftail (server.cpp) def
+% User defined strings:
+/pagenumstr (5) def
+/moddatestr (05/23/17) def
+/modtimestr (12:10:08) def
+/user_header_p false def
+/user_footer_p false def
+%%EndPageSetup
+column_lines
+do_header
+14.4 490 M (438:) s
+35.4 490 M
+(            flagforPS= true;) s
+14.4 482 M (439:) s
+35.4 482 M
+(            premove[0]=) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+132 482 M
+('0') s
+/F-gs-font 7 7 SF
+0 setgray
+144.6 482 M
+(;) s
+14.4 474 M (440:) s
+35.4 474 M
+(            premove[1]=) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+132 474 M
+('0') s
+/F-gs-font 7 7 SF
+0 setgray
+144.6 474 M
+(;) s
+14.4 466 M (441:) s
+35.4 466 M
+(            premove[2]=) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+132 466 M
+('0') s
+/F-gs-font 7 7 SF
+0 setgray
+144.6 466 M
+(;   ) s
+14.4 458 M (442:) s
+35.4 458 M
+(          }) s
+14.4 450 M (443:) s
+35.4 450 M
+(          ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+77.4 450 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+85.8 450 M
+(\(board.isGameOver\(\)\)) s
+14.4 442 M (444:) s
+35.4 442 M
+(            { board.print\(\);) s
+14.4 434 M (445:) s
+35.4 434 M
+(              cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+127.8 434 M
+("Black Disk:") s
+/F-gs-font 7 7 SF
+0 setgray
+182.4 434 M
+( << board.countDisc\(BLACK\) << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+308.4 434 M
+(" ") s
+/F-gs-font 7 7 SF
+0 setgray
+321 434 M
+(;) s
+14.4 426 M (446:) s
+35.4 426 M
+(              cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+127.8 426 M
+("White Disk:") s
+/F-gs-font 7 7 SF
+0 setgray
+182.4 426 M
+( << board.countDisc\(WHITE\) << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+308.4 426 M
+(" ") s
+/F-gs-font 7 7 SF
+0 setgray
+321 426 M
+(;) s
+14.4 418 M (447:) s
+35.4 418 M
+(              cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+127.8 418 M
+("Empty:") s
+/F-gs-font 7 7 SF
+0 setgray
+161.4 418 M
+( << board.countDisc\(EMPTY\) << endl;) s
+14.4 410 M (448:) s
+35.4 410 M
+(              GFprocess\(board\);) s
+14.4 402 M (449:) s
+35.4 402 M
+(              ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+94.2 402 M
+(break) s
+/F-gs-font 7 7 SF
+0 setgray
+115.2 402 M
+(;) s
+14.4 394 M (450:) s
+35.4 394 M
+(            }) s
+14.4 386 M (451:) s
+35.4 386 M
+(          ) s
+14.4 378 M (452:) s
+35.4 378 M
+(          ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+77.4 378 M
+(continue) s
+/F-gs-font 7 7 SF
+0 setgray
+111 378 M
+(;) s
+14.4 370 M (453:) s
+35.4 370 M
+(        }) s
+14.4 362 M (454:) s
+35.4 362 M
+(        ) s
+14.4 354 M (455:) s
+35.4 354 M
+(      ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+60.6 354 M
+(//point \343\\201\253\345\244\\211\346\\217\\233) s
+/F-gs-font 7 7 SF
+14.4 346 M (456:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 346 M
+(      ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+60.6 346 M
+(try) s
+/F-gs-font 7 7 SF
+0 setgray
+14.4 338 M (457:) s
+35.4 338 M
+(        {) s
+14.4 330 M (458:) s
+35.4 330 M
+(          Point parse\(in\);) s
+14.4 322 M (459:) s
+35.4 322 M
+(          p = parse;) s
+14.4 314 M (460:) s
+35.4 314 M
+(        }) s
+14.4 306 M (461:) s
+35.4 306 M
+(      ) s
+14.4 298 M (462:) s
+35.4 298 M
+(      ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+60.6 298 M
+(//\351\\226\\223\351\\201\\225\343\\201\243\343\\201\\237\345\\205\245\345\\212\\233) s
+/F-gs-font 7 7 SF
+14.4 290 M (463:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 290 M
+(      ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+60.6 290 M
+(catch) s
+/F-gs-font 7 7 SF
+0 setgray
+81.6 290 M
+(\(invalid_argument e\)) s
+14.4 282 M (464:) s
+35.4 282 M
+(        {) s
+14.4 274 M (465:) s
+35.4 274 M
+(          cerr <<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+106.8 274 M
+("wrong your input") s
+/F-gs-font 7 7 SF
+0 setgray
+182.4 274 M
+( << endl;) s
+14.4 266 M (466:) s
+35.4 266 M
+(          against_rules\(current_color\);) s
+14.4 258 M (467:) s
+35.4 258 M
+(          ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+77.4 258 M
+(continue) s
+/F-gs-font 7 7 SF
+0 setgray
+111 258 M
+(;) s
+14.4 250 M (468:) s
+35.4 250 M
+(        }) s
+14.4 242 M (469:) s
+35.4 242 M
+(      ) s
+14.4 234 M (470:) s
+35.4 234 M
+(      ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+60.6 234 M
+(//\343\\201\\212\343\\201\\221\343\\201\252\343\\201\\204\345\240\264\346\\211\\200) s
+/F-gs-font 7 7 SF
+14.4 226 M (471:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 226 M
+(      ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+60.6 226 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+69 226 M
+(\(board.move\(p\) == false\)) s
+14.4 218 M (472:) s
+35.4 218 M
+(        {) s
+14.4 210 M (473:) s
+35.4 210 M
+(          cerr << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+111 210 M
+("you can't move the place") s
+/F-gs-font 7 7 SF
+0 setgray
+220.2 210 M
+( << endl;) s
+14.4 202 M (474:) s
+35.4 202 M
+(          against_rules\(current_color\);) s
+14.4 194 M (475:) s
+35.4 194 M
+(          ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+77.4 194 M
+(continue) s
+/F-gs-font 7 7 SF
+0 setgray
+111 194 M
+(;) s
+14.4 186 M (476:) s
+35.4 186 M
+(        }) s
+14.4 178 M (477:) s
+35.4 178 M
+(      ) s
+14.4 170 M (478:) s
+35.4 170 M
+(      premove = in;) s
+14.4 162 M (479:) s
+14.4 154 M (480:) s
+14.4 146 M (481:) s
+35.4 146 M
+(      ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+60.6 146 M
+(//test mtflag) s
+/F-gs-font 7 7 SF
+14.4 138 M (482:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 138 M
+(      ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+60.6 138 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+69 138 M
+(\(\(p.flag & MTFLAG\) == MTFLAG\){) s
+14.4 130 M (483:) s
+35.4 130 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+69 130 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+77.4 130 M
+(\( \(current_color == WHITE\) && \(mt_status_WHITE == true\)\){) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+316.8 130 M
+(//\343\\202\\202) s
+5 122 M
+(\343\\201\\227MTFLAG\343\\201\\214\345\\220\\214\343\\201\\230\343\\203\\227\343\\203\254\343\\202\244\343\\203\244\343\\203\274\343\\201\247\344\272) s
+5 114 M
+(\\214\345\272\246\343\\201\\202\343\\201\243\343\\201\\237\343\\202\\211\351\\201\\225\345\\217\\215 flag\343\\201\253\343\\202\\210\343\\202) s
+5 106 M
+(\\212currentcolor\343\\201\257\343\\201\\235\343\\201\256\343\\201\276\343\\201\276\343\\201\247\343\\202\\210\343\\201\\204) s
+/F-gs-font 7 7 SF
+14.4 98 M (484:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 98 M
+(          against_rules\(current_color\);) s
+14.4 90 M (485:) s
+35.4 90 M
+(        }) s
+14.4 82 M (486:) s
+35.4 82 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+69 82 M
+(else) s
+/F-gs-font 7 7 SF
+0 setgray
+85.8 82 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+90 82 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+98.4 82 M
+(\( \(current_color == BLACK\) && \(mt_status_BLACK == true\)\){) s
+14.4 74 M (487:) s
+35.4 74 M
+(          against_rules\(current_color\);) s
+14.4 66 M (488:) s
+35.4 66 M
+(        }) s
+14.4 58 M (489:) s
+35.4 58 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+69 58 M
+(else) s
+/F-gs-font 7 7 SF
+0 setgray
+85.8 58 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+90 58 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+98.4 58 M
+(\(board.getTurns\(\)<10\){) s
+14.4 50 M (490:) s
+35.4 50 M
+(          against_rules\(current_color\);   ) s
+14.4 42 M (491:) s
+35.4 42 M
+(        }) s
+14.4 34 M (492:) s
+35.4 34 M
+(        cout<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+94.2 34 M
+("Still my turn!!!!!!!!!") s
+/F-gs-font 7 7 SF
+0 setgray
+195 34 M
+(<<endl;) s
+14.4 26 M (493:) s
+35.4 26 M
+(      ) s
+14.4 18 M (494:) s
+35.4 18 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+69 18 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+77.4 18 M
+(\(current_color==WHITE\){) s
+14.4 10 M (495:) s
+35.4 10 M
+(          mt_status_WHITE=true;) s
+14.4 2 M (496:) s
+35.4 2 M
+(        }) s
+386.4 490 M (497:) s
+407.4 490 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+441 490 M
+(else) s
+/F-gs-font 7 7 SF
+0 setgray
+457.8 490 M
+({) s
+386.4 482 M (498:) s
+407.4 482 M
+(          mt_status_BLACK=true;) s
+386.4 474 M (499:) s
+407.4 474 M
+(        }) s
+386.4 466 M (500:) s
+407.4 466 M
+(        premove[3]= MTFLAG;) s
+386.4 458 M (501:) s
+407.4 458 M
+(        ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+441 458 M
+(//mt\343\\201\\213\343\\201\244ps) s
+/F-gs-font 7 7 SF
+386.4 450 M (502:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+407.4 450 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+441 450 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+449.4 450 M
+(\(flagforPS == true\){) s
+386.4 442 M (503:) s
+407.4 442 M
+(          premove[3]=MTFLAG | PSFLAG;) s
+386.4 434 M (504:) s
+407.4 434 M
+(        }) s
+386.4 426 M (505:) s
+386.4 418 M (506:) s
+407.4 418 M
+(        ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+441 418 M
+(//**********************\351\\200\\232\344\277\241\343\\203\\235\343\\202\244\343\\203\263\343\\203\\210****) s
+377 410 M
+(***************) s
+/F-gs-font 7 7 SF
+386.4 402 M (507:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+407.4 402 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+441 402 M
+(char) s
+/F-gs-font 7 7 SF
+0 setgray
+457.8 402 M
+( send_data[DATASIZE];) s
+386.4 394 M (508:) s
+407.4 394 M
+(        assign_stringtochar\(premove, send_data\);) s
+386.4 386 M (509:) s
+407.4 386 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+441 386 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+449.4 386 M
+(\(current_color==BLACK\){) s
+386.4 378 M (510:) s
+407.4 378 M
+(          ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+449.4 378 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+457.8 378 M
+(\(TIME_LIMIT == send\(dstSocket[WHITESOCKET], send_data,strlen\(send_) s
+377 370 M
+(data\)+1,0\)\) time_out\(current_color\);) s
+386.4 362 M (511:) s
+407.4 362 M
+(        }) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+445.2 362 M
+(else) s
+/F-gs-font 7 7 SF
+0 setgray
+462 362 M
+({) s
+386.4 354 M (512:) s
+407.4 354 M
+(          ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+449.4 354 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+457.8 354 M
+(\(TIME_LIMIT == send\(dstSocket[BLACKSOCKET], send_data,strlen\(send_) s
+377 346 M
+(data\)+1,0\)\) time_out\(current_color\);) s
+386.4 338 M (513:) s
+407.4 338 M
+(        }) s
+386.4 330 M (514:) s
+407.4 330 M
+(        premove[0]=) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+487.2 330 M
+('0') s
+/F-gs-font 7 7 SF
+0 setgray
+499.8 330 M
+(;) s
+386.4 322 M (515:) s
+407.4 322 M
+(        premove[1]=) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+487.2 322 M
+('0') s
+/F-gs-font 7 7 SF
+0 setgray
+499.8 322 M
+(;) s
+386.4 314 M (516:) s
+407.4 314 M
+(        premove[2]=) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+487.2 314 M
+('0') s
+/F-gs-font 7 7 SF
+0 setgray
+499.8 314 M
+(;) s
+386.4 306 M (517:) s
+407.4 306 M
+(        premove[3]=0;) s
+386.4 298 M (518:) s
+407.4 298 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+441 298 M
+(continue) s
+/F-gs-font 7 7 SF
+0 setgray
+474.6 298 M
+(;) s
+386.4 290 M (519:) s
+407.4 290 M
+(      }) s
+386.4 282 M (520:) s
+407.4 282 M
+(      ) s
+386.4 274 M (521:) s
+386.4 266 M (522:) s
+407.4 266 M
+(      ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+432.6 266 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+441 266 M
+(\(board.isGameOver\(\)\)) s
+386.4 258 M (523:) s
+407.4 258 M
+(        {) s
+386.4 250 M (524:) s
+407.4 250 M
+(          board.print\(\);) s
+386.4 242 M (525:) s
+407.4 242 M
+(          cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+483 242 M
+("Black Disk:") s
+/F-gs-font 7 7 SF
+0 setgray
+537.6 242 M
+( << board.countDisc\(BLACK\) << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+663.6 242 M
+(" ") s
+/F-gs-font 7 7 SF
+0 setgray
+676.2 242 M
+(;) s
+386.4 234 M (526:) s
+407.4 234 M
+(          cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+483 234 M
+("White Disk:") s
+/F-gs-font 7 7 SF
+0 setgray
+537.6 234 M
+( << board.countDisc\(WHITE\) << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+663.6 234 M
+(" ") s
+/F-gs-font 7 7 SF
+0 setgray
+676.2 234 M
+(;) s
+386.4 226 M (527:) s
+407.4 226 M
+(          cout << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+483 226 M
+("Empty:") s
+/F-gs-font 7 7 SF
+0 setgray
+516.6 226 M
+( << board.countDisc\(EMPTY\) << endl;) s
+386.4 218 M (528:) s
+407.4 218 M
+(          GFprocess\(board\);) s
+386.4 210 M (529:) s
+407.4 210 M
+(          ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+449.4 210 M
+(break) s
+/F-gs-font 7 7 SF
+0 setgray
+470.4 210 M
+(;) s
+386.4 202 M (530:) s
+407.4 202 M
+(        }) s
+386.4 194 M (531:) s
+407.4 194 M
+(    }) s
+386.4 186 M (532:) s
+407.4 186 M
+(  ) s
+386.4 178 M (533:) s
+407.4 178 M
+(}) s
+386.4 170 M (534:) s
+_R
+S
+%%Trailer
+%%Pages: 5
+%%DocumentNeededResources: font Times-Roman Courier-Oblique Courier-Bold 
+%%+ font Courier Times-Bold 
+%%EOF

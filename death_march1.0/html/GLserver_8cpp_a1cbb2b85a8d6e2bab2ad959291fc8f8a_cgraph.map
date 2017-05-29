@@ -1,0 +1,4 @@
+<map id="draw_board" name="draw_board">
+<area shape="rect" id="node2" href="$classBoard.html#a8d62682a047b4105916e311eff53137d" title="Board::getColor" alt="" coords="145,5,258,32"/>
+<area shape="rect" id="node3" href="$GLserver_8cpp.html#af76c3e534e9742528fc933c3362b95b9" title="draw_circle" alt="" coords="157,56,245,83"/>
+</map>

@@ -1,0 +1,918 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.5"/>
+<title>deathreversi: GLserver/GLserver.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">deathreversi
+   &#160;<span id="projectnumber">1.0.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 作成： Doxygen 1.8.5 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'検索');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>メインページ</span></a></li>
+      <li><a href="annotated.html"><span>クラス</span></a></li>
+      <li class="current"><a href="files.html"><span>ファイル</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>ファイル一覧</span></a></li>
+      <li><a href="globals.html"><span>ファイルメンバ</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>全て</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>クラス</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>ファイル</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>関数</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>変数</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>型定義</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>マクロ定義</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_b82e4c4b85892c5580a29e6897978654.html">GLserver</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#define-members">マクロ定義</a> &#124;
+<a href="#func-members">関数</a> &#124;
+<a href="#var-members">変数</a>  </div>
+  <div class="headertitle">
+<div class="title">GLserver.cpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br/>
+<code>#include &lt;sys/types.h&gt;</code><br/>
+<code>#include &lt;sys/socket.h&gt;</code><br/>
+<code>#include &lt;netinet/in.h&gt;</code><br/>
+<code>#include &lt;arpa/inet.h&gt;</code><br/>
+<code>#include &lt;netdb.h&gt;</code><br/>
+<code>#include &quot;<a class="el" href="GLserver_2GameMaster_8h_source.html">GameMaster.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="GLserver_2Board_8h_source.html">Board.h</a>&quot;</code><br/>
+<code>#include &lt;string.h&gt;</code><br/>
+<code>#include &lt;string&gt;</code><br/>
+<code>#include &lt;unistd.h&gt;</code><br/>
+<code>#include &lt;iostream&gt;</code><br/>
+<code>#include &lt;GL/freeglut.h&gt;</code><br/>
+<code>#include &lt;GL/glut.h&gt;</code><br/>
+<code>#include &lt;math.h&gt;</code><br/>
+</div><div class="textblock"><div class="dynheader">
+GLserver.cppのインクルード依存関係図</div>
+<div class="dyncontent">
+<div class="center"><img src="GLserver_8cpp__incl.png" border="0" usemap="#GLserver_2GLserver_8cpp" alt=""/></div>
+<map name="GLserver_2GLserver_8cpp" id="GLserver_2GLserver_8cpp">
+<area shape="rect" id="node8" href="GLserver_2GameMaster_8h.html" title="GameMaster.h" alt="" coords="626,80,733,107"/><area shape="rect" id="node10" href="GLserver_2Board_8h.html" title="Board.h" alt="" coords="548,155,615,181"/><area shape="rect" id="node11" href="GLserver_2Reversi_8h.html" title="Reversi.h" alt="" coords="697,229,775,256"/></map>
+</div>
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+マクロ定義</h2></td></tr>
+<tr class="memitem:ad27cacdbd81ea4aa38cf2ac995aa935f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#ad27cacdbd81ea4aa38cf2ac995aa935f">PART</a>&#160;&#160;&#160;36</td></tr>
+<tr class="separator:ad27cacdbd81ea4aa38cf2ac995aa935f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab32e0045dc11c2e1153c04127cfa977e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#ab32e0045dc11c2e1153c04127cfa977e">SQUARESIZE</a>&#160;&#160;&#160;50</td></tr>
+<tr class="separator:ab32e0045dc11c2e1153c04127cfa977e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b19e283f101cdf0e22f31cfd7aba42f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#a0b19e283f101cdf0e22f31cfd7aba42f">BLACKSPACE</a>&#160;&#160;&#160;100</td></tr>
+<tr class="separator:a0b19e283f101cdf0e22f31cfd7aba42f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7cf6abdb80c7e45e52a9484ed4f8ac0e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#a7cf6abdb80c7e45e52a9484ed4f8ac0e">WINDOWSIZE</a>&#160;&#160;&#160;1000</td></tr>
+<tr class="separator:a7cf6abdb80c7e45e52a9484ed4f8ac0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d90f59dd66d481a7e69c00d23adb576"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#a3d90f59dd66d481a7e69c00d23adb576">PLAYERNUM</a>&#160;&#160;&#160;2</td></tr>
+<tr class="separator:a3d90f59dd66d481a7e69c00d23adb576"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b20d41d6252e9871430c242cb1a56e7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#a6b20d41d6252e9871430c242cb1a56e7">BUFFER_SIZE</a>&#160;&#160;&#160;256</td></tr>
+<tr class="separator:a6b20d41d6252e9871430c242cb1a56e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb383144a04ad304680b840cd65af5a5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#acb383144a04ad304680b840cd65af5a5">DATASIZE</a>&#160;&#160;&#160;4</td></tr>
+<tr class="separator:acb383144a04ad304680b840cd65af5a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb7e51d1df3047c08c50ae6682a6cd70"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#acb7e51d1df3047c08c50ae6682a6cd70">TIME_LIMIT</a>&#160;&#160;&#160;-1</td></tr>
+<tr class="separator:acb7e51d1df3047c08c50ae6682a6cd70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f8948531153a4048be18fc113442066"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#a5f8948531153a4048be18fc113442066">BLACKSOCKET</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:a5f8948531153a4048be18fc113442066"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45b99f11735f54949e6c4ed890533c02"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#a45b99f11735f54949e6c4ed890533c02">WHITESOCKET</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:a45b99f11735f54949e6c4ed890533c02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+関数</h2></td></tr>
+<tr class="memitem:a0985129db4548d271ec55a4bcb2bcfbb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#a0985129db4548d271ec55a4bcb2bcfbb">kodama</a> ()</td></tr>
+<tr class="separator:a0985129db4548d271ec55a4bcb2bcfbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4158a15f0f435cc16a6a4e56c88963a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#a4158a15f0f435cc16a6a4e56c88963a4">colombia</a> (string answer)</td></tr>
+<tr class="separator:a4158a15f0f435cc16a6a4e56c88963a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16c222f303e4df1add09f03a1626f9e9"><td class="memItemLeft" align="right" valign="top">ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#a16c222f303e4df1add09f03a1626f9e9">operator&lt;&lt;</a> (ostream &amp;os, const <a class="el" href="structPoint.html">Point</a> &amp;p)</td></tr>
+<tr class="separator:a16c222f303e4df1add09f03a1626f9e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51462ec5051e682934a07647f9a9a354"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#a51462ec5051e682934a07647f9a9a354">assign_stringtochar</a> (string input, char *output)</td></tr>
+<tr class="separator:a51462ec5051e682934a07647f9a9a354"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeef7d81e7e77dac24c2a568246b124b1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#aeef7d81e7e77dac24c2a568246b124b1">assign_chartostring</a> (char *input, string &amp;output)</td></tr>
+<tr class="separator:aeef7d81e7e77dac24c2a568246b124b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb4e5fa44c807e1850a970ccebddc262"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#aeb4e5fa44c807e1850a970ccebddc262">assign_char</a> (char *input, char *output)</td></tr>
+<tr class="separator:aeb4e5fa44c807e1850a970ccebddc262"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84203be816d62015ea31be725fee2847"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#a84203be816d62015ea31be725fee2847">GFprocess</a> (<a class="el" href="classConsoleBoard.html">ConsoleBoard</a> &amp;board)</td></tr>
+<tr class="separator:a84203be816d62015ea31be725fee2847"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7708c3e29913bab93bd9f2d367cbe5ad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#a7708c3e29913bab93bd9f2d367cbe5ad">time_out</a> (<a class="el" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a> current_color)</td></tr>
+<tr class="separator:a7708c3e29913bab93bd9f2d367cbe5ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af76c3e534e9742528fc933c3362b95b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#af76c3e534e9742528fc933c3362b95b9">draw_circle</a> (int xpos, int ypos, <a class="el" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a> color)</td></tr>
+<tr class="separator:af76c3e534e9742528fc933c3362b95b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cbb2b85a8d6e2bab2ad959291fc8f8a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#a1cbb2b85a8d6e2bab2ad959291fc8f8a">draw_board</a> (<a class="el" href="classBoard.html">Board</a> board)</td></tr>
+<tr class="separator:a1cbb2b85a8d6e2bab2ad959291fc8f8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa0cafeada99f578f88cd5a14706d37f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#aaa0cafeada99f578f88cd5a14706d37f">against_rules</a> (<a class="el" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a> current_color)</td></tr>
+<tr class="separator:aaa0cafeada99f578f88cd5a14706d37f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc3f753d52c6fd057897cf7306223de0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#abc3f753d52c6fd057897cf7306223de0">attack_chance</a> (int current_color, <a class="el" href="classConsoleBoard.html">ConsoleBoard</a> &amp;board, string premove)</td></tr>
+<tr class="separator:abc3f753d52c6fd057897cf7306223de0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ea013001a5fb47853d0fab8f8de35cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#a4ea013001a5fb47853d0fab8f8de35cd">display</a> (void)</td></tr>
+<tr class="separator:a4ea013001a5fb47853d0fab8f8de35cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
+<tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+変数</h2></td></tr>
+<tr class="memitem:a1fcc2b32d2481a8618338fde53cc4f97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#a1fcc2b32d2481a8618338fde53cc4f97">flagforPS</a> =0</td></tr>
+<tr class="separator:a1fcc2b32d2481a8618338fde53cc4f97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0dce57549da92c38d38ae6463950c2fd"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#a0dce57549da92c38d38ae6463950c2fd">ClientIP</a> [<a class="el" href="server_8cpp.html#a3d90f59dd66d481a7e69c00d23adb576">PLAYERNUM</a>][80] ={&quot;160.12.172.6&quot;,&quot;160.12.172.6&quot;}</td></tr>
+<tr class="separator:a0dce57549da92c38d38ae6463950c2fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95c0224914598e89b36297dd30ff7ecc"><td class="memItemLeft" align="right" valign="top">unsigned short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#a95c0224914598e89b36297dd30ff7ecc">port</a> [<a class="el" href="server_8cpp.html#a3d90f59dd66d481a7e69c00d23adb576">PLAYERNUM</a>] ={9800,9810}</td></tr>
+<tr class="separator:a95c0224914598e89b36297dd30ff7ecc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab0b9178764ea297826b20a363b6f834"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#aab0b9178764ea297826b20a363b6f834">dstSocket</a> [<a class="el" href="server_8cpp.html#a3d90f59dd66d481a7e69c00d23adb576">PLAYERNUM</a>]</td></tr>
+<tr class="separator:aab0b9178764ea297826b20a363b6f834"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5168be4271116b5d0ab173cb98aee431"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#a5168be4271116b5d0ab173cb98aee431">status</a> [<a class="el" href="server_8cpp.html#a3d90f59dd66d481a7e69c00d23adb576">PLAYERNUM</a>]</td></tr>
+<tr class="separator:a5168be4271116b5d0ab173cb98aee431"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2118152c26ccb43559ab9a376ef768a3"><td class="memItemLeft" align="right" valign="top">struct sockaddr_in&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#a2118152c26ccb43559ab9a376ef768a3">dstAddr</a> [<a class="el" href="server_8cpp.html#a3d90f59dd66d481a7e69c00d23adb576">PLAYERNUM</a>]</td></tr>
+<tr class="separator:a2118152c26ccb43559ab9a376ef768a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76c8e6d8a86c3ae0ad1a2a55da85414d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#a76c8e6d8a86c3ae0ad1a2a55da85414d">dstAddrSize</a> [<a class="el" href="server_8cpp.html#a3d90f59dd66d481a7e69c00d23adb576">PLAYERNUM</a>]</td></tr>
+<tr class="separator:a76c8e6d8a86c3ae0ad1a2a55da85414d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5753f7448f89841c9489d1241bc3487d"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#a5753f7448f89841c9489d1241bc3487d">Teaminfo</a> [20]</td></tr>
+<tr class="separator:a5753f7448f89841c9489d1241bc3487d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1715c256bfc708d917247830af7c3795"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#a1715c256bfc708d917247830af7c3795">TeamName</a> [<a class="el" href="server_8cpp.html#a3d90f59dd66d481a7e69c00d23adb576">PLAYERNUM</a>][40]</td></tr>
+<tr class="separator:a1715c256bfc708d917247830af7c3795"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a328e670b31dc7798f89566f475a54243"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#a328e670b31dc7798f89566f475a54243">numrcv</a> [<a class="el" href="server_8cpp.html#a3d90f59dd66d481a7e69c00d23adb576">PLAYERNUM</a>]</td></tr>
+<tr class="separator:a328e670b31dc7798f89566f475a54243"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af00b615ca097c43dbb02ae3a00ea3a62"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_8cpp.html#af00b615ca097c43dbb02ae3a00ea3a62">buffer</a> [<a class="el" href="server_8cpp.html#a6b20d41d6252e9871430c242cb1a56e7">BUFFER_SIZE</a>]</td></tr>
+<tr class="separator:af00b615ca097c43dbb02ae3a00ea3a62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">マクロ定義</h2>
+<a class="anchor" id="a5f8948531153a4048be18fc113442066"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLACKSOCKET&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a0b19e283f101cdf0e22f31cfd7aba42f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLACKSPACE&#160;&#160;&#160;100</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6b20d41d6252e9871430c242cb1a56e7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BUFFER_SIZE&#160;&#160;&#160;256</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="acb383144a04ad304680b840cd65af5a5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DATASIZE&#160;&#160;&#160;4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ad27cacdbd81ea4aa38cf2ac995aa935f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PART&#160;&#160;&#160;36</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a3d90f59dd66d481a7e69c00d23adb576"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PLAYERNUM&#160;&#160;&#160;2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ab32e0045dc11c2e1153c04127cfa977e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SQUARESIZE&#160;&#160;&#160;50</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="acb7e51d1df3047c08c50ae6682a6cd70"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TIME_LIMIT&#160;&#160;&#160;-1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a45b99f11735f54949e6c4ed890533c02"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define WHITESOCKET&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a7cf6abdb80c7e45e52a9484ed4f8ac0e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define WINDOWSIZE&#160;&#160;&#160;1000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">関数</h2>
+<a class="anchor" id="aaa0cafeada99f578f88cd5a14706d37f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void against_rules </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a>&#160;</td>
+          <td class="paramname"><em>current_color</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><div class="dynheader">
+呼出しグラフ:</div>
+<div class="dyncontent">
+<div class="center"><img src="GLserver_8cpp_aaa0cafeada99f578f88cd5a14706d37f_icgraph.png" border="0" usemap="#GLserver_8cpp_aaa0cafeada99f578f88cd5a14706d37f_icgraph" alt=""/></div>
+<map name="GLserver_8cpp_aaa0cafeada99f578f88cd5a14706d37f_icgraph" id="GLserver_8cpp_aaa0cafeada99f578f88cd5a14706d37f_icgraph">
+<area shape="rect" id="node2" href="GLserver_8cpp.html#abc3f753d52c6fd057897cf7306223de0" title="attack_chance" alt="" coords="152,31,259,57"/><area shape="rect" id="node3" href="GLserver_8cpp.html#a4ea013001a5fb47853d0fab8f8de35cd" title="display" alt="" coords="307,5,370,32"/><area shape="rect" id="node5" href="server_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="313,68,364,95"/><area shape="rect" id="node4" href="GLserver_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="419,5,469,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="aeb4e5fa44c807e1850a970ccebddc262"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void assign_char </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>output</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><div class="dynheader">
+呼出しグラフ:</div>
+<div class="dyncontent">
+<div class="center"><img src="GLserver_8cpp_aeb4e5fa44c807e1850a970ccebddc262_icgraph.png" border="0" usemap="#GLserver_8cpp_aeb4e5fa44c807e1850a970ccebddc262_icgraph" alt=""/></div>
+<map name="GLserver_8cpp_aeb4e5fa44c807e1850a970ccebddc262_icgraph" id="GLserver_8cpp_aeb4e5fa44c807e1850a970ccebddc262_icgraph">
+<area shape="rect" id="node2" href="GLserver_8cpp.html#abc3f753d52c6fd057897cf7306223de0" title="attack_chance" alt="" coords="147,31,253,57"/><area shape="rect" id="node3" href="GLserver_8cpp.html#a4ea013001a5fb47853d0fab8f8de35cd" title="display" alt="" coords="302,5,365,32"/><area shape="rect" id="node5" href="server_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="308,56,359,83"/><area shape="rect" id="node4" href="GLserver_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="413,5,464,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="aeef7d81e7e77dac24c2a568246b124b1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void assign_chartostring </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string &amp;&#160;</td>
+          <td class="paramname"><em>output</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><div class="dynheader">
+呼出しグラフ:</div>
+<div class="dyncontent">
+<div class="center"><img src="GLserver_8cpp_aeef7d81e7e77dac24c2a568246b124b1_icgraph.png" border="0" usemap="#GLserver_8cpp_aeef7d81e7e77dac24c2a568246b124b1_icgraph" alt=""/></div>
+<map name="GLserver_8cpp_aeef7d81e7e77dac24c2a568246b124b1_icgraph" id="GLserver_8cpp_aeef7d81e7e77dac24c2a568246b124b1_icgraph">
+<area shape="rect" id="node2" href="GLserver_8cpp.html#abc3f753d52c6fd057897cf7306223de0" title="attack_chance" alt="" coords="189,31,296,57"/><area shape="rect" id="node3" href="GLserver_8cpp.html#a4ea013001a5fb47853d0fab8f8de35cd" title="display" alt="" coords="345,5,407,32"/><area shape="rect" id="node5" href="server_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="351,68,401,95"/><area shape="rect" id="node4" href="GLserver_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="456,5,507,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a51462ec5051e682934a07647f9a9a354"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void assign_stringtochar </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>output</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><div class="dynheader">
+呼出しグラフ:</div>
+<div class="dyncontent">
+<div class="center"><img src="GLserver_8cpp_a51462ec5051e682934a07647f9a9a354_icgraph.png" border="0" usemap="#GLserver_8cpp_a51462ec5051e682934a07647f9a9a354_icgraph" alt=""/></div>
+<map name="GLserver_8cpp_a51462ec5051e682934a07647f9a9a354_icgraph" id="GLserver_8cpp_a51462ec5051e682934a07647f9a9a354_icgraph">
+<area shape="rect" id="node2" href="GLserver_8cpp.html#abc3f753d52c6fd057897cf7306223de0" title="attack_chance" alt="" coords="189,31,296,57"/><area shape="rect" id="node3" href="GLserver_8cpp.html#a4ea013001a5fb47853d0fab8f8de35cd" title="display" alt="" coords="345,5,407,32"/><area shape="rect" id="node5" href="server_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="351,68,401,95"/><area shape="rect" id="node4" href="GLserver_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="456,5,507,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="abc3f753d52c6fd057897cf7306223de0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool attack_chance </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>current_color</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classConsoleBoard.html">ConsoleBoard</a> &amp;&#160;</td>
+          <td class="paramname"><em>board</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>premove</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><div class="dynheader">
+関数の呼び出しグラフ:</div>
+<div class="dyncontent">
+<div class="center"><img src="GLserver_8cpp_abc3f753d52c6fd057897cf7306223de0_cgraph.png" border="0" usemap="#GLserver_8cpp_abc3f753d52c6fd057897cf7306223de0_cgraph" alt=""/></div>
+<map name="GLserver_8cpp_abc3f753d52c6fd057897cf7306223de0_cgraph" id="GLserver_8cpp_abc3f753d52c6fd057897cf7306223de0_cgraph">
+<area shape="rect" id="node2" href="GLserver_8cpp.html#a51462ec5051e682934a07647f9a9a354" title="assign_stringtochar" alt="" coords="165,5,299,32"/><area shape="rect" id="node3" href="GLserver_8cpp.html#a7708c3e29913bab93bd9f2d367cbe5ad" title="time_out" alt="" coords="196,56,268,83"/><area shape="rect" id="node4" href="GLserver_8cpp.html#aeef7d81e7e77dac24c2a568246b124b1" title="assign_chartostring" alt="" coords="165,107,299,133"/><area shape="rect" id="node5" href="classBoard.html#a8d62682a047b4105916e311eff53137d" title="Board::getColor" alt="" coords="357,309,470,336"/><area shape="rect" id="node6" href="GLserver_8cpp.html#aaa0cafeada99f578f88cd5a14706d37f" title="against_rules" alt="" coords="183,208,281,235"/><area shape="rect" id="node7" href="GLserver_8cpp.html#a4158a15f0f435cc16a6a4e56c88963a4" title="colombia" alt="" coords="195,259,269,285"/><area shape="rect" id="node8" href="classBoard.html#a1c469bee68cbeafdcd9ed4524dd888f0" title="Board::Reverse_disk" alt="" coords="160,309,304,336"/><area shape="rect" id="node9" href="GLserver_8cpp.html#aeb4e5fa44c807e1850a970ccebddc262" title="assign_char" alt="" coords="186,360,278,387"/><area shape="rect" id="node10" href="classBoard.html#ab647ccf386b7a788ec8a1e19616abf88" title="Board::isGameOver" alt="" coords="163,411,301,437"/><area shape="rect" id="node11" href="classConsoleBoard.html#a118f992ac0dc5c7e3379f90db3ec919e" title="ConsoleBoard::print" alt="" coords="163,461,301,488"/><area shape="rect" id="node12" href="GLserver_8cpp.html#a1cbb2b85a8d6e2bab2ad959291fc8f8a" title="draw_board" alt="" coords="187,512,277,539"/><area shape="rect" id="node14" href="classBoard.html#ab5205869c7109fbc533b61bb91c351a1" title="Board::countDisc" alt="" coords="352,588,475,615"/><area shape="rect" id="node15" href="GLserver_8cpp.html#a84203be816d62015ea31be725fee2847" title="GFprocess" alt="" coords="189,613,275,640"/><area shape="rect" id="node13" href="GLserver_8cpp.html#af76c3e534e9742528fc933c3362b95b9" title="draw_circle" alt="" coords="369,512,457,539"/></map>
+</div>
+</p>
+
+<p><div class="dynheader">
+呼出しグラフ:</div>
+<div class="dyncontent">
+<div class="center"><img src="GLserver_8cpp_abc3f753d52c6fd057897cf7306223de0_icgraph.png" border="0" usemap="#GLserver_8cpp_abc3f753d52c6fd057897cf7306223de0_icgraph" alt=""/></div>
+<map name="GLserver_8cpp_abc3f753d52c6fd057897cf7306223de0_icgraph" id="GLserver_8cpp_abc3f753d52c6fd057897cf7306223de0_icgraph">
+<area shape="rect" id="node2" href="GLserver_8cpp.html#a4ea013001a5fb47853d0fab8f8de35cd" title="display" alt="" coords="161,5,223,32"/><area shape="rect" id="node4" href="server_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="167,56,217,83"/><area shape="rect" id="node3" href="GLserver_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="272,5,323,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a4158a15f0f435cc16a6a4e56c88963a4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void colombia </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>answer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><div class="dynheader">
+呼出しグラフ:</div>
+<div class="dyncontent">
+<div class="center"><img src="GLserver_8cpp_a4158a15f0f435cc16a6a4e56c88963a4_icgraph.png" border="0" usemap="#GLserver_8cpp_a4158a15f0f435cc16a6a4e56c88963a4_icgraph" alt=""/></div>
+<map name="GLserver_8cpp_a4158a15f0f435cc16a6a4e56c88963a4_icgraph" id="GLserver_8cpp_a4158a15f0f435cc16a6a4e56c88963a4_icgraph">
+<area shape="rect" id="node2" href="GLserver_8cpp.html#abc3f753d52c6fd057897cf7306223de0" title="attack_chance" alt="" coords="128,31,235,57"/><area shape="rect" id="node3" href="GLserver_8cpp.html#a4ea013001a5fb47853d0fab8f8de35cd" title="display" alt="" coords="283,5,346,32"/><area shape="rect" id="node5" href="server_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="289,56,340,83"/><area shape="rect" id="node4" href="GLserver_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="395,5,445,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a4ea013001a5fb47853d0fab8f8de35cd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void display </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><div class="dynheader">
+関数の呼び出しグラフ:</div>
+<div class="dyncontent">
+<div class="center"><img src="GLserver_8cpp_a4ea013001a5fb47853d0fab8f8de35cd_cgraph.png" border="0" usemap="#GLserver_8cpp_a4ea013001a5fb47853d0fab8f8de35cd_cgraph" alt=""/></div>
+<map name="GLserver_8cpp_a4ea013001a5fb47853d0fab8f8de35cd_cgraph" id="GLserver_8cpp_a4ea013001a5fb47853d0fab8f8de35cd_cgraph">
+<area shape="rect" id="node2" href="classConsoleBoard.html#a118f992ac0dc5c7e3379f90db3ec919e" title="ConsoleBoard::print" alt="" coords="326,5,463,32"/><area shape="rect" id="node3" href="GLserver_8cpp.html#a1cbb2b85a8d6e2bab2ad959291fc8f8a" title="draw_board" alt="" coords="350,411,439,437"/><area shape="rect" id="node6" href="classBoard.html#ab5205869c7109fbc533b61bb91c351a1" title="Board::countDisc" alt="" coords="515,512,637,539"/><area shape="rect" id="node7" href="classBoard.html#ac468171c7b66cbef38ca652ae9fd87e2" title="Board::getCurrentColor" alt="" coords="118,715,274,741"/><area shape="rect" id="node8" href="GLserver_8cpp.html#a0985129db4548d271ec55a4bcb2bcfbb" title="kodama" alt="" coords="162,765,230,792"/><area shape="rect" id="node9" href="GLserver_8cpp.html#abc3f753d52c6fd057897cf7306223de0" title="attack_chance" alt="" coords="143,335,249,361"/><area shape="rect" id="node10" href="GLserver_8cpp.html#a51462ec5051e682934a07647f9a9a354" title="assign_stringtochar" alt="" coords="327,56,462,83"/><area shape="rect" id="node11" href="GLserver_8cpp.html#a7708c3e29913bab93bd9f2d367cbe5ad" title="time_out" alt="" coords="359,107,431,133"/><area shape="rect" id="node12" href="GLserver_8cpp.html#aeef7d81e7e77dac24c2a568246b124b1" title="assign_chartostring" alt="" coords="327,157,462,184"/><area shape="rect" id="node19" href="classBoard.html#abd1e908acdc23e225fdc552f42bbcd22" title="Board::pass" alt="" coords="150,816,242,843"/><area shape="rect" id="node13" href="GLserver_8cpp.html#aaa0cafeada99f578f88cd5a14706d37f" title="against_rules" alt="" coords="345,563,444,589"/><area shape="rect" id="node17" href="classBoard.html#ab647ccf386b7a788ec8a1e19616abf88" title="Board::isGameOver" alt="" coords="326,613,463,640"/><area shape="rect" id="node18" href="GLserver_8cpp.html#a84203be816d62015ea31be725fee2847" title="GFprocess" alt="" coords="351,512,438,539"/><area shape="rect" id="node20" href="classBoard.html#a38b005dbbb7e0b4101f10cad7b0f83fe" title="Board::move" alt="" coords="148,867,244,893"/><area shape="rect" id="node21" href="classBoard.html#a066d49b1cfdb87768a40e56cb8a5df01" title="Board::getTurns" alt="" coords="139,917,253,944"/><area shape="rect" id="node4" href="classBoard.html#a8d62682a047b4105916e311eff53137d" title="Board::getColor" alt="" coords="519,309,633,336"/><area shape="rect" id="node5" href="GLserver_8cpp.html#af76c3e534e9742528fc933c3362b95b9" title="draw_circle" alt="" coords="532,411,620,437"/><area shape="rect" id="node14" href="GLserver_8cpp.html#a4158a15f0f435cc16a6a4e56c88963a4" title="colombia" alt="" coords="357,309,432,336"/><area shape="rect" id="node15" href="classBoard.html#a1c469bee68cbeafdcd9ed4524dd888f0" title="Board::Reverse_disk" alt="" coords="323,360,467,387"/><area shape="rect" id="node16" href="GLserver_8cpp.html#aeb4e5fa44c807e1850a970ccebddc262" title="assign_char" alt="" coords="349,208,441,235"/></map>
+</div>
+</p>
+
+<p><div class="dynheader">
+呼出しグラフ:</div>
+<div class="dyncontent">
+<div class="center"><img src="GLserver_8cpp_a4ea013001a5fb47853d0fab8f8de35cd_icgraph.png" border="0" usemap="#GLserver_8cpp_a4ea013001a5fb47853d0fab8f8de35cd_icgraph" alt=""/></div>
+<map name="GLserver_8cpp_a4ea013001a5fb47853d0fab8f8de35cd_icgraph" id="GLserver_8cpp_a4ea013001a5fb47853d0fab8f8de35cd_icgraph">
+<area shape="rect" id="node2" href="GLserver_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="117,5,168,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a1cbb2b85a8d6e2bab2ad959291fc8f8a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void draw_board </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classBoard.html">Board</a>&#160;</td>
+          <td class="paramname"><em>board</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><div class="dynheader">
+関数の呼び出しグラフ:</div>
+<div class="dyncontent">
+<div class="center"><img src="GLserver_8cpp_a1cbb2b85a8d6e2bab2ad959291fc8f8a_cgraph.png" border="0" usemap="#GLserver_8cpp_a1cbb2b85a8d6e2bab2ad959291fc8f8a_cgraph" alt=""/></div>
+<map name="GLserver_8cpp_a1cbb2b85a8d6e2bab2ad959291fc8f8a_cgraph" id="GLserver_8cpp_a1cbb2b85a8d6e2bab2ad959291fc8f8a_cgraph">
+<area shape="rect" id="node2" href="classBoard.html#a8d62682a047b4105916e311eff53137d" title="Board::getColor" alt="" coords="145,5,258,32"/><area shape="rect" id="node3" href="GLserver_8cpp.html#af76c3e534e9742528fc933c3362b95b9" title="draw_circle" alt="" coords="157,56,245,83"/></map>
+</div>
+</p>
+
+<p><div class="dynheader">
+呼出しグラフ:</div>
+<div class="dyncontent">
+<div class="center"><img src="GLserver_8cpp_a1cbb2b85a8d6e2bab2ad959291fc8f8a_icgraph.png" border="0" usemap="#GLserver_8cpp_a1cbb2b85a8d6e2bab2ad959291fc8f8a_icgraph" alt=""/></div>
+<map name="GLserver_8cpp_a1cbb2b85a8d6e2bab2ad959291fc8f8a_icgraph" id="GLserver_8cpp_a1cbb2b85a8d6e2bab2ad959291fc8f8a_icgraph">
+<area shape="rect" id="node2" href="GLserver_8cpp.html#abc3f753d52c6fd057897cf7306223de0" title="attack_chance" alt="" coords="144,56,251,83"/><area shape="rect" id="node3" href="GLserver_8cpp.html#a4ea013001a5fb47853d0fab8f8de35cd" title="display" alt="" coords="299,5,362,32"/><area shape="rect" id="node5" href="server_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="305,56,356,83"/><area shape="rect" id="node4" href="GLserver_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="411,5,461,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="af76c3e534e9742528fc933c3362b95b9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void draw_circle </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>xpos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ypos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a>&#160;</td>
+          <td class="paramname"><em>color</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><div class="dynheader">
+呼出しグラフ:</div>
+<div class="dyncontent">
+<div class="center"><img src="GLserver_8cpp_af76c3e534e9742528fc933c3362b95b9_icgraph.png" border="0" usemap="#GLserver_8cpp_af76c3e534e9742528fc933c3362b95b9_icgraph" alt=""/></div>
+<map name="GLserver_8cpp_af76c3e534e9742528fc933c3362b95b9_icgraph" id="GLserver_8cpp_af76c3e534e9742528fc933c3362b95b9_icgraph">
+<area shape="rect" id="node2" href="GLserver_8cpp.html#a1cbb2b85a8d6e2bab2ad959291fc8f8a" title="draw_board" alt="" coords="142,31,231,57"/><area shape="rect" id="node3" href="GLserver_8cpp.html#abc3f753d52c6fd057897cf7306223de0" title="attack_chance" alt="" coords="280,56,387,83"/><area shape="rect" id="node4" href="GLserver_8cpp.html#a4ea013001a5fb47853d0fab8f8de35cd" title="display" alt="" coords="435,5,498,32"/><area shape="rect" id="node6" href="server_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="441,56,492,83"/><area shape="rect" id="node5" href="GLserver_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="547,5,597,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a84203be816d62015ea31be725fee2847"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GFprocess </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classConsoleBoard.html">ConsoleBoard</a> &amp;&#160;</td>
+          <td class="paramname"><em>board</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><div class="dynheader">
+関数の呼び出しグラフ:</div>
+<div class="dyncontent">
+<div class="center"><img src="GLserver_8cpp_a84203be816d62015ea31be725fee2847_cgraph.png" border="0" usemap="#GLserver_8cpp_a84203be816d62015ea31be725fee2847_cgraph" alt=""/></div>
+<map name="GLserver_8cpp_a84203be816d62015ea31be725fee2847_cgraph" id="GLserver_8cpp_a84203be816d62015ea31be725fee2847_cgraph">
+<area shape="rect" id="node2" href="classBoard.html#ab5205869c7109fbc533b61bb91c351a1" title="Board::countDisc" alt="" coords="141,5,264,32"/></map>
+</div>
+</p>
+
+<p><div class="dynheader">
+呼出しグラフ:</div>
+<div class="dyncontent">
+<div class="center"><img src="GLserver_8cpp_a84203be816d62015ea31be725fee2847_icgraph.png" border="0" usemap="#GLserver_8cpp_a84203be816d62015ea31be725fee2847_icgraph" alt=""/></div>
+<map name="GLserver_8cpp_a84203be816d62015ea31be725fee2847_icgraph" id="GLserver_8cpp_a84203be816d62015ea31be725fee2847_icgraph">
+<area shape="rect" id="node2" href="GLserver_8cpp.html#abc3f753d52c6fd057897cf7306223de0" title="attack_chance" alt="" coords="141,31,248,57"/><area shape="rect" id="node3" href="GLserver_8cpp.html#a4ea013001a5fb47853d0fab8f8de35cd" title="display" alt="" coords="297,5,359,32"/><area shape="rect" id="node5" href="server_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="303,68,353,95"/><area shape="rect" id="node4" href="GLserver_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="408,5,459,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a0985129db4548d271ec55a4bcb2bcfbb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void kodama </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><div class="dynheader">
+呼出しグラフ:</div>
+<div class="dyncontent">
+<div class="center"><img src="GLserver_8cpp_a0985129db4548d271ec55a4bcb2bcfbb_icgraph.png" border="0" usemap="#GLserver_8cpp_a0985129db4548d271ec55a4bcb2bcfbb_icgraph" alt=""/></div>
+<map name="GLserver_8cpp_a0985129db4548d271ec55a4bcb2bcfbb_icgraph" id="GLserver_8cpp_a0985129db4548d271ec55a4bcb2bcfbb_icgraph">
+<area shape="rect" id="node2" href="GLserver_8cpp.html#a4ea013001a5fb47853d0fab8f8de35cd" title="display" alt="" coords="123,5,186,32"/><area shape="rect" id="node4" href="server_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="129,56,180,83"/><area shape="rect" id="node3" href="GLserver_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="235,5,285,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a0ddf1224851353fc92bfbff6f499fa97"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>argc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>argv</em>[]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><div class="dynheader">
+関数の呼び出しグラフ:</div>
+<div class="dyncontent">
+<div class="center"><img src="GLserver_8cpp_a0ddf1224851353fc92bfbff6f499fa97_cgraph.png" border="0" usemap="#GLserver_8cpp_a0ddf1224851353fc92bfbff6f499fa97_cgraph" alt=""/></div>
+<map name="GLserver_8cpp_a0ddf1224851353fc92bfbff6f499fa97_cgraph" id="GLserver_8cpp_a0ddf1224851353fc92bfbff6f499fa97_cgraph">
+<area shape="rect" id="node2" href="GLserver_8cpp.html#a4ea013001a5fb47853d0fab8f8de35cd" title="display" alt="" coords="105,563,167,589"/><area shape="rect" id="node3" href="classConsoleBoard.html#a118f992ac0dc5c7e3379f90db3ec919e" title="ConsoleBoard::print" alt="" coords="425,5,562,32"/><area shape="rect" id="node4" href="GLserver_8cpp.html#a1cbb2b85a8d6e2bab2ad959291fc8f8a" title="draw_board" alt="" coords="449,411,538,437"/><area shape="rect" id="node7" href="classBoard.html#ab5205869c7109fbc533b61bb91c351a1" title="Board::countDisc" alt="" coords="613,512,736,539"/><area shape="rect" id="node8" href="classBoard.html#ac468171c7b66cbef38ca652ae9fd87e2" title="Board::getCurrentColor" alt="" coords="217,715,373,741"/><area shape="rect" id="node9" href="GLserver_8cpp.html#a0985129db4548d271ec55a4bcb2bcfbb" title="kodama" alt="" coords="261,765,329,792"/><area shape="rect" id="node10" href="GLserver_8cpp.html#abc3f753d52c6fd057897cf7306223de0" title="attack_chance" alt="" coords="241,335,348,361"/><area shape="rect" id="node11" href="GLserver_8cpp.html#a51462ec5051e682934a07647f9a9a354" title="assign_stringtochar" alt="" coords="426,56,561,83"/><area shape="rect" id="node12" href="GLserver_8cpp.html#a7708c3e29913bab93bd9f2d367cbe5ad" title="time_out" alt="" coords="457,107,529,133"/><area shape="rect" id="node13" href="GLserver_8cpp.html#aeef7d81e7e77dac24c2a568246b124b1" title="assign_chartostring" alt="" coords="426,157,561,184"/><area shape="rect" id="node20" href="classBoard.html#abd1e908acdc23e225fdc552f42bbcd22" title="Board::pass" alt="" coords="249,816,341,843"/><area shape="rect" id="node14" href="GLserver_8cpp.html#aaa0cafeada99f578f88cd5a14706d37f" title="against_rules" alt="" coords="444,563,543,589"/><area shape="rect" id="node18" href="classBoard.html#ab647ccf386b7a788ec8a1e19616abf88" title="Board::isGameOver" alt="" coords="425,613,562,640"/><area shape="rect" id="node19" href="GLserver_8cpp.html#a84203be816d62015ea31be725fee2847" title="GFprocess" alt="" coords="450,512,537,539"/><area shape="rect" id="node21" href="classBoard.html#a38b005dbbb7e0b4101f10cad7b0f83fe" title="Board::move" alt="" coords="247,867,343,893"/><area shape="rect" id="node22" href="classBoard.html#a066d49b1cfdb87768a40e56cb8a5df01" title="Board::getTurns" alt="" coords="237,917,352,944"/><area shape="rect" id="node5" href="classBoard.html#a8d62682a047b4105916e311eff53137d" title="Board::getColor" alt="" coords="618,309,731,336"/><area shape="rect" id="node6" href="GLserver_8cpp.html#af76c3e534e9742528fc933c3362b95b9" title="draw_circle" alt="" coords="631,411,719,437"/><area shape="rect" id="node15" href="GLserver_8cpp.html#a4158a15f0f435cc16a6a4e56c88963a4" title="colombia" alt="" coords="456,309,531,336"/><area shape="rect" id="node16" href="classBoard.html#a1c469bee68cbeafdcd9ed4524dd888f0" title="Board::Reverse_disk" alt="" coords="421,360,565,387"/><area shape="rect" id="node17" href="GLserver_8cpp.html#aeb4e5fa44c807e1850a970ccebddc262" title="assign_char" alt="" coords="447,208,539,235"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a16c222f303e4df1add09f03a1626f9e9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ostream&amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structPoint.html">Point</a> &amp;&#160;</td>
+          <td class="paramname"><em>p</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a7708c3e29913bab93bd9f2d367cbe5ad"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void time_out </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a>&#160;</td>
+          <td class="paramname"><em>current_color</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><div class="dynheader">
+呼出しグラフ:</div>
+<div class="dyncontent">
+<div class="center"><img src="GLserver_8cpp_a7708c3e29913bab93bd9f2d367cbe5ad_icgraph.png" border="0" usemap="#GLserver_8cpp_a7708c3e29913bab93bd9f2d367cbe5ad_icgraph" alt=""/></div>
+<map name="GLserver_8cpp_a7708c3e29913bab93bd9f2d367cbe5ad_icgraph" id="GLserver_8cpp_a7708c3e29913bab93bd9f2d367cbe5ad_icgraph">
+<area shape="rect" id="node2" href="GLserver_8cpp.html#abc3f753d52c6fd057897cf7306223de0" title="attack_chance" alt="" coords="125,31,232,57"/><area shape="rect" id="node3" href="GLserver_8cpp.html#a4ea013001a5fb47853d0fab8f8de35cd" title="display" alt="" coords="281,5,343,32"/><area shape="rect" id="node5" href="server_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="287,68,337,95"/><area shape="rect" id="node4" href="GLserver_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="392,5,443,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<h2 class="groupheader">変数</h2>
+<a class="anchor" id="af00b615ca097c43dbb02ae3a00ea3a62"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char buffer[<a class="el" href="server_8cpp.html#a6b20d41d6252e9871430c242cb1a56e7">BUFFER_SIZE</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a0dce57549da92c38d38ae6463950c2fd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char ClientIP[<a class="el" href="server_8cpp.html#a3d90f59dd66d481a7e69c00d23adb576">PLAYERNUM</a>][80] ={&quot;160.12.172.6&quot;,&quot;160.12.172.6&quot;}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a2118152c26ccb43559ab9a376ef768a3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct sockaddr_in dstAddr[<a class="el" href="server_8cpp.html#a3d90f59dd66d481a7e69c00d23adb576">PLAYERNUM</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a76c8e6d8a86c3ae0ad1a2a55da85414d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int dstAddrSize[<a class="el" href="server_8cpp.html#a3d90f59dd66d481a7e69c00d23adb576">PLAYERNUM</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aab0b9178764ea297826b20a363b6f834"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int dstSocket[<a class="el" href="server_8cpp.html#a3d90f59dd66d481a7e69c00d23adb576">PLAYERNUM</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a1fcc2b32d2481a8618338fde53cc4f97"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int flagforPS =0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a328e670b31dc7798f89566f475a54243"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int numrcv[<a class="el" href="server_8cpp.html#a3d90f59dd66d481a7e69c00d23adb576">PLAYERNUM</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a95c0224914598e89b36297dd30ff7ecc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned short port[<a class="el" href="server_8cpp.html#a3d90f59dd66d481a7e69c00d23adb576">PLAYERNUM</a>] ={9800,9810}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a5168be4271116b5d0ab173cb98aee431"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int status[<a class="el" href="server_8cpp.html#a3d90f59dd66d481a7e69c00d23adb576">PLAYERNUM</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a5753f7448f89841c9489d1241bc3487d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char Teaminfo[20]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a1715c256bfc708d917247830af7c3795"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char TeamName[<a class="el" href="server_8cpp.html#a3d90f59dd66d481a7e69c00d23adb576">PLAYERNUM</a>][40]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+作成： &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.5
+</small></address>
+</body>
+</html>

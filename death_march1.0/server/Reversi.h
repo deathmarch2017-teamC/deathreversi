@@ -24,91 +24,97 @@ struct Point
   int x;
   int y;
   unsigned char flag;
-	Point()
-	{
-		Point(0, 0);
-	}
+  Point()
+  {
+    Point(0, 0);
+  }
 	
-	Point(int x, int y)
-	{
-		this->x = x;
-		this->y = y;
-	}
-	
-	Point(std::string coordstr) throw(std::invalid_argument)
-	{
-	  if(coordstr.length() < 3){
-	    throw std::invalid_argument("The argument must be Reversi style coordinates!");
-	  }
-		
-		x = coordstr[0] - 'a'+1;
-		y = 10*(coordstr[1] - '1'+1) +  coordstr[2] - '1' +1;
-		flag = coordstr[3];
-	}
-	
-	operator std::string() const
-	{
-		std::ostringstream oss;
-		oss << static_cast<char>('a'+x-1) << static_cast<char>('1'+y-1);
-		
-		return oss.str();
-	}
+  Point(int x, int y)
+  {
+    this->x = x;
+    this->y = y;
+  }
+  Point(int x, int y, int flag)
+  {
+    this->x = x;
 
-	bool operator==(const Point& p) const
-	{
-		if(x != p.x) return false;
-		if(y != p.y) return false;
+  }
+	
+  Point(std::string coordstr) throw(std::invalid_argument)
+  {
+    if(coordstr.length() < 3){
+      throw std::invalid_argument("The argument must be Reversi style coordinates!");
+    }
 		
-		return true;
-	}
+    x = coordstr[0] - 'a'+1;
+    y = 10*(coordstr[1] - '1'+1) +  coordstr[2] - '1' +1;
+    flag = coordstr[3];
+  }
+	
+  operator std::string() const
+  {
+    std::ostringstream oss;
+    oss << static_cast<char>('a'+x-1) << static_cast<char>('1'+y-1);
+		
+    return oss.str();
+  }
+
+  bool operator==(const Point& p) const
+  {
+    if(x != p.x) return false;
+    if(y != p.y) return false;
+		
+    return true;
+  }
 };
 /*
-bool operator==(const Point& lhs, const Point& rhs)
-{
-	if(lhs.x != rhs.x) return false;
-	if(lhs.y != rhs.y) return false;
+  bool operator==(const Point& lhs, const Point& rhs)
+  {
+  if(lhs.x != rhs.x) return false;
+  if(lhs.y != rhs.y) return false;
 	
-	return true;
-}*/
+  return true;
+  }*/
 
 struct Disc : public Point
 {
-	Color color;
+  Color color;
 
-	Disc() : Point(0, 0)
-	{
-		color = EMPTY;
-	}
+ Disc() : Point(0, 0)
+    {
+      color = EMPTY;
+    }
 
-	Disc(int x, int y, Color color) : Point(x, y)
-	{
-		this->color = color;
-	}
+ Disc(int x, int y, Color color) : Point(x, y)
+    {
+      this->color = color;
+    }
 };
 
 template<typename T> class ColorStorage
 {
-	T data[3];
-public:
-	T& operator[](int color)
-	{
-		return data[color+1];
-	}
+  T data[3];
+ public:
+  T& operator[](int color)
+    {
+      return data[color+1];
+    }
 
-	const T& operator[](int color) const
-	{
-		return data[color+1];
-	}
+  const T& operator[](int color) const
+  {
+    return data[color+1];
+  }
 
-	ColorStorage<T>& operator +=(const ColorStorage<T> &src)
-	{
-		data[0] += src.data[0];
-		data[1] += src.data[1];
-		data[2] += src.data[2];
+  ColorStorage<T>& operator +=(const ColorStorage<T> &src)
+    {
+      data[0] += src.data[0];
+      data[1] += src.data[1];
+      data[2] += src.data[2];
 
-		return *this;
-	}
+      return *this;
+    }
 
 };
 
 #endif
+
