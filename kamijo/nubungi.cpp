@@ -1,6 +1,6 @@
 /* @file
- @brief minimax$BK!<BAuESCf(B
- @author $B>e[j(B
+ @brief minimax法実装途中
+ @author 上條
  @date 2017.5.29
 */
 
@@ -9,7 +9,7 @@
 #include <cstdlib>
 
 
-/*! @brief $B%3%s%9%H%i%/%?(B
+/*! @brief コンストラクタ
 */
 
 Reversi_AI_Random::Reversi_AI_Random()
@@ -18,17 +18,17 @@ Reversi_AI_Random::Reversi_AI_Random()
   srand(time(NULL));
 }
 
-/*! @brief $B<!$N<j$rJV$94X?t(B
- @param[in] board $BHWLL>pJs(B
- @param[in] flagin $B%5!<%P$+$i<u?.$7$?%U%i%0(B
- @param[out] x $B<!$N<j$N(Bx$B:BI8(B
- @param[out] y $B<!$N<j$N(By$B:BI8(B
- @param[out] flagout $B%5!<%P$XAw?.$9$k%U%i%0>pJs(B
+/*! @brief 次の手を返す関数
+ @param[in] board 盤面情報
+ @param[in] flagin サーバから受信したフラグ
+ @param[out] x 次の手のx座標
+ @param[out] y 次の手のy座標
+ @param[out] flagout サーバへ送信するフラグ情報
 */
 
 
 
-//$BI>2A4X?t%[%2%[%2(B
+//評価関数ホゲホゲ
 int hogehoge()
 {
   int r;
@@ -53,26 +53,26 @@ void Reversi_AI_Random::return_move(Board board, int flagin, int &x, int &y, int
     }
     else
       {
-	//$BC5:w$N?<$5(B
+	//探索の深さ
 	int limit = 2;
 
-	//$B<+J,$N<j$rD4$Y$k4X?t(B
+	//自分の手を調べる関数
 	int maxlevel(int limit)
 	{
 	  if(limit == 0)
-	    //$BI>2ACM$rJV$9(B
+	    //評価値を返す
 	    return hogehoge();
 
-	  //$BBG$D<j$rA48!:w(B
+	  //打つ手を全検索
 	  std::vector<Point>points = board.getMovable();
 	  Point p = points;
 	  for(Point p : p )
 		     {
 		       int score , score_max;
-		       //$B<+J,$N<j$rBG$D(B
+		       //自分の手を打つ
 		       move(Point p);
 		       score = minleve(limit-1);
-		       //$B#1$DA0$N<j$KLa$9(B
+		       //１つ前の手に戻す
 		       undo();
 		       if(score > score_max)
 			 {
@@ -84,23 +84,23 @@ void Reversi_AI_Random::return_move(Board board, int flagin, int &x, int &y, int
 
 
 
-	//$BAj<j$N<j$rD4$Y$k4X?t(B
+	//相手の手を調べる関数
 	int minleverl(int limit)
 	{
 	  if(limit == 0)
-	    //$BI>2ACM$rJV$9(B
+	    //評価値を返す
 	    return hogehoge();
 
-	  //$BBG$D<j$rA48!:w(B
+	  //打つ手を全検索
 	  std::vector<Point>points = board.getMovable();
 	  Point p = points;
 	  for(Point p : p )
 		     {
 		       int score , score_min;
-		       //$B<+J,$N<j$rBG$D(B
+		       //自分の手を打つ
 		       move(Point p);
 		       score = maxleve(limit-1);
-		       //$B#1$DA0$N<j$KLa$9(B
+		       //１つ前の手に戻す
 		       undo();
 		       if(score > score_max)
 			 {
