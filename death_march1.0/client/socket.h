@@ -20,5 +20,5 @@
 bool set_socket(char* ip_addr, int port);
 bool send_func(char* BUF);
 bool recv_func(char* BUF);
-void close_socket();
+int close_socket();
 #endif

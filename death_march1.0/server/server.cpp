@@ -454,82 +454,92 @@ main() {
       }
 	
     //point に変換
-      try
-	{
-	  Point parse(in);
-	  p = parse;
-	}
+    try
+      {
+	Point parse(in);
+	p = parse;
+      }
       
-      //間違った入力
-      catch(invalid_argument e)
-	{
-	  cerr <<"wrong your input" << endl;
-	  against_rules(current_color);
-	  continue;
-	}
-      
-      //おけない場所
-      if(board.move(p) == false)
-	{
-	  cerr << "you can't move the place" << endl;
-	  against_rules(current_color);
-	  continue;
-	}
-      
-      premove = in;
-
-
-      //test mtflag
-      if((p.flag & MTFLAG) == MTFLAG){
-	if( (current_color == WHITE) && (mt_status_WHITE == true)){//もしMTFLAGが同じプレイヤーで二度あったら違反 flagによりcurrentcolorはそのままでよい
-	  against_rules(current_color);
-	}
-	else if( (current_color == BLACK) && (mt_status_BLACK == true)){
-	  against_rules(current_color);
-	}
-	else if(board.getTurns()<10){
-	  against_rules(current_color);	  
-	}
-	cout<<"Still my turn!!!!!!!!!"<<endl;
-      
-	if(current_color==WHITE){
-	  mt_status_WHITE=true;
-	}
-	else{
-	  mt_status_BLACK=true;
-	}
-	premove[3]= MTFLAG;
-	//mtかつps
-	if(flagforPS == true){
-	  premove[3]=MTFLAG | PSFLAG;
-	}
-
-     	//**********************通信ポイント*******************
-	char send_data[DATASIZE];
-	assign_stringtochar(premove, send_data);
-	if(current_color==BLACK){
-	  if(TIME_LIMIT == send(dstSocket[WHITESOCKET], send_data,strlen(send_data)+1,0)) time_out(current_color);
-	}else{
-	  if(TIME_LIMIT == send(dstSocket[BLACKSOCKET], send_data,strlen(send_data)+1,0)) time_out(current_color);
-	}
-	premove[0]='0';
-	premove[1]='0';
-	premove[2]='0';
-      	premove[3]=0;
+    //間違った入力
+    catch(invalid_argument e)
+      {
+	cerr <<"wrong your input" << endl;
+	against_rules(current_color);
 	continue;
       }
       
+    //おけない場所
+    if(board.move(p) == false)
+      {
+	cerr << "you can't move the place" << endl;
+	against_rules(current_color);
+	continue;
+      }
+      
+    premove = in;
 
-      if(board.isGameOver())
-	{
-	  board.print();
-	  cout << "Black Disk:" << board.countDisc(BLACK) << " ";
-	  cout << "White Disk:" << board.countDisc(WHITE) << " ";
-	  cout << "Empty:" << board.countDisc(EMPTY) << endl;
-	  GFprocess(board);
-	  break;
-	}
+
+    //test mtflag
+    if((p.flag & MTFLAG) == MTFLAG){
+      if( (current_color == WHITE) && (mt_status_WHITE == true)){//もしMTFLAGが同じプレイヤーで二度あったら違反 flagによりcurrentcolorはそのままでよい
+	against_rules(current_color);
+      }
+      else if( (current_color == BLACK) && (mt_status_BLACK == true)){
+	against_rules(current_color);
+      }
+      else if(board.getTurns()<10){
+	against_rules(current_color);	  
+      }
+      cout<<"Still my turn!!!!!!!!!"<<endl;
+      
+      if(current_color==WHITE){
+	mt_status_WHITE=true;
+      }
+      else{
+	mt_status_BLACK=true;
+      }
+      premove[3]= MTFLAG;
+      //mtかつps
+      if(flagforPS == true){
+	premove[3]=MTFLAG | PSFLAG;
+      }
+
+      //**********************通信ポイント*******************
+      char send_data[DATASIZE];
+      assign_stringtochar(premove, send_data);
+      if(current_color==BLACK){
+	if(TIME_LIMIT == send(dstSocket[WHITESOCKET], send_data,strlen(send_data)+1,0)) time_out(current_color);
+      }else{
+	if(TIME_LIMIT == send(dstSocket[BLACKSOCKET], send_data,strlen(send_data)+1,0)) time_out(current_color);
+      }
+      premove[0]='0';
+      premove[1]='0';
+      premove[2]='0';
+      premove[3]=0;
+      continue;
     }
+      
+
+    if(board.isGameOver())
+      {
+	board.print();
+	cout << "Black Disk:" << board.countDisc(BLACK) << " ";
+	cout << "White Disk:" << board.countDisc(WHITE) << " ";
+	cout << "Empty:" << board.countDisc(EMPTY) << endl;
+	GFprocess(board);
+	break;
+      }
+  }
   
+  if(close(dstSocket[BLACKSOCKET])<0){
+    cerr << "close BLACKSOCKET miss" << endl;
+  }else{
+    cout << "BLACKSOCKET closed !" << endl;
+  }
+  if(close(dstSocket[WHITESOCKET])<0){
+    cerr << "close WHITESOCKET miss" << endl;
+  }else{
+    cout << "WHITESOCKET closed !" << endl;
+  }
 }
 

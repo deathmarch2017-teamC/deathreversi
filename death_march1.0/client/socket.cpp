@@ -50,6 +50,6 @@ bool recv_func(char* buf){
   return true;
 }
 
-void close_socket(){
-  close(serverSock);
+int close_socket(){
+  return close(serverSock);
 }

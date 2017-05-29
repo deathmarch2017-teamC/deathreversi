@@ -67,15 +67,23 @@ int board_update(Board &board){
       cerr <<"wrong input" << endl;
     }
   cout << "p.x:" << p.x << " p.y:" << p.y << endl;
-  if(p.x == 0 && p.y == 0){
+  if(((int)in[FLAGNUM] & ARFLAG) != 0){
+    cout << "AC board update" << endl;
+    cout << "in[FLAGNAM]:" << (int)in[FLAGNUM] << endl;
+    board.Reverse_disk(p, board.getCurrentColor());
+    return (int)in[FLAGNUM];
+
+  }else if(((int)in[FLAGNUM] & PSFLAG) != 0){
+    cout << "PS board update" << endl;
+    cout << "in[FLAGNAM]:" << (int)in[FLAGNUM] << endl;
+    board.pass();
+    return (int)in[FLAGNUM];
+
+  }else if(p.x == -48 && p.y == 0){
     cout << "board update skip" << endl;
     cout << "in[FLAGNAM]:" << (int)in[FLAGNUM] << endl;
     return (int)in[FLAGNUM];
 
-  }else if(((int)in[FLAGNUM] & ARFLAG) != 0){
-    cout << "AC board update" << endl;
-    board.Reverse_disk(p, board.getCurrentColor());
-    return (int)in[FLAGNUM];
   }
   if(board.move(p) == false){
     cerr << "board update miss" << endl;
@@ -89,5 +97,5 @@ void move_gen(char* move, int x, int y, int flag){
   move[1] = (y/10)+'1'-1;
   move[2] = (y%10)+'1'-1;
   move[3] = flag;
-  cout << move << endl;
+  cout << "move_gen: " << move << endl;
 }
