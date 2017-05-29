@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.5"/>
+<title>deathreversi: クラス ConsoleBoard</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">deathreversi
+   &#160;<span id="projectnumber">1.0.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 作成： Doxygen 1.8.5 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'検索');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>メインページ</span></a></li>
+      <li class="current"><a href="annotated.html"><span>クラス</span></a></li>
+      <li><a href="files.html"><span>ファイル</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>構成</span></a></li>
+      <li><a href="classes.html"><span>構成索引</span></a></li>
+      <li><a href="inherits.html"><span>クラス階層</span></a></li>
+      <li><a href="functions.html"><span>構成メンバ</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>全て</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>クラス</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>ファイル</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>関数</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>変数</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>型定義</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>マクロ定義</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public メソッド</a> &#124;
+<a href="classConsoleBoard-members.html">すべてのメンバ一覧</a>  </div>
+  <div class="headertitle">
+<div class="title">クラス ConsoleBoard</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="GLserver_2GameMaster_8h_source.html">GameMaster.h</a>&gt;</code></p>
+<div class="dynheader">
+ConsoleBoardに対する継承グラフ</div>
+<div class="dyncontent">
+<div class="center"><img src="classConsoleBoard__inherit__graph.png" border="0" usemap="#ConsoleBoard_inherit__map" alt="Inheritance graph"/></div>
+<map name="ConsoleBoard_inherit__map" id="ConsoleBoard_inherit__map">
+<area shape="rect" id="node2" href="classBoard.html" title="{Board\n|&#45; RawBoard\l&#45; Turns\l&#45; CurrentColor\l&#45; UpdateLog\l&#45; MovablePos\l&#45; MovableDir\l&#45; Liberty\l&#45; Discs\l&#45; NONE\l&#45; UPPER\l&#45; UPPER_LEFT\l&#45; LEFT\l&#45; LOWER_LEFT\l&#45; LOWER\l&#45; LOWER_RIGHT\l&#45; RIGHT\l&#45; UPPER_RIGHT\l|+ Board()\l+ init()\l+ move()\l+ pass()\l+ undo()\l+ isGameOver()\l+ countDisc()\l+ getColor()\l+ getMovablePos()\l+ getUpdate()\land 20 more...\l&#45; flipDiscs()\l&#45; checkMobility()\l&#45; initMovable()\l&#45; flipDiscs()\l&#45; checkMobility()\l&#45; initMovable()\l}" alt="" coords="5,5,136,552"/></map>
+</div>
+<div class="dynheader">
+ConsoleBoardのコラボレーション図</div>
+<div class="dyncontent">
+<div class="center"><img src="classConsoleBoard__coll__graph.png" border="0" usemap="#ConsoleBoard_coll__map" alt="Collaboration graph"/></div>
+<map name="ConsoleBoard_coll__map" id="ConsoleBoard_coll__map">
+<area shape="rect" id="node2" href="classBoard.html" title="{Board\n|&#45; RawBoard\l&#45; Turns\l&#45; CurrentColor\l&#45; UpdateLog\l&#45; MovablePos\l&#45; MovableDir\l&#45; Liberty\l&#45; NONE\l&#45; UPPER\l&#45; UPPER_LEFT\l&#45; LEFT\l&#45; LOWER_LEFT\l&#45; LOWER\l&#45; LOWER_RIGHT\l&#45; RIGHT\l&#45; UPPER_RIGHT\l|+ Board()\l+ init()\l+ move()\l+ pass()\l+ undo()\l+ isGameOver()\l+ countDisc()\l+ getColor()\l+ getMovablePos()\l+ getUpdate()\land 20 more...\l&#45; flipDiscs()\l&#45; checkMobility()\l&#45; initMovable()\l&#45; flipDiscs()\l&#45; checkMobility()\l&#45; initMovable()\l}" alt="" coords="26,222,157,754"/><area shape="rect" id="node3" href="classColorStorage.html" title="{ColorStorage\&lt; unsigned \&gt;\n|&#45; data\l|+ operator[]()\l+ operator[]()\l+ operator[]()\l+ operator[]()\l+ operator+=()\l+ operator+=()\l}" alt="" coords="5,6,179,157"/></map>
+</div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public メソッド</h2></td></tr>
+<tr class="memitem:a118f992ac0dc5c7e3379f90db3ec919e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConsoleBoard.html#a118f992ac0dc5c7e3379f90db3ec919e">print</a> ()</td></tr>
+<tr class="separator:a118f992ac0dc5c7e3379f90db3ec919e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a118f992ac0dc5c7e3379f90db3ec919e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConsoleBoard.html#a118f992ac0dc5c7e3379f90db3ec919e">print</a> ()</td></tr>
+<tr class="separator:a118f992ac0dc5c7e3379f90db3ec919e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classBoard"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classBoard')"><img src="closed.png" alt="-"/>&#160;Public メソッド inherited from <a class="el" href="classBoard.html">Board</a></td></tr>
+<tr class="memitem:a9ee491d4fea680cf69b033374a9fdfcb inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a9ee491d4fea680cf69b033374a9fdfcb">Board</a> ()</td></tr>
+<tr class="separator:a9ee491d4fea680cf69b033374a9fdfcb inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cf5d799795f86a50d5d6eb4bd353b93 inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a2cf5d799795f86a50d5d6eb4bd353b93">init</a> ()</td></tr>
+<tr class="separator:a2cf5d799795f86a50d5d6eb4bd353b93 inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38b005dbbb7e0b4101f10cad7b0f83fe inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a38b005dbbb7e0b4101f10cad7b0f83fe">move</a> (const <a class="el" href="structPoint.html">Point</a> &amp;point)</td></tr>
+<tr class="separator:a38b005dbbb7e0b4101f10cad7b0f83fe inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd1e908acdc23e225fdc552f42bbcd22 inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#abd1e908acdc23e225fdc552f42bbcd22">pass</a> ()</td></tr>
+<tr class="separator:abd1e908acdc23e225fdc552f42bbcd22 inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afaaab1faf31ed7d1176bd96532dc3aa4 inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#afaaab1faf31ed7d1176bd96532dc3aa4">undo</a> ()</td></tr>
+<tr class="separator:afaaab1faf31ed7d1176bd96532dc3aa4 inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab647ccf386b7a788ec8a1e19616abf88 inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#ab647ccf386b7a788ec8a1e19616abf88">isGameOver</a> () const </td></tr>
+<tr class="separator:ab647ccf386b7a788ec8a1e19616abf88 inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5205869c7109fbc533b61bb91c351a1 inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#ab5205869c7109fbc533b61bb91c351a1">countDisc</a> (<a class="el" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a> color) const </td></tr>
+<tr class="separator:ab5205869c7109fbc533b61bb91c351a1 inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d62682a047b4105916e311eff53137d inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top"><a class="el" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a8d62682a047b4105916e311eff53137d">getColor</a> (const <a class="el" href="structPoint.html">Point</a> &amp;p) const </td></tr>
+<tr class="separator:a8d62682a047b4105916e311eff53137d inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32854f2fac523400a3bf65cb3b04b827 inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="structPoint.html">Point</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a32854f2fac523400a3bf65cb3b04b827">getMovablePos</a> () const </td></tr>
+<tr class="separator:a32854f2fac523400a3bf65cb3b04b827 inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afca67111c528bb674e01953cb1b2125c inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structDisc.html">Disc</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#afca67111c528bb674e01953cb1b2125c">getUpdate</a> () const </td></tr>
+<tr class="separator:afca67111c528bb674e01953cb1b2125c inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac468171c7b66cbef38ca652ae9fd87e2 inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top"><a class="el" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#ac468171c7b66cbef38ca652ae9fd87e2">getCurrentColor</a> () const </td></tr>
+<tr class="separator:ac468171c7b66cbef38ca652ae9fd87e2 inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a066d49b1cfdb87768a40e56cb8a5df01 inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a066d49b1cfdb87768a40e56cb8a5df01">getTurns</a> () const </td></tr>
+<tr class="separator:a066d49b1cfdb87768a40e56cb8a5df01 inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34069247b314e8e166ca0373dda4a5db inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structPoint.html">Point</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a34069247b314e8e166ca0373dda4a5db">getHistory</a> () const </td></tr>
+<tr class="separator:a34069247b314e8e166ca0373dda4a5db inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44f35922230819c056ffa5b2c7e68e63 inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a44f35922230819c056ffa5b2c7e68e63">getLiberty</a> (const <a class="el" href="structPoint.html">Point</a> &amp;p) const </td></tr>
+<tr class="separator:a44f35922230819c056ffa5b2c7e68e63 inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c469bee68cbeafdcd9ed4524dd888f0 inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a1c469bee68cbeafdcd9ed4524dd888f0">Reverse_disk</a> (const <a class="el" href="structPoint.html">Point</a> &amp;p, <a class="el" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a> color)</td></tr>
+<tr class="separator:a1c469bee68cbeafdcd9ed4524dd888f0 inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ee491d4fea680cf69b033374a9fdfcb inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a9ee491d4fea680cf69b033374a9fdfcb">Board</a> ()</td></tr>
+<tr class="separator:a9ee491d4fea680cf69b033374a9fdfcb inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cf5d799795f86a50d5d6eb4bd353b93 inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a2cf5d799795f86a50d5d6eb4bd353b93">init</a> ()</td></tr>
+<tr class="separator:a2cf5d799795f86a50d5d6eb4bd353b93 inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38b005dbbb7e0b4101f10cad7b0f83fe inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a38b005dbbb7e0b4101f10cad7b0f83fe">move</a> (const <a class="el" href="structPoint.html">Point</a> &amp;point)</td></tr>
+<tr class="separator:a38b005dbbb7e0b4101f10cad7b0f83fe inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd1e908acdc23e225fdc552f42bbcd22 inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#abd1e908acdc23e225fdc552f42bbcd22">pass</a> ()</td></tr>
+<tr class="separator:abd1e908acdc23e225fdc552f42bbcd22 inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afaaab1faf31ed7d1176bd96532dc3aa4 inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#afaaab1faf31ed7d1176bd96532dc3aa4">undo</a> ()</td></tr>
+<tr class="separator:afaaab1faf31ed7d1176bd96532dc3aa4 inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab647ccf386b7a788ec8a1e19616abf88 inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#ab647ccf386b7a788ec8a1e19616abf88">isGameOver</a> () const </td></tr>
+<tr class="separator:ab647ccf386b7a788ec8a1e19616abf88 inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5205869c7109fbc533b61bb91c351a1 inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#ab5205869c7109fbc533b61bb91c351a1">countDisc</a> (<a class="el" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a> color) const </td></tr>
+<tr class="separator:ab5205869c7109fbc533b61bb91c351a1 inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d62682a047b4105916e311eff53137d inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top"><a class="el" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a8d62682a047b4105916e311eff53137d">getColor</a> (const <a class="el" href="structPoint.html">Point</a> &amp;p) const </td></tr>
+<tr class="separator:a8d62682a047b4105916e311eff53137d inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32854f2fac523400a3bf65cb3b04b827 inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="structPoint.html">Point</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a32854f2fac523400a3bf65cb3b04b827">getMovablePos</a> () const </td></tr>
+<tr class="separator:a32854f2fac523400a3bf65cb3b04b827 inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afca67111c528bb674e01953cb1b2125c inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structDisc.html">Disc</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#afca67111c528bb674e01953cb1b2125c">getUpdate</a> () const </td></tr>
+<tr class="separator:afca67111c528bb674e01953cb1b2125c inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac468171c7b66cbef38ca652ae9fd87e2 inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top"><a class="el" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#ac468171c7b66cbef38ca652ae9fd87e2">getCurrentColor</a> () const </td></tr>
+<tr class="separator:ac468171c7b66cbef38ca652ae9fd87e2 inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a066d49b1cfdb87768a40e56cb8a5df01 inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a066d49b1cfdb87768a40e56cb8a5df01">getTurns</a> () const </td></tr>
+<tr class="separator:a066d49b1cfdb87768a40e56cb8a5df01 inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34069247b314e8e166ca0373dda4a5db inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structPoint.html">Point</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a34069247b314e8e166ca0373dda4a5db">getHistory</a> () const </td></tr>
+<tr class="separator:a34069247b314e8e166ca0373dda4a5db inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44f35922230819c056ffa5b2c7e68e63 inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a44f35922230819c056ffa5b2c7e68e63">getLiberty</a> (const <a class="el" href="structPoint.html">Point</a> &amp;p) const </td></tr>
+<tr class="separator:a44f35922230819c056ffa5b2c7e68e63 inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c469bee68cbeafdcd9ed4524dd888f0 inherit pub_methods_classBoard"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a1c469bee68cbeafdcd9ed4524dd888f0">Reverse_disk</a> (const <a class="el" href="structPoint.html">Point</a> &amp;p, <a class="el" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a> color)</td></tr>
+<tr class="separator:a1c469bee68cbeafdcd9ed4524dd888f0 inherit pub_methods_classBoard"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">関数</h2>
+<a class="anchor" id="a118f992ac0dc5c7e3379f90db3ec919e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ConsoleBoard::print </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><div class="dynheader">
+呼出しグラフ:</div>
+<div class="dyncontent">
+<div class="center"><img src="classConsoleBoard_a118f992ac0dc5c7e3379f90db3ec919e_icgraph.png" border="0" usemap="#classConsoleBoard_a118f992ac0dc5c7e3379f90db3ec919e_icgraph" alt=""/></div>
+<map name="classConsoleBoard_a118f992ac0dc5c7e3379f90db3ec919e_icgraph" id="classConsoleBoard_a118f992ac0dc5c7e3379f90db3ec919e_icgraph">
+<area shape="rect" id="node2" href="GLserver_8cpp.html#abc3f753d52c6fd057897cf7306223de0" title="attack_chance" alt="" coords="192,31,299,57"/><area shape="rect" id="node3" href="GLserver_8cpp.html#a4ea013001a5fb47853d0fab8f8de35cd" title="display" alt="" coords="347,5,410,32"/><area shape="rect" id="node5" href="server_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="353,68,404,95"/><area shape="rect" id="node4" href="GLserver_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="459,5,509,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a118f992ac0dc5c7e3379f90db3ec919e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ConsoleBoard::print </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<hr/>このクラスの説明は次のファイルから生成されました:<ul>
+<li>GLserver/<a class="el" href="GLserver_2GameMaster_8h_source.html">GameMaster.h</a></li>
+<li>server/<a class="el" href="server_2GameMaster_8h_source.html">GameMaster.h</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+作成： &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.5
+</small></address>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.5"/>
+<title>deathreversi: GLserver/Reversi.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">deathreversi
+   &#160;<span id="projectnumber">1.0.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 作成： Doxygen 1.8.5 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'検索');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>メインページ</span></a></li>
+      <li><a href="annotated.html"><span>クラス</span></a></li>
+      <li class="current"><a href="files.html"><span>ファイル</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>ファイル一覧</span></a></li>
+      <li><a href="globals.html"><span>ファイルメンバ</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>全て</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>クラス</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>ファイル</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>関数</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>変数</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>型定義</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>マクロ定義</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_b82e4c4b85892c5580a29e6897978654.html">GLserver</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">構成</a> &#124;
+<a href="#typedef-members">型定義</a> &#124;
+<a href="#var-members">変数</a>  </div>
+  <div class="headertitle">
+<div class="title">Reversi.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;string&gt;</code><br/>
+<code>#include &lt;sstream&gt;</code><br/>
+<code>#include &lt;stdexcept&gt;</code><br/>
+</div><div class="textblock"><div class="dynheader">
+Reversi.hのインクルード依存関係図</div>
+<div class="dyncontent">
+<div class="center"><img src="GLserver_2Reversi_8h__incl.png" border="0" usemap="#GLserver_2Reversi_8h" alt=""/></div>
+<map name="GLserver_2Reversi_8h" id="GLserver_2Reversi_8h">
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+このグラフは、どのファイルから直接、間接的にインクルードされているかを示しています。</div>
+<div class="dyncontent">
+<div class="center"><img src="GLserver_2Reversi_8h__dep__incl.png" border="0" usemap="#GLserver_2Reversi_8hdep" alt=""/></div>
+<map name="GLserver_2Reversi_8hdep" id="GLserver_2Reversi_8hdep">
+<area shape="rect" id="node2" href="GLserver_2Board_8h.html" title="GLserver/Board.h" alt="" coords="115,80,239,107"/><area shape="rect" id="node3" href="GLserver_2Board_8cpp.html" title="GLserver/Board.cpp" alt="" coords="5,229,144,256"/><area shape="rect" id="node4" href="GLserver_2GameMaster_8h.html" title="GLserver/GameMaster.h" alt="" coords="95,155,260,181"/><area shape="rect" id="node5" href="GLserver_8cpp.html" title="GLserver/GLserver.cpp" alt="" coords="201,229,359,256"/></map>
+</div>
+</div>
+<p><a href="GLserver_2Reversi_8h_source.html">ソースコードを見る。</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+構成</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPoint.html">Point</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structDisc.html">Disc</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classColorStorage.html">ColorStorage&lt; T &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+型定義</h2></td></tr>
+<tr class="memitem:aeeff082dbf607675914ae4e2f81d6518"><td class="memItemLeft" align="right" valign="top">typedef int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a></td></tr>
+<tr class="separator:aeeff082dbf607675914ae4e2f81d6518"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+変数</h2></td></tr>
+<tr class="memitem:aa7a2b8ea2c784a4ad8b58a3262bb4f07"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_2Reversi_8h.html#aa7a2b8ea2c784a4ad8b58a3262bb4f07">BOARD_SIZE</a> = 12</td></tr>
+<tr class="separator:aa7a2b8ea2c784a4ad8b58a3262bb4f07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac1b50d359c230c3bd30917d638a0538"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_2Reversi_8h.html#aac1b50d359c230c3bd30917d638a0538">MAX_TURNS</a> = 136</td></tr>
+<tr class="separator:aac1b50d359c230c3bd30917d638a0538"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f16ab8d12157bf1d3ff18f8170046dc"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_2Reversi_8h.html#a7f16ab8d12157bf1d3ff18f8170046dc">EMPTY</a> = 0</td></tr>
+<tr class="separator:a7f16ab8d12157bf1d3ff18f8170046dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c1dae93bafe5ebc5b82ae9e4446f20d"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_2Reversi_8h.html#a9c1dae93bafe5ebc5b82ae9e4446f20d">WHITE</a> = -1</td></tr>
+<tr class="separator:a9c1dae93bafe5ebc5b82ae9e4446f20d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa82726d920caa8252564557356628b4c"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_2Reversi_8h.html#aa82726d920caa8252564557356628b4c">BLACK</a> = 1</td></tr>
+<tr class="separator:aa82726d920caa8252564557356628b4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c18de0c41bd1685970ea5b31c59315e"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLserver_2Reversi_8h.html#a6c18de0c41bd1685970ea5b31c59315e">WALL</a> = 2</td></tr>
+<tr class="separator:a6c18de0c41bd1685970ea5b31c59315e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">型定義</h2>
+<a class="anchor" id="aeeff082dbf607675914ae4e2f81d6518"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef int <a class="el" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">変数</h2>
+<a class="anchor" id="aa82726d920caa8252564557356628b4c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a> BLACK = 1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa7a2b8ea2c784a4ad8b58a3262bb4f07"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int BOARD_SIZE = 12</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a7f16ab8d12157bf1d3ff18f8170046dc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a> EMPTY = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aac1b50d359c230c3bd30917d638a0538"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int MAX_TURNS = 136</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6c18de0c41bd1685970ea5b31c59315e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a> WALL = 2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a9c1dae93bafe5ebc5b82ae9e4446f20d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a> WHITE = -1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+作成： &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.5
+</small></address>
+</body>
+</html>
