@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.5"/>
+<title>deathreversi: GLserver/Board.h „ÇΩ„Éº„Çπ„Éï„Ç°„Ç§„É´</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">deathreversi
+   &#160;<span id="projectnumber">1.0.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- ‰ΩúÊàêÔºö Doxygen 1.8.5 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Ê§úÁ¥¢');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>„É°„Ç§„É≥„Éö„Éº„Ç∏</span></a></li>
+      <li><a href="annotated.html"><span>„ÇØ„É©„Çπ</span></a></li>
+      <li class="current"><a href="files.html"><span>„Éï„Ç°„Ç§„É´</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Ê§úÁ¥¢" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>„Éï„Ç°„Ç§„É´‰∏ÄË¶ß</span></a></li>
+      <li><a href="globals.html"><span>„Éï„Ç°„Ç§„É´„É°„É≥„Éê</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>ÂÖ®„Å¶</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>„ÇØ„É©„Çπ</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>„Éï„Ç°„Ç§„É´</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Èñ¢Êï∞</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Â§âÊï∞</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>ÂûãÂÆöÁæ©</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>„Éû„ÇØ„É≠ÂÆöÁæ©</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_b82e4c4b85892c5580a29e6897978654.html">GLserver</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">Board.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="GLserver_2Board_8h.html">Ë™¨Êòé„ÇíË¶ã„Çã„ÄÇ</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef BOARD_H_INCLUDED</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BOARD_H_INCLUDED</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="GLserver_2Reversi_8h.html">Reversi.h</a>&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
+<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="GLserver_2Board_8h.html#adfe66e853153f2d0d67ae473b0843ee7">    7</a></span>&#160;<span class="preprocessor">#define MTFLAG  0b00000001//Ç‹ÇæÇ‹Çæâ¥ÇÃÉ^Å[Éì</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="GLserver_2Board_8h.html#a2c14421ccca6ca7f80c355e35a8e8d1f">    8</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ACFLAG  0b00000010//ÉAÉ^ÉbÉNÉ`ÉÉÉìÉXégópë§</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="GLserver_2Board_8h.html#af40eee692d0af83fa95cb8638d29e798">    9</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARFLAG  0b00000100//ÉAÉ^ÉbÉNÉ`ÉÉÉìÉXéÛÇØÇÈë§</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="GLserver_2Board_8h.html#a36ba17408a7820ef45d0797462563933">   10</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define PSFLAG  0b00001000//ÉpÉXÉtÉâÉO</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="GLserver_2Board_8h.html#a80c490235d26e5443ef01cfb13f52b4c">   11</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define GFFLAG  0b00010000//ÉQÅ[ÉÄèIóπ</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="GLserver_2Board_8h.html#a1fbcfbdc562c9d26a7b9cd72122ffc98">   12</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define FLAGNUM 3//ï∂éöóÒÇÃâΩå¬ñ⁄Ç™ÉtÉâÉOÇÃbitÇ© 0Ç©ÇÁêîÇ¶ÇÈ</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="GLserver_2Board_8h.html#a7b7cce9879be4fdf5f11ac374b2ae2d9">   15</a></span>&#160;<span class="preprocessor">#define ATTACKNUM 20//âΩêŒà»è„ïâÇØÇ≈attack chance ÇÃî≠ìÆèåèÇñûÇΩÇ∑Ç©</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="classBoard.html">   17</a></span>&#160;<span class="keyword">class </span><a class="code" href="classBoard.html">Board</a></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;{</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <a class="code" href="classBoard.html#a9ee491d4fea680cf69b033374a9fdfcb">Board</a>();</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classBoard.html#a2cf5d799795f86a50d5d6eb4bd353b93">init</a>();</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classBoard.html#a38b005dbbb7e0b4101f10cad7b0f83fe">move</a>(<span class="keyword">const</span> <a class="code" href="structPoint.html">Point</a>&amp; point);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classBoard.html#abd1e908acdc23e225fdc552f42bbcd22">pass</a>();</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classBoard.html#afaaab1faf31ed7d1176bd96532dc3aa4">undo</a>();</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classBoard.html#ab647ccf386b7a788ec8a1e19616abf88">isGameOver</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classBoard.html#ab5205869c7109fbc533b61bb91c351a1">   28</a></span>&#160;    <span class="keywordtype">unsigned</span> <a class="code" href="classBoard.html#ab5205869c7109fbc533b61bb91c351a1">countDisc</a>(<a class="code" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a> color)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classBoard.html#a4f03fb454fe53c93aed19f801a0542e4">Discs</a>[color];</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    }</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    </div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="classBoard.html#a8d62682a047b4105916e311eff53137d">   33</a></span>&#160;    <a class="code" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a> <a class="code" href="classBoard.html#a8d62682a047b4105916e311eff53137d">getColor</a>(<span class="keyword">const</span> <a class="code" href="structPoint.html">Point</a>&amp; p)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classBoard.html#aa3e4485051f26c85de5dfa60eed55b6e">RawBoard</a>[p.<a class="code" href="structPoint.html#a8c779e11e694b20e0946105a9f5de842">x</a>][p.<a class="code" href="structPoint.html#a2e1b5fb2b2a83571f5c0bc0f66a73cf7">y</a>];</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    }</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    </div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="classBoard.html#a32854f2fac523400a3bf65cb3b04b827">   38</a></span>&#160;    <span class="keyword">const</span> std::vector&lt;Point&gt;&amp; <a class="code" href="classBoard.html#a32854f2fac523400a3bf65cb3b04b827">getMovablePos</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classBoard.html#a0bde19862be8b4970a19e83819f6f4b7">MovablePos</a>[<a class="code" href="classBoard.html#a373c3ddd31d6b9b3eff0d51300a7e934">Turns</a>];</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    }</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    </div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classBoard.html#afca67111c528bb674e01953cb1b2125c">   43</a></span>&#160;    std::vector&lt;Disc&gt; <a class="code" href="classBoard.html#afca67111c528bb674e01953cb1b2125c">getUpdate</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordflow">if</span>(<a class="code" href="classBoard.html#a02b61c1d1b9ddb2365c279e191a817dd">UpdateLog</a>.empty()) <span class="keywordflow">return</span> std::vector&lt;Disc&gt;();</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordflow">else</span> <span class="keywordflow">return</span> <a class="code" href="classBoard.html#a02b61c1d1b9ddb2365c279e191a817dd">UpdateLog</a>.back();</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    }</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    </div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="classBoard.html#ac468171c7b66cbef38ca652ae9fd87e2">   49</a></span>&#160;    <a class="code" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a> <a class="code" href="classBoard.html#ac468171c7b66cbef38ca652ae9fd87e2">getCurrentColor</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classBoard.html#aa8c4021b11728410a648e5fba2cec5d3">CurrentColor</a>;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    }</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    </div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="classBoard.html#a066d49b1cfdb87768a40e56cb8a5df01">   54</a></span>&#160;    <span class="keywordtype">unsigned</span> <a class="code" href="classBoard.html#a066d49b1cfdb87768a40e56cb8a5df01">getTurns</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classBoard.html#a373c3ddd31d6b9b3eff0d51300a7e934">Turns</a>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    }</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="classBoard.html#a34069247b314e8e166ca0373dda4a5db">   59</a></span>&#160;    std::vector&lt;Point&gt; <a class="code" href="classBoard.html#a34069247b314e8e166ca0373dda4a5db">getHistory</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        std::vector&lt;Point&gt; history;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordflow">for</span>(<span class="keywordtype">unsigned</span> i=0; i&lt;<a class="code" href="classBoard.html#a02b61c1d1b9ddb2365c279e191a817dd">UpdateLog</a>.size(); i++)</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        {</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            std::vector&lt;Disc&gt; update = <a class="code" href="classBoard.html#a02b61c1d1b9ddb2365c279e191a817dd">UpdateLog</a>[i];</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keywordflow">if</span>(update.empty()) <span class="keywordflow">continue</span>; <span class="comment">// ÉpÉXÇÕîÚÇŒÇ∑</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            history.push_back(update[0]);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        }</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keywordflow">return</span> history;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    }</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    </div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="classBoard.html#a44f35922230819c056ffa5b2c7e68e63">   74</a></span>&#160;    <span class="keywordtype">unsigned</span> <a class="code" href="classBoard.html#a44f35922230819c056ffa5b2c7e68e63">getLiberty</a>(<span class="keyword">const</span> <a class="code" href="structPoint.html">Point</a>&amp; p)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classBoard.html#a5a7e1f73ee14dc3df25f0cd97464e050">Liberty</a>[p.<a class="code" href="structPoint.html#a8c779e11e694b20e0946105a9f5de842">x</a>][p.<a class="code" href="structPoint.html#a2e1b5fb2b2a83571f5c0bc0f66a73cf7">y</a>];</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    }</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="comment">//watanabe wrote 2017/3/30</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classBoard.html#a1c469bee68cbeafdcd9ed4524dd888f0">Reverse_disk</a>(<span class="keyword">const</span> <a class="code" href="structPoint.html">Point</a>&amp; p, <a class="code" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a> color);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="classBoard.html#a0c6c41c48c90f70fefa6fdbbf6679983">   85</a></span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="classBoard.html#a0c6c41c48c90f70fefa6fdbbf6679983">NONE</a>        =   0;</div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="classBoard.html#a20396c356cd6111cbf1e5ceccb18e4b8">   86</a></span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="classBoard.html#a20396c356cd6111cbf1e5ceccb18e4b8">UPPER</a>       =   1;</div>
+<div class="line"><a name="l00087"></a><span class="lineno"><a class="line" href="classBoard.html#af934c43c9c6692ae1d5f1fb478beb79d">   87</a></span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="classBoard.html#af934c43c9c6692ae1d5f1fb478beb79d">UPPER_LEFT</a>  =   2;</div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="classBoard.html#a85b48e073c3fa4894d28dadaf0f17344">   88</a></span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="classBoard.html#a85b48e073c3fa4894d28dadaf0f17344">LEFT</a>        =   4;</div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="classBoard.html#aae0ff1591c6d12797957690e9770b6cd">   89</a></span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="classBoard.html#aae0ff1591c6d12797957690e9770b6cd">LOWER_LEFT</a>  =   8;</div>
+<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="classBoard.html#a52898864ae5a2ce1bbaab744341f284d">   90</a></span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="classBoard.html#a52898864ae5a2ce1bbaab744341f284d">LOWER</a>       =  16;</div>
+<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="classBoard.html#a85754c5e247eb1ea96c3a1e4cc85de81">   91</a></span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="classBoard.html#a85754c5e247eb1ea96c3a1e4cc85de81">LOWER_RIGHT</a> =  32;</div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="classBoard.html#a581035a30f853f8a34b72e913e71736a">   92</a></span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="classBoard.html#a581035a30f853f8a34b72e913e71736a">RIGHT</a>       =  64;</div>
+<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="classBoard.html#af13bd5268ee96024cec718e362321ec4">   93</a></span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="classBoard.html#af13bd5268ee96024cec718e362321ec4">UPPER_RIGHT</a> = 128;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="classBoard.html#aa3e4485051f26c85de5dfa60eed55b6e">   96</a></span>&#160;    <a class="code" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a> <a class="code" href="classBoard.html#aa3e4485051f26c85de5dfa60eed55b6e">RawBoard</a>[<a class="code" href="GLserver_2Reversi_8h.html#aa7a2b8ea2c784a4ad8b58a3262bb4f07">BOARD_SIZE</a>+2][<a class="code" href="GLserver_2Reversi_8h.html#aa7a2b8ea2c784a4ad8b58a3262bb4f07">BOARD_SIZE</a>+2];</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="classBoard.html#a373c3ddd31d6b9b3eff0d51300a7e934">   98</a></span>&#160;    <span class="keywordtype">unsigned</span> <a class="code" href="classBoard.html#a373c3ddd31d6b9b3eff0d51300a7e934">Turns</a>;</div>
+<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="classBoard.html#aa8c4021b11728410a648e5fba2cec5d3">   99</a></span>&#160;    <a class="code" href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a> <a class="code" href="classBoard.html#aa8c4021b11728410a648e5fba2cec5d3">CurrentColor</a>;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
+<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="classBoard.html#a02b61c1d1b9ddb2365c279e191a817dd">  101</a></span>&#160;    std::vector&lt;std::vector&lt;Disc&gt; &gt; <a class="code" href="classBoard.html#a02b61c1d1b9ddb2365c279e191a817dd">UpdateLog</a>;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
+<div class="line"><a name="l00103"></a><span class="lineno"><a class="line" href="classBoard.html#a0bde19862be8b4970a19e83819f6f4b7">  103</a></span>&#160;    std::vector&lt;Point&gt; <a class="code" href="classBoard.html#a0bde19862be8b4970a19e83819f6f4b7">MovablePos</a>[<a class="code" href="GLserver_2Reversi_8h.html#aac1b50d359c230c3bd30917d638a0538">MAX_TURNS</a>+1];</div>
+<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="classBoard.html#a7021672a91ea6218bba23ca923534a63">  104</a></span>&#160;    <span class="keywordtype">unsigned</span> <a class="code" href="classBoard.html#a7021672a91ea6218bba23ca923534a63">MovableDir</a>[<a class="code" href="GLserver_2Reversi_8h.html#aac1b50d359c230c3bd30917d638a0538">MAX_TURNS</a>+1][<a class="code" href="GLserver_2Reversi_8h.html#aa7a2b8ea2c784a4ad8b58a3262bb4f07">BOARD_SIZE</a>+2][<a class="code" href="GLserver_2Reversi_8h.html#aa7a2b8ea2c784a4ad8b58a3262bb4f07">BOARD_SIZE</a>+2];</div>
+<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="classBoard.html#a5a7e1f73ee14dc3df25f0cd97464e050">  105</a></span>&#160;    <span class="keywordtype">unsigned</span> <a class="code" href="classBoard.html#a5a7e1f73ee14dc3df25f0cd97464e050">Liberty</a>[<a class="code" href="GLserver_2Reversi_8h.html#aa7a2b8ea2c784a4ad8b58a3262bb4f07">BOARD_SIZE</a>+2][<a class="code" href="GLserver_2Reversi_8h.html#aa7a2b8ea2c784a4ad8b58a3262bb4f07">BOARD_SIZE</a>+2];</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
+<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="classBoard.html#a4f03fb454fe53c93aed19f801a0542e4">  107</a></span>&#160;    <a class="code" href="classColorStorage.html">ColorStorage&lt;unsigned&gt;</a> <a class="code" href="classBoard.html#a4f03fb454fe53c93aed19f801a0542e4">Discs</a>;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classBoard.html#a6051899845ac00007f7e08ffa0a2d250">flipDiscs</a>(<span class="keyword">const</span> <a class="code" href="structPoint.html">Point</a>&amp; point);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keywordtype">unsigned</span> <a class="code" href="classBoard.html#adf8ccf5ad567698235ada0b739fb8499">checkMobility</a>(<span class="keyword">const</span> <a class="code" href="structDisc.html">Disc</a>&amp; disc) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classBoard.html#af7e12826e75d916f56219d5616208a81">initMovable</a>();</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;};</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="structPoint_html_a8c779e11e694b20e0946105a9f5de842"><div class="ttname"><a href="structPoint.html#a8c779e11e694b20e0946105a9f5de842">Point::x</a></div><div class="ttdeci">int x</div><div class="ttdef"><b>Definition:</b> Reversi.h:24</div></div>
+<div class="ttc" id="classBoard_html_a066d49b1cfdb87768a40e56cb8a5df01"><div class="ttname"><a href="classBoard.html#a066d49b1cfdb87768a40e56cb8a5df01">Board::getTurns</a></div><div class="ttdeci">unsigned getTurns() const </div><div class="ttdef"><b>Definition:</b> Board.h:54</div></div>
+<div class="ttc" id="GLserver_2Reversi_8h_html"><div class="ttname"><a href="GLserver_2Reversi_8h.html">Reversi.h</a></div></div>
+<div class="ttc" id="classBoard_html_ab5205869c7109fbc533b61bb91c351a1"><div class="ttname"><a href="classBoard.html#ab5205869c7109fbc533b61bb91c351a1">Board::countDisc</a></div><div class="ttdeci">unsigned countDisc(Color color) const </div><div class="ttdef"><b>Definition:</b> Board.h:28</div></div>
+<div class="ttc" id="structPoint_html_a2e1b5fb2b2a83571f5c0bc0f66a73cf7"><div class="ttname"><a href="structPoint.html#a2e1b5fb2b2a83571f5c0bc0f66a73cf7">Point::y</a></div><div class="ttdeci">int y</div><div class="ttdef"><b>Definition:</b> Reversi.h:25</div></div>
+<div class="ttc" id="classBoard_html_afca67111c528bb674e01953cb1b2125c"><div class="ttname"><a href="classBoard.html#afca67111c528bb674e01953cb1b2125c">Board::getUpdate</a></div><div class="ttdeci">std::vector&lt; Disc &gt; getUpdate() const </div><div class="ttdef"><b>Definition:</b> Board.h:43</div></div>
+<div class="ttc" id="classBoard_html_a0c6c41c48c90f70fefa6fdbbf6679983"><div class="ttname"><a href="classBoard.html#a0c6c41c48c90f70fefa6fdbbf6679983">Board::NONE</a></div><div class="ttdeci">static const unsigned NONE</div><div class="ttdef"><b>Definition:</b> Board.h:85</div></div>
+<div class="ttc" id="classBoard_html_af13bd5268ee96024cec718e362321ec4"><div class="ttname"><a href="classBoard.html#af13bd5268ee96024cec718e362321ec4">Board::UPPER_RIGHT</a></div><div class="ttdeci">static const unsigned UPPER_RIGHT</div><div class="ttdef"><b>Definition:</b> Board.h:93</div></div>
+<div class="ttc" id="classBoard_html_a4f03fb454fe53c93aed19f801a0542e4"><div class="ttname"><a href="classBoard.html#a4f03fb454fe53c93aed19f801a0542e4">Board::Discs</a></div><div class="ttdeci">ColorStorage&lt; unsigned &gt; Discs</div><div class="ttdef"><b>Definition:</b> Board.h:107</div></div>
+<div class="ttc" id="classBoard_html_a1c469bee68cbeafdcd9ed4524dd888f0"><div class="ttname"><a href="classBoard.html#a1c469bee68cbeafdcd9ed4524dd888f0">Board::Reverse_disk</a></div><div class="ttdeci">void Reverse_disk(const Point &amp;p, Color color)</div><div class="ttdef"><b>Definition:</b> Board.cpp:472</div></div>
+<div class="ttc" id="classBoard_html_a373c3ddd31d6b9b3eff0d51300a7e934"><div class="ttname"><a href="classBoard.html#a373c3ddd31d6b9b3eff0d51300a7e934">Board::Turns</a></div><div class="ttdeci">unsigned Turns</div><div class="ttdef"><b>Definition:</b> Board.h:98</div></div>
+<div class="ttc" id="classBoard_html_afaaab1faf31ed7d1176bd96532dc3aa4"><div class="ttname"><a href="classBoard.html#afaaab1faf31ed7d1176bd96532dc3aa4">Board::undo</a></div><div class="ttdeci">bool undo()</div><div class="ttdef"><b>Definition:</b> Board.cpp:126</div></div>
+<div class="ttc" id="classBoard_html_a52898864ae5a2ce1bbaab744341f284d"><div class="ttname"><a href="classBoard.html#a52898864ae5a2ce1bbaab744341f284d">Board::LOWER</a></div><div class="ttdeci">static const unsigned LOWER</div><div class="ttdef"><b>Definition:</b> Board.h:90</div></div>
+<div class="ttc" id="classBoard_html_a9ee491d4fea680cf69b033374a9fdfcb"><div class="ttname"><a href="classBoard.html#a9ee491d4fea680cf69b033374a9fdfcb">Board::Board</a></div><div class="ttdeci">Board()</div><div class="ttdef"><b>Definition:</b> Board.cpp:8</div></div>
+<div class="ttc" id="classBoard_html_a581035a30f853f8a34b72e913e71736a"><div class="ttname"><a href="classBoard.html#a581035a30f853f8a34b72e913e71736a">Board::RIGHT</a></div><div class="ttdeci">static const unsigned RIGHT</div><div class="ttdef"><b>Definition:</b> Board.h:92</div></div>
+<div class="ttc" id="classBoard_html_af7e12826e75d916f56219d5616208a81"><div class="ttname"><a href="classBoard.html#af7e12826e75d916f56219d5616208a81">Board::initMovable</a></div><div class="ttdeci">void initMovable()</div><div class="ttdef"><b>Definition:</b> Board.cpp:292</div></div>
+<div class="ttc" id="classBoard_html"><div class="ttname"><a href="classBoard.html">Board</a></div><div class="ttdef"><b>Definition:</b> Board.h:17</div></div>
+<div class="ttc" id="GLserver_2Reversi_8h_html_aa7a2b8ea2c784a4ad8b58a3262bb4f07"><div class="ttname"><a href="GLserver_2Reversi_8h.html#aa7a2b8ea2c784a4ad8b58a3262bb4f07">BOARD_SIZE</a></div><div class="ttdeci">const int BOARD_SIZE</div><div class="ttdef"><b>Definition:</b> Reversi.h:8</div></div>
+<div class="ttc" id="GLserver_2Reversi_8h_html_aeeff082dbf607675914ae4e2f81d6518"><div class="ttname"><a href="GLserver_2Reversi_8h.html#aeeff082dbf607675914ae4e2f81d6518">Color</a></div><div class="ttdeci">int Color</div><div class="ttdef"><b>Definition:</b> Reversi.h:13</div></div>
+<div class="ttc" id="classBoard_html_aa8c4021b11728410a648e5fba2cec5d3"><div class="ttname"><a href="classBoard.html#aa8c4021b11728410a648e5fba2cec5d3">Board::CurrentColor</a></div><div class="ttdeci">Color CurrentColor</div><div class="ttdef"><b>Definition:</b> Board.h:99</div></div>
+<div class="ttc" id="classBoard_html_aa3e4485051f26c85de5dfa60eed55b6e"><div class="ttname"><a href="classBoard.html#aa3e4485051f26c85de5dfa60eed55b6e">Board::RawBoard</a></div><div class="ttdeci">Color RawBoard[BOARD_SIZE+2][BOARD_SIZE+2]</div><div class="ttdef"><b>Definition:</b> Board.h:96</div></div>
+<div class="ttc" id="classBoard_html_a38b005dbbb7e0b4101f10cad7b0f83fe"><div class="ttname"><a href="classBoard.html#a38b005dbbb7e0b4101f10cad7b0f83fe">Board::move</a></div><div class="ttdeci">bool move(const Point &amp;point)</div><div class="ttdef"><b>Definition:</b> Board.cpp:88</div></div>
+<div class="ttc" id="classBoard_html_af934c43c9c6692ae1d5f1fb478beb79d"><div class="ttname"><a href="classBoard.html#af934c43c9c6692ae1d5f1fb478beb79d">Board::UPPER_LEFT</a></div><div class="ttdeci">static const unsigned UPPER_LEFT</div><div class="ttdef"><b>Definition:</b> Board.h:87</div></div>
+<div class="ttc" id="classBoard_html_ac468171c7b66cbef38ca652ae9fd87e2"><div class="ttname"><a href="classBoard.html#ac468171c7b66cbef38ca652ae9fd87e2">Board::getCurrentColor</a></div><div class="ttdeci">Color getCurrentColor() const </div><div class="ttdef"><b>Definition:</b> Board.h:49</div></div>
+<div class="ttc" id="classBoard_html_a5a7e1f73ee14dc3df25f0cd97464e050"><div class="ttname"><a href="classBoard.html#a5a7e1f73ee14dc3df25f0cd97464e050">Board::Liberty</a></div><div class="ttdeci">unsigned Liberty[BOARD_SIZE+2][BOARD_SIZE+2]</div><div class="ttdef"><b>Definition:</b> Board.h:105</div></div>
+<div class="ttc" id="classBoard_html_a34069247b314e8e166ca0373dda4a5db"><div class="ttname"><a href="classBoard.html#a34069247b314e8e166ca0373dda4a5db">Board::getHistory</a></div><div class="ttdeci">std::vector&lt; Point &gt; getHistory() const </div><div class="ttdef"><b>Definition:</b> Board.h:59</div></div>
+<div class="ttc" id="classBoard_html_a2cf5d799795f86a50d5d6eb4bd353b93"><div class="ttname"><a href="classBoard.html#a2cf5d799795f86a50d5d6eb4bd353b93">Board::init</a></div><div class="ttdeci">void init()</div><div class="ttdef"><b>Definition:</b> Board.cpp:13</div></div>
+<div class="ttc" id="classBoard_html_ab647ccf386b7a788ec8a1e19616abf88"><div class="ttname"><a href="classBoard.html#ab647ccf386b7a788ec8a1e19616abf88">Board::isGameOver</a></div><div class="ttdeci">bool isGameOver() const </div><div class="ttdef"><b>Definition:</b> Board.cpp:264</div></div>
+<div class="ttc" id="classBoard_html_a85754c5e247eb1ea96c3a1e4cc85de81"><div class="ttname"><a href="classBoard.html#a85754c5e247eb1ea96c3a1e4cc85de81">Board::LOWER_RIGHT</a></div><div class="ttdeci">static const unsigned LOWER_RIGHT</div><div class="ttdef"><b>Definition:</b> Board.h:91</div></div>
+<div class="ttc" id="classBoard_html_a6051899845ac00007f7e08ffa0a2d250"><div class="ttname"><a href="classBoard.html#a6051899845ac00007f7e08ffa0a2d250">Board::flipDiscs</a></div><div class="ttdeci">void flipDiscs(const Point &amp;point)</div><div class="ttdef"><b>Definition:</b> Board.cpp:319</div></div>
+<div class="ttc" id="structDisc_html"><div class="ttname"><a href="structDisc.html">Disc</a></div><div class="ttdef"><b>Definition:</b> Reversi.h:74</div></div>
+<div class="ttc" id="classBoard_html_a02b61c1d1b9ddb2365c279e191a817dd"><div class="ttname"><a href="classBoard.html#a02b61c1d1b9ddb2365c279e191a817dd">Board::UpdateLog</a></div><div class="ttdeci">std::vector&lt; std::vector&lt; Disc &gt; &gt; UpdateLog</div><div class="ttdef"><b>Definition:</b> Board.h:101</div></div>
+<div class="ttc" id="classBoard_html_aae0ff1591c6d12797957690e9770b6cd"><div class="ttname"><a href="classBoard.html#aae0ff1591c6d12797957690e9770b6cd">Board::LOWER_LEFT</a></div><div class="ttdeci">static const unsigned LOWER_LEFT</div><div class="ttdef"><b>Definition:</b> Board.h:89</div></div>
+<div class="ttc" id="classBoard_html_a7021672a91ea6218bba23ca923534a63"><div class="ttname"><a href="classBoard.html#a7021672a91ea6218bba23ca923534a63">Board::MovableDir</a></div><div class="ttdeci">unsigned MovableDir[MAX_TURNS+1][BOARD_SIZE+2][BOARD_SIZE+2]</div><div class="ttdef"><b>Definition:</b> Board.h:104</div></div>
+<div class="ttc" id="structPoint_html"><div class="ttname"><a href="structPoint.html">Point</a></div><div class="ttdef"><b>Definition:</b> Reversi.h:21</div></div>
+<div class="ttc" id="classColorStorage_html"><div class="ttname"><a href="classColorStorage.html">ColorStorage&lt; unsigned &gt;</a></div></div>
+<div class="ttc" id="classBoard_html_a8d62682a047b4105916e311eff53137d"><div class="ttname"><a href="classBoard.html#a8d62682a047b4105916e311eff53137d">Board::getColor</a></div><div class="ttdeci">Color getColor(const Point &amp;p) const </div><div class="ttdef"><b>Definition:</b> Board.h:33</div></div>
+<div class="ttc" id="classBoard_html_a0bde19862be8b4970a19e83819f6f4b7"><div class="ttname"><a href="classBoard.html#a0bde19862be8b4970a19e83819f6f4b7">Board::MovablePos</a></div><div class="ttdeci">std::vector&lt; Point &gt; MovablePos[MAX_TURNS+1]</div><div class="ttdef"><b>Definition:</b> Board.h:103</div></div>
+<div class="ttc" id="classBoard_html_a32854f2fac523400a3bf65cb3b04b827"><div class="ttname"><a href="classBoard.html#a32854f2fac523400a3bf65cb3b04b827">Board::getMovablePos</a></div><div class="ttdeci">const std::vector&lt; Point &gt; &amp; getMovablePos() const </div><div class="ttdef"><b>Definition:</b> Board.h:38</div></div>
+<div class="ttc" id="classBoard_html_a20396c356cd6111cbf1e5ceccb18e4b8"><div class="ttname"><a href="classBoard.html#a20396c356cd6111cbf1e5ceccb18e4b8">Board::UPPER</a></div><div class="ttdeci">static const unsigned UPPER</div><div class="ttdef"><b>Definition:</b> Board.h:86</div></div>
+<div class="ttc" id="classBoard_html_a44f35922230819c056ffa5b2c7e68e63"><div class="ttname"><a href="classBoard.html#a44f35922230819c056ffa5b2c7e68e63">Board::getLiberty</a></div><div class="ttdeci">unsigned getLiberty(const Point &amp;p) const </div><div class="ttdef"><b>Definition:</b> Board.h:74</div></div>
+<div class="ttc" id="classBoard_html_abd1e908acdc23e225fdc552f42bbcd22"><div class="ttname"><a href="classBoard.html#abd1e908acdc23e225fdc552f42bbcd22">Board::pass</a></div><div class="ttdeci">bool pass()</div><div class="ttdef"><b>Definition:</b> Board.cpp:107</div></div>
+<div class="ttc" id="classBoard_html_a85b48e073c3fa4894d28dadaf0f17344"><div class="ttname"><a href="classBoard.html#a85b48e073c3fa4894d28dadaf0f17344">Board::LEFT</a></div><div class="ttdeci">static const unsigned LEFT</div><div class="ttdef"><b>Definition:</b> Board.h:88</div></div>
+<div class="ttc" id="GLserver_2Reversi_8h_html_aac1b50d359c230c3bd30917d638a0538"><div class="ttname"><a href="GLserver_2Reversi_8h.html#aac1b50d359c230c3bd30917d638a0538">MAX_TURNS</a></div><div class="ttdeci">const int MAX_TURNS</div><div class="ttdef"><b>Definition:</b> Reversi.h:9</div></div>
+<div class="ttc" id="classBoard_html_adf8ccf5ad567698235ada0b739fb8499"><div class="ttname"><a href="classBoard.html#adf8ccf5ad567698235ada0b739fb8499">Board::checkMobility</a></div><div class="ttdeci">unsigned checkMobility(const Disc &amp;disc) const </div><div class="ttdef"><b>Definition:</b> Board.cpp:186</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+‰ΩúÊàêÔºö &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.5
+</small></address>
+</body>
+</html>

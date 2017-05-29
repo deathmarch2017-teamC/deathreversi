@@ -1,0 +1,17 @@
+# gtags関連のファイル
+GPATH 
+GRTAGS
+GTAGS
+
+# 一時ファイル
+*~
+
+# gtagsのパス通したりとか？
+initialize.sh
+
+# テスト用実行ファイル
+a.out
+
+#Doxygen関係
+Doxyfile*
+
