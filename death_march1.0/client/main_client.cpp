@@ -7,7 +7,7 @@ int main(){
   int teamcolor;
   char moveout[4];
   ConsoleBoard board;
-  Reversi_AI_Random AI;
+  Reversi_AI AI;
   int x_out;
   int y_out;
   int flagout;

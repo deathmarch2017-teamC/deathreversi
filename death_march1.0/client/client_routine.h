@@ -10,7 +10,7 @@
 #include"Board.h"
 #include"Reversi.h"
 #include"socket.h"
-#include"Reversi_AI_Random.h"
+#include"Reversi_AI.h"
 #define DATASIZE 4
 //extern int serverSock;
 
