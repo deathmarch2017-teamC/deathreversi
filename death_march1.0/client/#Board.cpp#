@@ -110,7 +110,7 @@ bool Board::pass()
   if(MovablePos[Turns].size() != 0) return false;
 	
   // ゲームが終了しているなら、パスできない
-  if(isGameOver)) return false;
+  if(isGameOver()) return false;
 	
   CurrentColor = -CurrentColor;
 	

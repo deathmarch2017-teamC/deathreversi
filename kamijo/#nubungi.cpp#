@@ -65,15 +65,14 @@ void Reversi_AI_Random::return_move(Board board, int flagin, int &x, int &y, int
 
 	  //打つ手を全検索
 	  std::vector<Point>points = board.getMovable();
-	  Point p = points;
-	  for(Point p : p )
+	  for(Point p : points )
 		     {
 		       int score , score_max;
 		       //自分の手を打つ
-		       move(Point p);
+		       board.move(Point p);
 		       score = minlevel(limit-1);
 		       //１つ前の手に戻す
-		       undo();
+		       board.undo();
 		       if(score > score_max)
 			 {
 			   score_max = score;

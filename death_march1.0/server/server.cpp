@@ -354,6 +354,7 @@ main() {
   //ソケットのタイムアウト設定
   for(int i=0;i<PLAYERNUM;i++){
     setsockopt(dstSocket[i], SOL_SOCKET, SO_SNDTIMEO, (char *)&limit_tv, sizeof(limit_tv));
+    setsockopt(dstSocket[i], SOL_SOCKET, SO_RCVTIMEO, (char *)&limit_tv, sizeof(limit_tv));
   }
 
   while(true){

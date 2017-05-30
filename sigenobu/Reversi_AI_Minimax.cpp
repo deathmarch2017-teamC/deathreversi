@@ -8,10 +8,10 @@
 #include <ctime>
 #include <cstdlib>
 
-#define DEPTH 2
+#define DEPTH 3
 #define NUM_MAX 65535
 
-Reversi_AI_Minimax::Reversi_AI_Minimax()
+Reversi_AI::Reversi_AI()
 {
   Berserker_Soul = false;
   use_of_MT = false;
@@ -23,27 +23,26 @@ Reversi_AI_Minimax::Reversi_AI_Minimax()
 
 /*! @brief eval_boardの初期化
 */
-void Reversi_AI_Minimax::init_eval_board()
+void Reversi_AI::init_eval_board()
 {
-   char eval[] = {
-       0, 100, -80,  80,  20,   5,   5,  20,  80, -80, 100,   0,\
-     100, -90, -60,  -5,  -5,  -5,  -5,  -5,  -5, -60, -90, 100,\
-     -80, -60,  20,  10,  10,   3,   3,  10,  10,  20, -60, -80,\
-      80,  -5,  10,   5,   5,   3,   3,   5,   5,  10,  -5,  80,\
-      20,  -5,  10,   5,   5,   3,   3,   5,   5,   5,  10,  -5,\
-       5,  -5,   3,   3,   3,   3,   3,   3,   3,   3,  -5,   5,\
-       5,  -5,   3,   3,   3,   3,   3,   3,   3,   3,  -5,   5,\
-      20,  -5,  10,   5,   5,   3,   3,   5,   5,   5,  10,  -5,\
-      80,  -5,  10,   5,   5,   3,   3,   5,   5,  10,  -5,  80,\
-     -80, -60,  20,  10,  10,   3,   3,  10,  10,  20, -60, -80,\
-     100, -90, -60,  -5,  -5,  -5,  -5,  -5,  -5, -60, -90, 100,\
-       0, 100, -80,  80,  20,   5,   5,  20,  80, -80, 100,   0};
-   eval_board.assign(&eval[0], &eval[BOARD_SIZE*BOARD_SIZE]);
+  eval_board = {
+  {   0, 100, -80,  80,  20,   5,   5,  20,  80, -80, 100,   0},
+  { 100, -90, -60,  -5,  -5,  -5,  -5,  -5,  -5, -60, -90, 100},
+  { -80, -60,  20,  10,  10,   3,   3,  10,  10,  20, -60, -80},
+  {  80,  -5,  10,   5,   5,   3,   3,   5,   5,  10,  -5,  80},
+  {  20,  -5,  10,   5,   5,   3,   3,   5,   5,   5,  10,  -5},
+  {   5,  -5,   3,   3,   3,   3,   3,   3,   3,   3,  -5,   5}
+  {   5,  -5,   3,   3,   3,   3,   3,   3,   3,   3,  -5,   5},
+  {  20,  -5,  10,   5,   5,   3,   3,   5,   5,   5,  10,  -5},
+  {  80,  -5,  10,   5,   5,   3,   3,   5,   5,  10,  -5,  80},
+  { -80, -60,  20,  10,  10,   3,   3,  10,  10,  20, -60, -80},
+  { 100, -90, -60,  -5,  -5,  -5,  -5,  -5,  -5, -60, -90, 100},
+  {   0, 100, -80,  80,  20,   5,   5,  20,  80, -80, 100,   0}};
 }
 
 /*! @brief 相手がMTを使用したことを通知する関数
 */
-void Reversi_AI_Minimax::notice_opponent_use_MT()
+void Reversi_AI::notice_opponent_use_MT()
 {
   opponent_MT_FLAG = true;
 }
@@ -56,7 +55,7 @@ void Reversi_AI_Minimax::notice_opponent_use_MT()
  @param[out] flagout サーバへ送信するフラグ情報
 */
 
-void Reversi_AI_Minimax::return_move(Board board, int flagin, int &x, int &y, int &flagout)
+void Reversi_AI::return_move(Board board, int flagin, int &x, int &y, int &flagout)
 {
   if((flagin & ACFLAG) == 0){
     // second move which you used MT
@@ -100,7 +99,7 @@ void Reversi_AI_Minimax::return_move(Board board, int flagin, int &x, int &y, in
         
 
       std::vector<Point> points = board.getMovablePos();
-      Point p = Minimax(board, DEPTH);
+      Point p = points[rand() % points.size()];
       x = p.x;
       y = p.y;
       flagout = 0;
@@ -124,7 +123,7 @@ void Reversi_AI_Minimax::return_move(Board board, int flagin, int &x, int &y, in
       }
 
     // decides a move with minimax
-    Point p = points[rand() % points.size()];
+    Point p = Minimax(board, DEPTH);
     x = p.x;
     y = p.y;
     flagout = 0;
@@ -136,30 +135,30 @@ void Reversi_AI_Minimax::return_move(Board board, int flagin, int &x, int &y, in
  @param[in] depth 探索する深さ
  @return 評価値
 */
-Point Reversi_AI_Minimax::Minimax(Board b, int depth)
+Point Minimax(Board b, int depth)
 {
   Point mymove;
   int eval, eval_max = -NUM_MAX;
 
-  std::vector<Point>points = b.getMovablePos();
+  std::vector<Point>points = board.getMovable();
   int score , score_max = -NUM_MAX;
-  for(int i = 0; i < points.size(); i++)
+  for(Point p : points )
     {
-      b.move(points[i]);
+      b.move(p);
       eval = minlevel(depth, b);
       b.undo();
       if(eval > eval_max){
-	mymove = points[i];
+	mymove = p;
       }
     }
-  std::cout << "------------------- minimax x:" << mymove.x << " y:" << mymove.y << " flags:" << mymove.flag << " -------------------" << std::endl;
+  
   return mymove;
 }
 /*! @brief 評価値の計算
  @param[in] board 盤面情報
  @return 評価値
 */
-int Reversi_AI_Minimax::evaluate_board(Board b)
+int evaluate_board(Board b)
 {
   int i, j, val = 0;
   Point tmp;
@@ -167,10 +166,10 @@ int Reversi_AI_Minimax::evaluate_board(Board b)
     for(j = 0; j < BOARD_SIZE; j++){
       tmp.x = i+1;
       tmp.y = j+1;
-      val += eval_board[i+j*BOARD_SIZE] * b.getColor(tmp);
+      val += eval_board[i][j] * board.getColor(tmp);
     }
   }
-  if(b.getCurrentColor() == WHITE){
+  if(board.getCurrentColor() == WHITE){
     val = val * -1;
   }
   return val;
@@ -181,20 +180,20 @@ int Reversi_AI_Minimax::evaluate_board(Board b)
  @return そのノードの評価値
 */
 
-int Reversi_AI_Minimax::maxlevel(int limit, Board board){
+int maxlevel(int limit, board board){
 
   if(limit == 0)
     //評価値を返す
     return evaluate_board(board);
 
   //打つ手を全検索
-  std::vector<Point>points = board.getMovablePos();
+  std::vector<Point>points = board.getMovable();
   int score , score_max = -NUM_MAX;
-  for(int i = 0; i < points.size(); i++)
+  for(Point p : points )
     {
       //自分の手を打つ
-      board.move(points[i]);
-      score = minlevel(limit-1, board);
+      board.move(p);
+      score = minlevel(limit-1);
       //１つ前の手に戻す
       board.undo();
       if(score > score_max)
@@ -205,23 +204,23 @@ int Reversi_AI_Minimax::maxlevel(int limit, Board board){
   return score_max;
 }
 
-int Reversi_AI_Minimax::minlevel(int limit, Board board)
+int minlevel(int limit, board board)
 {
   if(limit == 0)
     //評価値を返す
     return evaluate_board(board);
 
   //打つ手を全検索
-  std::vector<Point>points = board.getMovablePos();
+  std::vector<Point>points = board.getMovable();
   int score , score_min = NUM_MAX;
-  for(int i = 0; i < points.size(); i++)
+  for(Point p : points )
     {
       //自分の手を打つ
-      board.move(points[i]);
-      score = maxlevel(limit-1, board);
+      board.move(p);
+      score = maxlevel(limit-1);
       //１つ前の手に戻す
       board.undo();
-      if(score < score_min)
+      if(score > score_max)
 	{
 	  score_min = score;
 	}
@@ -235,7 +234,7 @@ int Reversi_AI_Minimax::minlevel(int limit, Board board)
     @param[out] second_point MTにおける座標
     @return MTを使うべきかをbool値で返す．trueなら使うべきと判定
   */
-  bool Reversi_AI_Minimax::check_to_use_MT(Board b, Point &first_point, Point &second_point)
+  bool Reversi_AI::check_to_use_MT(Board b, Point &first_point, Point &second_point)
   {
     // get movable position
     std::vector<Point> movable_pos = b.getMovablePos();
