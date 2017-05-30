@@ -150,6 +150,7 @@ Point Reversi_AI_Minimax::Minimax(Board b, int depth)
       b.undo();
       if(eval > eval_max){
 	mymove = points[i];
+	eval_max = eval;
       }
     }
   std::cout << "------------------- minimax x:" << mymove.x << " y:" << mymove.y << " flags:" << mymove.flag << " -------------------" << std::endl;
