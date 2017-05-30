@@ -5,12 +5,14 @@
 */
 
 #include "Reversi_AI.h"
+#include <iostream>
 #include <ctime>
 #include <cstdlib>
 
+/* public functions */
+
 /*! @brief コンストラクタ
 */
-
 Reversi_AI::Reversi_AI()
 {
   Berserker_Soul = false;
@@ -45,6 +47,7 @@ void Reversi_AI::return_move(Board board, int flagin, int &x, int &y, int &flago
       y = tp.y;
       flagout = tp.flag;
       set_tp = false;
+      std::cout << "tp: " << x << "," << y << std::endl;
       return;
     }
     // branch by movable position
@@ -62,17 +65,19 @@ void Reversi_AI::return_move(Board board, int flagin, int &x, int &y, int &flago
       if(Berserker_Soul == false && board.getTurns() >= 9)
       {
         Point p1, p2;
-        if(check_to_use_MT(b, p1, p2))
-	{
-	  x = p1.x;
-	  y = p1.y;
-	  flagout = MTFLAG;
-	  tp.x = p2.x;
-	  tp.y = p2.y;
-	  tp.flag = 0;
-	  set_tp = true;
-	  break;
-	}
+        if(check_to_use_MT(board, p1, p2))
+        {
+          x = p1.x;
+          y = p1.y;
+          flagout = p1.flag;
+          tp.x = p2.x;
+          tp.y = p2.y;
+          tp.flag = p2.flag;
+          set_tp = true;
+          // sigenobu revised
+          Berserker_Soul = true;
+          return;
+        }
       }
         
       // decides a random move
@@ -89,16 +94,16 @@ void Reversi_AI::return_move(Board board, int flagin, int &x, int &y, int &flago
     std::vector<Point> points;
     // collect all opponent's coordinate
     for(int i = 1; i <= 12; i++)
-    {
-      for(int j = 1; j <= 12; j++)
       {
-        Point p(i, j);
-	if(board.getColor(p) == opponentColor)
-	{
-	  points.push_back(p);
-	}
+	for(int j = 1; j <= 12; j++)
+	  {
+	    Point p(i, j);
+	    if(board.getColor(p) == opponentColor)
+	      {
+		points.push_back(p);
+	      }
+	  }
       }
-    }
 
     // decides a move with random
     Point p = points[rand() % points.size()];
@@ -117,86 +122,91 @@ void Reversi_AI::return_move(Board board, int flagin, int &x, int &y, int &flago
 bool Reversi_AI::check_to_use_MT(Board b, Point &first_point, Point &second_point)
 {
   // get movable position
-  std::vector<Point> movable_pos = board.getMovablePos();
+  std::vector<Point> movable_pos = b.getMovablePos();
 
   // search for a position which the opponent gets all coins
   // remove position from movable_pos, which you mustn't put
   for(int i = 0; i < movable_pos.size(); i++)
   {
     // first move
-    board.move(movable_pos(i));
+    b.move(movable_pos[i]);
     // then, get movable positions
-    std::vector<Point> opponent_movable_pos = board.getMovablePos();
+    std::vector<Point> opponent_movable_pos = b.getMovablePos();
     for(int j = 0; j < opponent_movable_pos.size(); j++)
     {
-      // consider the opponent's MT
-      if(opponent_MT_FLAG == false)
-        opponent_movable_pos(j).flag = MTFLAG;
-
       // check whether you put a coin
-      board.move(opponent_movable_pos(j));
+      b.move(opponent_movable_pos[j]);
       // if you can't put a coin, remove position from movable_pos
-      if(opponent_MT_FLAG == true && board.getMovablePos().size() == 0)
+      if(b.getMovablePos().size() == 0)
       {
-	movable_pos.erase(movable_pos.begin() + i, 1);
-	board.undo();
-	i--;
-	break;
+        //sigenobu revised
+        //movable_pos.erase(movable_pos.begin() + i, 1);
+        movable_pos.erase(movable_pos.begin() + i);
+        i--;
+        b.undo();
+        break;
       }
+      b.undo();
       
-      // check whether you put a coin, if your opponent use MT
-      bool erase_flag = false;
       if(opponent_MT_FLAG == false)
       {
+        // check whether you put a coin
+        opponent_movable_pos[j].flag = MTFLAG;
+        b.move(opponent_movable_pos[j]);
+
+        // check whether you put a coin, if your opponent use MT
+        bool erase_flag = false;
         // get movable positions
-        std::vector<Point> opponent_second_movable_pos = board.getMovablePos();
-	// if your opponent get all coins, remove a posision from movable_pos
-        for(k = 0; k < opponent_second_movable_pos.size(); k++)
-	{
-          board.move(opponent_second_movable_pos(k));
-	  if(board.getMovablePos().size() == 0)
-	  {
-	    movable_pos.erase(movable_pos.begin() + i, 1);
-	    board.undo();
-	    i--;
-	    erase_flag = true;
-	    break;
-	  }
-	  board.undo();
-	}
+        std::vector<Point> opponent_second_movable_pos = b.getMovablePos();
+	
+        // if your opponent get all coins, remove a posision from movable_pos
+        for(int k = 0; k < opponent_second_movable_pos.size(); k++)
+        {
+          b.move(opponent_second_movable_pos[k]);
+          if(b.getMovablePos().size() == 0)
+          {
+            // sigenobu revised
+            movable_pos.erase(movable_pos.begin() + i);
+            i--;
+            b.undo();
+            erase_flag = true;
+            break;
+          }
+          b.undo();
+        }
+        b.undo();
+        if(erase_flag)
+          break;
       }
-      board.undo();
-      if(erase_flag)
-        break;
     }
-    board.undo();
+    b.undo();
   }
 
   // if you lose whenever you don't use MT, use MT
   if(movable_pos.size() == 0)
   {
-    movable_pos = board.getMovablePos();
+    movable_pos = b.getMovablePos();
     for(int i = 0; i < movable_pos.size(); i++)
     {
       // move random
       int p1 = rand() % movable_pos.size();
-      movable_pos(p1).flag = MTFLAG;
-      board.move(movable_pos(p1));
-      std::vector<Point> second_movable_pos = board.getMovablePos();
+      movable_pos[p1].flag = MTFLAG;
+      b.move(movable_pos[p1]);
+      std::vector<Point> second_movable_pos = b.getMovablePos();
       // decide coordinates to put coins
       if(second_movable_pos.size() != 0)
       {
         int p2 = rand() % second_movable_pos.size();
-	second_movable_pos(p2).flag = 0;
-        first_point.x  = movable_pos(p1).x;
-        first_point.y  = movable_pos(p1).y;
+	second_movable_pos[p2].flag = 0;
+        first_point.x  = movable_pos[p1].x;
+        first_point.y  = movable_pos[p1].y;
         first_point.flag = MTFLAG;
-        second_point.x = second_movable_pos(p2).x;
-        second_point.y = second_movable_pos(p2).y;
-        first_point.flag = 0;
+        second_point.x = second_movable_pos[p2].x;
+        second_point.y = second_movable_pos[p2].y;
+        second_point.flag = 0;
         return true;
       }
-      board.undo();
+      b.undo();
     }
     return false;
   }
@@ -205,32 +215,32 @@ bool Reversi_AI::check_to_use_MT(Board b, Point &first_point, Point &second_poin
   for(int i = 0; i < movable_pos.size(); i++)
   {
     // first move
-    movable_pos(i).flag = MTFLAG;
-    board.move(movable_pos(i));
+    movable_pos[i].flag = MTFLAG;
+    b.move(movable_pos[i]);
     // then, get movable position
-    std::vector<Point> second_movable_pos = board.getMovablePos();
+    std::vector<Point> second_movable_pos = b.getMovablePos();
     // search for a move which you get all discs
     for(int j = 0; j < second_movable_pos.size(); j++)
     {
       // second move
-      board.move(second_movable_pos(j));
+      b.move(second_movable_pos[j]);
       // judge if you get all discs
-      if(board.getMovablePos().size() == 0)
+      if(b.getMovablePos().size() == 0)
       {
         // if you do, return the following data
-        first_point.x  = movable_pos(i).x;
-        first_point.y  = movable_pos(i).y;
+        first_point.x  = movable_pos[i].x;
+        first_point.y  = movable_pos[i].y;
 	first_point.flag = MTFLAG;
-        second_point.x = second_movable_pos(i).x;
-        second_point.y = second_movable_pos(i).y;
-	first_point.flag = 0;
+        second_point.x = second_movable_pos[i].x;
+        second_point.y = second_movable_pos[i].y;
+	second_point.flag = 0;
 	return true;
       }
       // if second move isn't suitable, undo the board
-      board.undo();
+      b.undo();
     }
     // if first move isn't suitable, undo the board
-    board.undo();
+    b.undo();
   }
 
   return false;

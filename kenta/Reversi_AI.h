@@ -4,8 +4,8 @@
  @date 2017.5.23
 */
 
-#ifndef REVERSI_AI_RANDOM_H
-#define REVERSI_AI_RANDOM_H
+#ifndef REVERSI_AI_H
+#define REVERSI_AI_H
 
 #include "Board.h"
 
@@ -15,6 +15,7 @@ class Reversi_AI
 {
   public:
     Reversi_AI();
+    void notice_opponent_use_MT();
     void return_move(Board b, int flagin, int &x, int &y, int &flagout);
   private:
     bool check_to_use_MT(Board b, Point &first_Point, Point &second_Point);
