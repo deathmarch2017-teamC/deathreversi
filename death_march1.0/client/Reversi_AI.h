@@ -47,5 +47,26 @@ class Reversi_AI_Minimax
     bool set_tp;
 };
 
+class Reversi_AI_ab
+{
+  public:
+    Reversi_AI_ab();
+    void notice_opponent_use_MT();
+    void return_move(Board b, int flagin, int &x, int &y, int &flagout);
+  private:
+    bool check_to_use_MT(Board b, Point &first_Point, Point &second_Point);
+    void init_eval_board();
+    Point ab(Board b, int depth);
+    int evaluate_board(Board b);
+    int maxlevel(int limit, Board board, int alpha, int beta);
+    int minlevel(int limit, Board board, int alpha, int beta);
+    std::vector<char> eval_board;
+    bool Berserker_Soul;
+    bool use_of_MT;
+    bool opponent_MT_FLAG;
+    Point tp;
+    bool set_tp;
+};
+
 
 #endif
