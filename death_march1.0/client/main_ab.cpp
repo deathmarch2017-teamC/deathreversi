@@ -7,7 +7,6 @@ int main(){
   int teamcolor;
   char moveout[4];
   ConsoleBoard board;
-  Reversi_AI_ab AI;
   int x_out;
   int y_out;
   int flagout;
@@ -30,6 +29,9 @@ int main(){
     printf("my color is WHITE!\n");
   }
   printf("end initial setting\n");
+
+  Reversi_AI_ab AI(teamcolor);
+
   
   while(true){
     cout << "Turn:" << board.getTurns() << endl;
