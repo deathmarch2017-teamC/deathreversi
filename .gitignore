@@ -22,7 +22,13 @@ Doxyfile*
 *.o
 
 #個人フォルダ
-kenta/
-kamijo/
+/kenta/
+/kamijo/
 
 \#*#
+
+#txtファイル
+*.txt
+
+#
+.gitignore
