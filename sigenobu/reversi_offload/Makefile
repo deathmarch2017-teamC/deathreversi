@@ -4,8 +4,8 @@ all: ab raspi
 ab:  main_ab.cpp Board.o socket.o client_routine.o Reversi_AI_ab.o
 	g++ -O3 -o client_ab.out main_ab.cpp Board.o socket.o client_routine.o Reversi_AI_ab.o 
 
-raspi: raspi_socket.cpp socket.o 
-	g++ -O3 -o client_raspi.out raspi_socket.cpp socket.o
+raspi: raspi_socket.cpp 
+	g++ -O3 -o client_raspi.out raspi_socket.cpp 
 
 Board.o: Board.cpp Reversi.h Board.h
 	g++ -O3 -c Board.cpp 

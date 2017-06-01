@@ -16,9 +16,9 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
-bool set_socket_connect(char* ip_addr, int port);
-bool set_socket_accept(char* ip_addr, int port);
-bool send_func(char* BUF);
-bool recv_func(char* BUF);
-int close_socket();
+bool recv_raspi_off(char* buf);
+bool send_raspi_off(char* buf);
+bool recv_raspi_server(char* buf);
+bool send_raspi_server(char* buf);
+
 #endif

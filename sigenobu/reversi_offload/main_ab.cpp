@@ -12,12 +12,14 @@ int main(){
   int flagout;
   int flagin;
   Point mymove;
-  int dstSock;
-  
-  dstSock = set_socket_accept(ip_addr, port);
+  struct sockaddr_in dstSockaddr;
 
+  if(set_socket_accept(ip_addr, port) == false){
+    cout << "socket accept miss" << endl;
+  } 
+ 
   printf("start setting_game\n");
-  if((teamcolor = setting_game(dstSock, teamname)) == BLACK){
+  if((teamcolor = setting_game(teamname)) == BLACK){
     printf("my color is BLACK!\n");
   }else{
     printf("my color is WHITE!\n");
@@ -29,13 +31,13 @@ int main(){
   while(true){
     cout << "Turn:" << board.getTurns() << "myColor:" << AI.getmyColor() << endl;
     if((board.getTurns() != 0) || teamcolor == WHITE){
-      flagin = board_update(dstSock, board);
+      flagin = board_update(board);
       board.print();
       cout << "Black Disk:" << board.countDisc(BLACK) << endl;
       cout << "White Disk:" << board.countDisc(WHITE) << endl;
       cout << "Empty:" << board.countDisc(EMPTY) << endl << endl;
     }else{
-      recv_func(dstSock, moveout);
+      recv_func(moveout);
       flagin = 0;
     }
     if((flagin & MTFLAG) != 0 ){
@@ -55,7 +57,7 @@ int main(){
       move_gen(moveout, x_out, y_out, flagout);
       cout << "move:" << moveout << " flag:" << flagout << endl;
 
-      send_func(dstSock, moveout);
+      send_func(moveout);
       
       /* }else if((flagin & PSFLAG) != 0 ){
 	 cout << "receive PS" << endl;
@@ -86,7 +88,7 @@ int main(){
 
 	cout << "move:" << moveout << " flag:" << flagout << endl << endl;
 
-	send_func(dstSock, moveout);
+	send_func(moveout);
 
       }else{
       
@@ -105,12 +107,12 @@ int main(){
 
 	cout << "move:" << moveout << " flag:" << flagout << endl << endl;
 
-	send_func(dstSock, moveout);
+	send_func( moveout);
       }
     }
   }
 
-  if(close_socket(dstSock)<0){
+  if(close_socket()<0){
     cerr << "close serverSock miss" << endl;
   }else{
     cout << "serverSock closed !" << endl;

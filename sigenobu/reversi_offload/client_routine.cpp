@@ -18,18 +18,18 @@
  BLACK:0 WHITE:1
 */
 
-int setting_game(int &dstSock, char* teamname){
+int setting_game(char* teamname){
   char buffer[80];
   Color teamcolor;
   cout << "sending team name...";
-  if(send_func(dstSock, teamname)==false){
+  if(send_func(teamname)==false){
     cerr << "NG" << endl;
     exit(1);
   }
   cout << "OK" << endl;
   
   cout << "getting my team color...";
-  if(recv_func(dstSock, buffer)==false){
+  if(recv_func(buffer)==false){
     cerr << "NG" << endl;
     exit(1); 
   }
@@ -44,11 +44,11 @@ int setting_game(int &dstSock, char* teamname){
   return teamcolor;
 }
 
-int board_update(int &dstSock, Board &board){
+int board_update(Board &board){
   char c_in[DATASIZE];
   char c_cmp[DATASIZE-1];
   Point p;
-  if(recv_func(dstSock, c_in)==false){
+  if(recv_func(c_in)==false){
     cerr << "move recv miss"<< endl;
     exit(1);
   }
