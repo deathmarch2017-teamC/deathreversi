@@ -18,7 +18,7 @@ int main(){
   
 
   printf("start setting_game\n");
-  if((teamcolor = setting_game(teamname)) == BLACK){
+  if((teamcolor = setting_game(dstSock, teamname)) == BLACK){
     printf("my color is BLACK!\n");
   }else{
     printf("my color is WHITE!\n");
@@ -30,7 +30,7 @@ int main(){
   while(true){
     cout << "Turn:" << board.getTurns() << "myColor:" << AI.getmyColor() << endl;
     if((board.getTurns() != 0) || teamcolor == WHITE){
-      flagin = board_update(board);
+      flagin = board_update(dstSock, board);
       board.print();
       cout << "Black Disk:" << board.countDisc(BLACK) << endl;
       cout << "White Disk:" << board.countDisc(WHITE) << endl;

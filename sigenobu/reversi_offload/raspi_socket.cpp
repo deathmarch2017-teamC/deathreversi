@@ -28,8 +28,9 @@ int main()
   cout << "server port:";
   cin >> port[SERVER];
   
-  dstSocket[OFFLOAD] = set_socket_connect(ip_addr[OFFLOAD], port[OFFLOAD]);
   dstSocket[SERVER] = set_socket_connect(ip_addr[SERVER], port[SERVER]);
+  dstSocket[OFFLOAD] = set_socket_connect(ip_addr[OFFLOAD], port[OFFLOAD]);
+
   
   if(recv_func(dstSocket[OFFLOAD], buffer) == false){
     cout << "team name recv miss" << endl;

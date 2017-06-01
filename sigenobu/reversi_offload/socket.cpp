@@ -19,7 +19,7 @@ int set_socket_connect(char* ip_addr, int port){
   dstSockaddr.sin_family = AF_INET;
   dstSockaddr.sin_port = htons(port);
 
-  inet_pton(AF_INET, ip_addr,  &dstSockaddr.sin_addr.s_addr);
+  inet_pton(AF_INET, ip_addr, &dstSockaddr.sin_addr.s_addr);
 
   //サーバに接続
   if(connect(dstSock, (struct sockaddr *) &dstSockaddr, (socklen_t)sizeof(dstSockaddr))<-1){

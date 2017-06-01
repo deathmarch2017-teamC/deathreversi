@@ -16,8 +16,8 @@
 
 using namespace std;
 
-int setting_game(char* teamname);
-int board_update(Board &board);
+int setting_game(int dstSock, char* teamname);
+int board_update(int dstSock, Board &board);
 void move_gen(char* move, int x, int y, int flag);
 
 #endif
