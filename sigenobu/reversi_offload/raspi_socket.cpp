@@ -23,19 +23,19 @@ char buffer[BUFFER_SIZE];
 
 int main()
 {
+  dstSocket[OFFLOAD] = set_socket_connect(ip_addr[OFFLOAD], port[OFFLOAD]);
+  if(recv_func(dstSocket[OFFLOAD], buffer) == false){
+    cout << "team name recv miss" << endl;
+  }
+
+
   cout << "server IP address:";
   cin >> ip_addr[SERVER];
   cout << "server port:";
   cin >> port[SERVER];
   
   dstSocket[SERVER] = set_socket_connect(ip_addr[SERVER], port[SERVER]);
-  dstSocket[OFFLOAD] = set_socket_connect(ip_addr[OFFLOAD], port[OFFLOAD]);
-
   
-  if(recv_func(dstSocket[OFFLOAD], buffer) == false){
-    cout << "team name recv miss" << endl;
-  }
-
   if(send_func(dstSocket[SERVER], buffer) == false){
     cout << "team name send miss" << endl;
   }

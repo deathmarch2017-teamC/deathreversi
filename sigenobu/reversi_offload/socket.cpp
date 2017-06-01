@@ -42,7 +42,7 @@ int set_socket_accept(int port){
     bind(dstSock, (struct sockaddr *) &dstSockaddr, sizeof(dstSockaddr));
 
     listen(dstSock, 1);
-    std::cout << "wait connection ..." << std::endl;
+    std::cout << "port: " << port << " wait connection ..." << std::endl;
     if(dstSock = accept(dstSock, (struct sockaddr *) &dstSockaddr, (socklen_t *)sizeof(dstSockaddr)) < -1){
       std::cout << "not connect" << std::endl;
       return 0;
