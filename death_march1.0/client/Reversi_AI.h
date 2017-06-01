@@ -53,6 +53,7 @@ class Reversi_AI_ab
     Reversi_AI_ab(Color color);
     void notice_opponent_use_MT();
     void return_move(Board b, int flagin, int &x, int &y, int &flagout);
+    const Color getmyColor(){return myColor;}
   private:
     bool check_to_use_MT(Board b, Point &p);
     void init_eval_board();

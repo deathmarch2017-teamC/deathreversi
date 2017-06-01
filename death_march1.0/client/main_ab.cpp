@@ -34,7 +34,7 @@ int main(){
 
   
   while(true){
-    cout << "Turn:" << board.getTurns() << endl;
+    cout << "Turn:" << board.getTurns() << "myColor:" << AI.getmyColor() << endl;
     if((board.getTurns() != 0) || teamcolor == WHITE){
       flagin = board_update(board);
       board.print();

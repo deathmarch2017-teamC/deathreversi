@@ -324,6 +324,7 @@ void Reversi_AI_ab::return_move(Board board, int flagin, int &x, int &y, int &fl
 
     if(getStoneNumMax != 0) return;
     // decides a move with minimax
+    std::cout << "AC gen random !!!" << std::endl;
     Point p = points[rand() % points.size()];
     x = p.x;
     y = p.y;
