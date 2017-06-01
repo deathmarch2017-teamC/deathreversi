@@ -3,17 +3,25 @@
 
 class GeneticAlgorithmforReversi
 {
-  int parent[5][19];
-  int children[10][19];
+public:
+  GeneticAlgorithmforReversi();
+  void getEvaluateFunctionOfParent(int* evalBoard);
+  void getEvaluateFunctionOfChild(int index, int* evalBoard);
+  void createChildren();
+  void setNumberOfWins(int index, int* wins);
+
+private:
+  int parent[2][20];
+  int children[10][20];
   int numberOfWins[10];
 
-  GeneticAlgorithmforReversi();
-  void initChildren();
-  void initNumberOfWins();
-  void evaluate();
   void choiceParent();
   void crossParent();
   void mutation();
+
+  void initChildren();
+  void initNumberOfWins();
+
 };
 
 #endif
