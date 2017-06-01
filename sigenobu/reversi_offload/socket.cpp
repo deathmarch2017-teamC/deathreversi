@@ -30,7 +30,7 @@ int set_socket_connect(char* ip_addr, int port){
   return dstSock;
 }
 
-int set_socket_accept(int port){
+int set_socket_accept(char* ip_addr, int port){
   int dstSock;
   struct sockaddr_in dstSockaddr;
     dstSockaddr.sin_port = htons(port);
@@ -56,7 +56,7 @@ bool send_func(int socket ,char* buf){
 
   //送信
   if(send(socket, buf, strlen(buf)+1,0)<0){
-    //perror("send error\n");
+    perror("send error\n");
     return false;
   }
 

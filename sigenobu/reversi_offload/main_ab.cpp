@@ -14,8 +14,7 @@ int main(){
   Point mymove;
   int dstSock;
   
-  dstSock = set_socket_accept(port);
-  
+  dstSock = set_socket_accept(ip_addr, port);
 
   printf("start setting_game\n");
   if((teamcolor = setting_game(dstSock, teamname)) == BLACK){
