@@ -167,7 +167,7 @@ void Reversi_AI_ab::return_move(Board board, int flagin, int &x, int &y, int &fl
     if(boardColor[2][12] == opponentColor)
       {
 	getStoneNum = 0;
-	for (int i = 3; i <= 11; i++){
+	for (int i = 3; i <= 12; i++){
 	  if(boardColor[i][12] == opponentColor)
 	    {
 	      getStoneNum++;
@@ -189,7 +189,7 @@ void Reversi_AI_ab::return_move(Board board, int flagin, int &x, int &y, int &fl
     if(boardColor[11][1] == opponentColor)
       {
 	getStoneNum = 0;
-	for (int i = 10; i >= 2; i--){
+	for (int i = 10; i >= 1; i--){
 	  if(boardColor[i][1] == opponentColor)
 	    {
 	      getStoneNum++;
@@ -211,7 +211,7 @@ void Reversi_AI_ab::return_move(Board board, int flagin, int &x, int &y, int &fl
     if(boardColor[11][12] == opponentColor)
       {
 	getStoneNum = 0;
-	for (int i = 10; i >= 2; i--){
+	for (int i = 10; i >= 1; i--){
 	  if(boardColor[i][12] == opponentColor)
 	    {
 	      getStoneNum++;
@@ -233,7 +233,7 @@ void Reversi_AI_ab::return_move(Board board, int flagin, int &x, int &y, int &fl
     if(boardColor[1][2] == opponentColor)
       {
 	getStoneNum = 0;
-	for (int i = 3; i <= 11; i++){
+	for (int i = 3; i <= 12; i++){
 	  if(boardColor[1][i] == opponentColor)
 	    {
 	      getStoneNum++;
@@ -255,7 +255,7 @@ void Reversi_AI_ab::return_move(Board board, int flagin, int &x, int &y, int &fl
     if(boardColor[12][2] == opponentColor)
       {
 	getStoneNum = 0;
-	for (int i = 3; i <= 11; i++){
+	for (int i = 3; i <= 12; i++){
 	  if(boardColor[12][i] == opponentColor)
 	    {
 	      getStoneNum++;
@@ -277,7 +277,7 @@ void Reversi_AI_ab::return_move(Board board, int flagin, int &x, int &y, int &fl
     if(boardColor[1][11] == opponentColor)
       {
 	getStoneNum = 0;
-	for (int i = 10; i >= 2; i--){
+	for (int i = 10; i >= 1; i--){
 	  if(boardColor[1][i] == opponentColor)
 	    {
 	      getStoneNum++;
@@ -299,7 +299,7 @@ void Reversi_AI_ab::return_move(Board board, int flagin, int &x, int &y, int &fl
     if(boardColor[12][11] == opponentColor)
       {
 	getStoneNum = 0;
-	for (int i = 10; i >= 2; i--){
+	for (int i = 10; i >= 1; i--){
 	  if(boardColor[12][i] == opponentColor)
 	    {
 	      getStoneNum++;
