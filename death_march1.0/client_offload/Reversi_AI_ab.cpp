@@ -496,7 +496,7 @@ int Reversi_AI_ab::minlevel(int limit, Board board, int alpha, int beta)
 bool Reversi_AI_ab::check_to_use_MT(Board b, Point &point)
 {
   std::vector<Point> movable_pos = b.getMovablePos();
-  if(movable_pos.size() >= 10){
+  if(movable_pos.size() >= 5){
     point = movable_pos[rand() % movable_pos.size()];
     return true;
   }
