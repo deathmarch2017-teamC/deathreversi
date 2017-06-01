@@ -12,8 +12,23 @@ initialize.sh
 # テスト用実行ファイル
 a.out
 
+#
+*.out
+
 #Doxygen関係
 Doxyfile*
 
 #オブジェクトファイル
 *.o
+
+#個人フォルダ
+/kenta/
+/kamijo/
+
+\#*#
+
+#txtファイル
+*.txt
+
+#
+.gitignore

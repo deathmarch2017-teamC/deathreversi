@@ -130,6 +130,7 @@ void GeneticAlgorithmforReversi::choiceParent()
 */
 GeneticAlgorithmforReversi::crossParent()
 {
+<<<<<<< HEAD
   for(int i = 0; i < 10; i++)
   {
     for(int j = 0; j < 20; j++)
@@ -137,6 +138,9 @@ GeneticAlgorithmforReversi::crossParent()
       children[i][j] = parent[rand() % 2][j];
     }
   }
+=======
+  
+>>>>>>> bc80acb6bea91b80d3545ba28806c8b5d9331e83
 }
 
 /*! @brief 突然変異

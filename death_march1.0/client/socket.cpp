@@ -8,7 +8,7 @@ bool set_socket(char* ip_addr, int port){
 
   //ソケットの生成
   serverSock = socket(AF_INET, SOCK_STREAM, 0);
-
+  
   //接続先構造体の準備
   server.sin_family = AF_INET;
   server.sin_port = htons(port);

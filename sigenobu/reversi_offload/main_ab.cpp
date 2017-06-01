@@ -1,10 +1,10 @@
 #include"client_routine.h"
 
 int main(){
-  char teamname[]={"Alpha O"};
-  char ip_addr[80];
-  int port;
-  int teamcolor;
+  char ip_addr[80]={"160.12.172.212"};
+  int port = 20000;
+  char teamname[8] = "Alpha O";
+ int teamcolor;
   char moveout[4];
   ConsoleBoard board;
   int x_out;
@@ -12,16 +12,11 @@ int main(){
   int flagout;
   int flagin;
   Point mymove;
-  
-  cout << "server IP address:";
-  cin >> ip_addr;
-  cout << "server port:";
-  cin >> port;
-  
-  if(set_socket(ip_addr, port)==false){
-    cerr << "connection miss" << endl;
-  }
 
+  if(set_socket_accept(ip_addr, port) == false){
+    cout << "socket accept miss" << endl;
+  } 
+ 
   printf("start setting_game\n");
   if((teamcolor = setting_game(teamname)) == BLACK){
     printf("my color is BLACK!\n");
@@ -31,7 +26,6 @@ int main(){
   printf("end initial setting\n");
 
   Reversi_AI_ab AI(teamcolor);
-
   
   while(true){
     cout << "Turn:" << board.getTurns() << "myColor:" << AI.getmyColor() << endl;
@@ -112,7 +106,7 @@ int main(){
 
 	cout << "move:" << moveout << " flag:" << flagout << endl << endl;
 
-	send_func(moveout);
+	send_func( moveout);
       }
     }
   }
