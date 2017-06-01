@@ -18,7 +18,7 @@
  BLACK:0 WHITE:1
 */
 
-int setting_game(int dstSock, char* teamname){
+int setting_game(int &dstSock, char* teamname){
   char buffer[80];
   Color teamcolor;
   cout << "sending team name...";
@@ -44,7 +44,7 @@ int setting_game(int dstSock, char* teamname){
   return teamcolor;
 }
 
-int board_update(int dstSock, Board &board){
+int board_update(int &dstSock, Board &board){
   char c_in[DATASIZE];
   char c_cmp[DATASIZE-1];
   Point p;

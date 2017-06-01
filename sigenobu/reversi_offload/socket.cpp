@@ -52,7 +52,7 @@ int set_socket_accept(char* ip_addr, int port){
 }
 
 //送信する関数
-bool send_func(int socket ,char* buf){
+bool send_func(int &socket ,char* buf){
 
   //送信
   if(send(socket, buf, strlen(buf)+1,0)<0){
@@ -64,7 +64,7 @@ bool send_func(int socket ,char* buf){
 }
 
 //受信する関数
-bool recv_func(int socket, char* buf){
+bool recv_func(int &socket, char* buf){
   //サーバからデータを受信
   //memset(buf, 0, sizeof(buf));
   if(recv(socket, buf, BUFFER_SIZE,0)<0){
@@ -75,6 +75,6 @@ bool recv_func(int socket, char* buf){
   return true;
 }
 
-int close_socket(int socket){
+int close_socket(int &socket){
   return close(socket);
 }

@@ -18,7 +18,7 @@
 
 int set_socket_connect(char* ip_addr, int port);
 int set_socket_accept(char* ip_addr, int port);
-bool send_func(int dstSock, char* BUF);
-bool recv_func(int dstSock, char* BUF);
-int close_socket(int dstSock);
+bool send_func(int &dstSock, char* BUF);
+bool recv_func(int &dstSock, char* BUF);
+int close_socket(int &dstSock);
 #endif
