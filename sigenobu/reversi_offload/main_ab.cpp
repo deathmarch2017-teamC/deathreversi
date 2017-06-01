@@ -1,10 +1,10 @@
 #include"client_routine.h"
 
 int main(){
-  char teamname[]={"Alpha O"};
-  char ip_addr[80];
-  int port;
-  int teamcolor;
+  char ip_addr[80]={"160.12.172.212"};
+  int port = 30000;
+  char teamname[8] = "Alpha O";
+ int teamcolor;
   char moveout[4];
   ConsoleBoard board;
   int x_out;
@@ -12,15 +12,10 @@ int main(){
   int flagout;
   int flagin;
   Point mymove;
+  int dstSock;
   
-  cout << "server IP address:";
-  cin >> ip_addr;
-  cout << "server port:";
-  cin >> port;
+  dstSock = set_socket_accept(port);
   
-  if(set_socket(ip_addr, port)==false){
-    cerr << "connection miss" << endl;
-  }
 
   printf("start setting_game\n");
   if((teamcolor = setting_game(teamname)) == BLACK){
@@ -31,7 +26,6 @@ int main(){
   printf("end initial setting\n");
 
   Reversi_AI_ab AI(teamcolor);
-
   
   while(true){
     cout << "Turn:" << board.getTurns() << "myColor:" << AI.getmyColor() << endl;
@@ -42,7 +36,7 @@ int main(){
       cout << "White Disk:" << board.countDisc(WHITE) << endl;
       cout << "Empty:" << board.countDisc(EMPTY) << endl << endl;
     }else{
-      recv_func(moveout);
+      recv_func(dstSock, moveout);
       flagin = 0;
     }
     if((flagin & MTFLAG) != 0 ){
@@ -62,7 +56,7 @@ int main(){
       move_gen(moveout, x_out, y_out, flagout);
       cout << "move:" << moveout << " flag:" << flagout << endl;
 
-      send_func(moveout);
+      send_func(dstSock, moveout);
       
       /* }else if((flagin & PSFLAG) != 0 ){
 	 cout << "receive PS" << endl;
@@ -93,7 +87,7 @@ int main(){
 
 	cout << "move:" << moveout << " flag:" << flagout << endl << endl;
 
-	send_func(moveout);
+	send_func(dstSock, moveout);
 
       }else{
       
@@ -112,12 +106,12 @@ int main(){
 
 	cout << "move:" << moveout << " flag:" << flagout << endl << endl;
 
-	send_func(moveout);
+	send_func(dstSock, moveout);
       }
     }
   }
 
-  if(close_socket()<0){
+  if(close_socket(dstSock)<0){
     cerr << "close serverSock miss" << endl;
   }else{
     cout << "serverSock closed !" << endl;

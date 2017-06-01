@@ -1,6 +1,5 @@
 #ifndef SOCKET_H
 #define SOCKET_H
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -17,8 +16,9 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
-bool set_socket(char* ip_addr, int port);
-bool send_func(char* BUF);
-bool recv_func(char* BUF);
-int close_socket();
+int set_socket_connect(char* ip_addr, int port);
+int set_socket_accept(int port);
+bool send_func(int dstSock, char* BUF);
+bool recv_func(int dstSock, char* BUF);
+int close_socket(int dstSock);
 #endif
