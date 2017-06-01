@@ -346,7 +346,9 @@ Point Reversi_AI_ab::ab(Board b, int depth)
     std::cout << "LAST_STAGE!!!!!!!!!!!" << std::endl;
     stage = LAST_STAGE;
   }
+
   if(stage == LAST_STAGE) depth = 3;
+
   std::vector<Point>points = b.getMovablePos();
   for(int i = 0; i < points.size(); i++)
     {
@@ -370,11 +372,20 @@ Point Reversi_AI_ab::ab(Board b, int depth)
 int Reversi_AI_ab::evaluate_board(Board b)
 {
   int val = 0;
+
+  if(b.countDisc(myColor) == 0){
+    val = -NUM_MAX;
+    return val;
+  }else if(b.countDisc(myColor*-1) == 0){
+    val = NUM_MAX;
+  }
+
   if(stage == LAST_STAGE){
     //   std::cout << "*********** count disc ***********" << std::endl;
     val = myColor * (b.countDisc(BLACK) - b.countDisc(WHITE));
     return val;
   }
+
   int i, j;
   Point tmp;
   for(i = 0; i < BOARD_SIZE; i++){
