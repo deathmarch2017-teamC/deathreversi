@@ -8,7 +8,7 @@
 #include <ctime>
 #include <cstdlib>
 
-#define DEPTH 30
+#define DEPTH 3
 #define NUM_MAX 65535
 #define EARLY_STAGE -1
 #define MIDDLE_STAGE 0
@@ -34,8 +34,8 @@ Reversi_AI_ab::Reversi_AI_ab(Color color)
 void Reversi_AI_ab::init_eval_board()
 {
    char eval[] = {
-       0, 100, -80,  80,  20,  -5,  -5,  20,  10, -80,  60,   0,\
-      60, -90, -60,  -5,  -5,  -5,  -5,  -5,  -5, -60, -90,  60,\
+       0, 100, -80,  80,  20,  -5,  -5,  20,  10, -80, 100,   0,\
+     100, -90, -60,  -5,  -5,  -5,  -5,  -5,  -5, -60, -90, 100,\
      -80, -60,  20,  -5,  -5, -10, -10,  -5,  -5,  20, -60, -80,\
       10,  -5,  -5,  -5,  -5, -10, -10,  -5,  -5,  -5,  -5,  10,\
       -5,  -5,  -5,  -5,  -5, -10, -10,  -5,  -5,  -5,  -5,  -5,\
@@ -44,8 +44,8 @@ void Reversi_AI_ab::init_eval_board()
       -5,  -5,  -5,  -5,  -5, -10, -10,  -5,  -5,  -5,  -5,  -5,\
       10,  -5,  -5,  -5,  -5, -10, -10,  -5,  -5,  -5,  -5,  10,\
      -80, -60,  20,  -5,  -5, -10, -10,  -5,  -5,  20, -60, -80,\
-      60, -90, -60,  -5,  -5,  -5,  -5,  -5,  -5, -60, -90,  60,\
-       0,  60, -80,  10,  -5,  -5,  -5,  -5,  10, -80,  60,   0};
+     100, -90, -60,  -5,  -5,  -5,  -5,  -5,  -5, -60, -90, 100,\
+       0, 100, -80,  10,  -5,  -5,  -5,  -5,  10, -80, 100,   0};
    eval_board.assign(&eval[0], &eval[BOARD_SIZE*BOARD_SIZE]);
 }
 
@@ -145,14 +145,14 @@ void Reversi_AI_ab::return_move(Board board, int flagin, int &x, int &y, int &fl
     if(boardColor[2][1] == opponentColor)
       {
 	getStoneNum = 0;
-	for (int i = 3; i <= 11; i++){
+	for (int i = 3; i <= 12; i++){
 	  if(boardColor[i][1] == opponentColor)
 	    {
 	      getStoneNum++;
 	    }
 	  else
 	    {
-	      if(boardColor[i][1] == board.getCurrentColor()) getStoneNum=0;
+	      if((boardColor[i][1] == board.getCurrentColor())||(boardColor[i][1] == WALL)) getStoneNum=0;
 	      break;
 	    }
 	}
@@ -174,7 +174,7 @@ void Reversi_AI_ab::return_move(Board board, int flagin, int &x, int &y, int &fl
 	    }
 	  else
 	    {
-	      if(boardColor[i][12] == board.getCurrentColor()) getStoneNum=0;
+	      if((boardColor[i][12] == board.getCurrentColor())||(boardColor[i][12] == WALL)) getStoneNum=0;
 	      break;
 	    }
 	}
@@ -196,7 +196,7 @@ void Reversi_AI_ab::return_move(Board board, int flagin, int &x, int &y, int &fl
 	    }
 	  else
 	    {
-	      if(boardColor[i][1] == board.getCurrentColor()) getStoneNum=0;
+	      if((boardColor[i][1] == board.getCurrentColor())||(boardColor[i][1] == WALL)) getStoneNum=0;
 	      break;
 	    }
 	}
@@ -218,7 +218,7 @@ void Reversi_AI_ab::return_move(Board board, int flagin, int &x, int &y, int &fl
 	    }
 	  else
 	    {
-	      if(boardColor[i][12] == board.getCurrentColor()) getStoneNum=0;
+	      if((boardColor[i][12] == board.getCurrentColor())||(boardColor[i][12] == WALL)) getStoneNum=0;
 	      break;
 	    }
 	}
@@ -240,7 +240,7 @@ void Reversi_AI_ab::return_move(Board board, int flagin, int &x, int &y, int &fl
 	    }
 	  else
 	    {
-	      if(boardColor[1][i] == board.getCurrentColor()) getStoneNum=0;
+	      if((boardColor[1][i] == board.getCurrentColor())||(boardColor[1][i] == WALL)) getStoneNum=0;
 	      break;
 	    }
 	}
@@ -262,7 +262,7 @@ void Reversi_AI_ab::return_move(Board board, int flagin, int &x, int &y, int &fl
 	    }
 	  else
 	    {
-	      if(boardColor[12][i] == board.getCurrentColor()) getStoneNum=0;
+	      if((boardColor[12][i] == board.getCurrentColor())||(boardColor[12][i] == WALL)) getStoneNum=0;
 	      break;
 	    }
 	}
@@ -284,7 +284,7 @@ void Reversi_AI_ab::return_move(Board board, int flagin, int &x, int &y, int &fl
 	    }
 	  else
 	    {
-	      if(boardColor[1][i] == board.getCurrentColor()) getStoneNum=0;
+	      if((boardColor[1][i] == board.getCurrentColor())||(boardColor[1][i] == WALL)) getStoneNum=0;
 	      break;
 	    }
 	}
@@ -306,7 +306,7 @@ void Reversi_AI_ab::return_move(Board board, int flagin, int &x, int &y, int &fl
 	    }
 	  else
 	    {
-	      if(boardColor[12][i] == board.getCurrentColor()) getStoneNum=0;
+	      if((boardColor[12][i] == board.getCurrentColor())||(boardColor[12][i] == WALL)) getStoneNum=0;
 	      break;
 	    }
 	}
@@ -340,20 +340,20 @@ Point Reversi_AI_ab::ab(Board b, int depth)
 {
   Point mymove;
   int eval, eval_max = -NUM_MAX;
-  int alpha = NUM_MAX; 
-  int beta = -NUM_MAX;
+  int alpha = -NUM_MAX; 
+  int beta = NUM_MAX;
   if(b.getTurns() > 100 && !(stage == LAST_STAGE)){
     std::cout << "LAST_STAGE!!!!!!!!!!!" << std::endl;
     stage = LAST_STAGE;
   }
-  if(stage == LAST_STAGE) depth = 30;
+  if(stage == LAST_STAGE) depth = 3;
   std::vector<Point>points = b.getMovablePos();
   for(int i = 0; i < points.size(); i++)
     {
       b.move(points[i]);
       eval = minlevel(depth, b, alpha, beta);
       b.undo();
-      std::cout << "x:" << points[i].x << "y:" << points[i].y << "eval_value = " << eval << std::endl;
+      std::cout << "x:" << points[i].x << "y:" << points[i].y << " eval_value = " << eval << std::endl;
       if(eval >= eval_max){
 	mymove = points[i];
 	eval_max = eval;
@@ -371,7 +371,7 @@ int Reversi_AI_ab::evaluate_board(Board b)
 {
   int val = 0;
   if(stage == LAST_STAGE){
-    std::cout << "*********** count disc ***********" << std::endl;
+    //   std::cout << "*********** count disc ***********" << std::endl;
     val = myColor * (b.countDisc(BLACK) - b.countDisc(WHITE));
     return val;
   }
@@ -398,13 +398,17 @@ int Reversi_AI_ab::evaluate_board(Board b)
 
 int Reversi_AI_ab::maxlevel(int limit, Board board, int alpha, int beta){
 
-  if(limit == 0)
+  if(limit == 0){
     //評価値を返す
+    std::cout << "@@@@@@@ end depth_count: " << limit << " @@@@@@@" << std::endl;
     return evaluate_board(board);
-
+  }
   //打つ手を全検索
   std::vector<Point>points = board.getMovablePos();
-  if(points.size() == 0) return evaluate_board(board);
+  if(points.size() == 0){
+    std::cout << "@@@@@@@ depth_count: " << limit << " @@@@@@@" << std::endl;
+    return evaluate_board(board);
+  }
   int score , score_max = -NUM_MAX;
   for(int i = 0; i < points.size(); i++)
     {
@@ -416,6 +420,7 @@ int Reversi_AI_ab::maxlevel(int limit, Board board, int alpha, int beta){
       
       //探索中止の判定
       if(score >= beta){
+	std::cout << "@@@@@@@ beta depth_count: " << limit << " @@@@@@@" << std::endl;
 	return score;
       }
       
@@ -426,18 +431,23 @@ int Reversi_AI_ab::maxlevel(int limit, Board board, int alpha, int beta){
 	  if(score_max > alpha) alpha = score_max;
 	}
     }
+  std::cout << "@@@@@@@ maxlevel depth_count: " << limit << " @@@@@@@" << std::endl;
   return score_max;
 }
 
 int Reversi_AI_ab::minlevel(int limit, Board board, int alpha, int beta)
 {
-  if(limit == 0)
+  if(limit == 0){
     //評価値を返す
-    return evaluate_board(board);
-
+    //  std::cout << "@@@@@@@ end depth_count: " << limit << " @@@@@@@" << std::endl;
+  return evaluate_board(board);
+  }
   //打つ手を全検索
   std::vector<Point>points = board.getMovablePos();
-  if(points.size() == 0) return evaluate_board(board);
+  if(points.size() == 0){
+    std::cout << "@@@@@@@ depth_count: " << limit << " @@@@@@@" << std::endl;
+    return evaluate_board(board);
+  } 
   int score , score_min = NUM_MAX;
   for(int i = 0; i < points.size(); i++)
     {
@@ -449,6 +459,7 @@ int Reversi_AI_ab::minlevel(int limit, Board board, int alpha, int beta)
 
       //探索打ち切りの判定
       if(score <= alpha){
+	std::cout << "@@@@@@@ alpha depth_count: " << limit << " @@@@@@@" << std::endl;
 	return score;
       }
 
@@ -459,6 +470,7 @@ int Reversi_AI_ab::minlevel(int limit, Board board, int alpha, int beta)
 	  if(score_min < beta) beta = score_min;
 	}
     }
+   std::cout << "@@@@@@@ minlevel depth_count: " << limit << " @@@@@@@" << std::endl;
   return score_min;
 }
 
