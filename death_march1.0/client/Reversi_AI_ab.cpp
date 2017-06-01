@@ -324,7 +324,6 @@ void Reversi_AI_ab::return_move(Board board, int flagin, int &x, int &y, int &fl
 
     if(getStoneNumMax != 0) return;
     // decides a move with minimax
-    std::cout << "AC gen random !!!" << std::endl;
     Point p = points[rand() % points.size()];
     x = p.x;
     y = p.y;
@@ -377,8 +376,9 @@ int Reversi_AI_ab::evaluate_board(Board b)
   if(b.countDisc(myColor) == 0){
     val = -NUM_MAX;
     return val;
-  }else if(b.countDisc(myColor*-1) == 0){
+  }else if(b.countDisc(myColor * -1) == 0){
     val = NUM_MAX;
+    return val;
   }
 
   if(stage == LAST_STAGE){
@@ -418,8 +418,9 @@ int Reversi_AI_ab::maxlevel(int limit, Board board, int alpha, int beta){
   //打つ手を全検索
   std::vector<Point>points = board.getMovablePos();
   if(points.size() == 0){
-    std::cout << "@@@@@@@ depth_count: " << limit << " @@@@@@@" << std::endl;
-    return evaluate_board(board);
+    std::cout << "@@@@@@@ path depth_count: " << limit << " @@@@@@@" << std::endl;
+    board.pass();
+    return minlevel(limit, board,alpha,beta);
   }
   int score , score_max = -NUM_MAX;
   for(int i = 0; i < points.size(); i++)
@@ -458,7 +459,8 @@ int Reversi_AI_ab::minlevel(int limit, Board board, int alpha, int beta)
   std::vector<Point>points = board.getMovablePos();
   if(points.size() == 0){
     std::cout << "@@@@@@@ depth_count: " << limit << " @@@@@@@" << std::endl;
-    return evaluate_board(board);
+    board.pass();
+    return maxlevel(limit, board,alpha,beta);
   } 
   int score , score_min = NUM_MAX;
   for(int i = 0; i < points.size(); i++)
