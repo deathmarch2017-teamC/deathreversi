@@ -1,6 +1,6 @@
 /*! @file
- @brief $B%3%s%9%H%i%/%?(B
- @author $B?70f(B
+ @brief コンストラクタ
+ @author 新井
  @date 2017.6.2
 */
 
@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-/*! @brief $B%3%s%9%H%i%/%?(B
+/*! @brief コンストラクタ
 */
 GeneticAlgorithmforReversi::GeneticAlgorithmforReversi()
 {
@@ -18,9 +18,9 @@ GeneticAlgorithmforReversi::GeneticAlgorithmforReversi()
   initNumberOfWins();
 }
 
-/*! @brief $B?F$NI>2A%\!<%I$rJV$9(B
- @param[in] index $B?F$N%$%s%G%C%/%9(B(0$B$+(B1)
- @param[out] evalBoard $BI>2A%\!<%I(B(int$B7?(B1$B<!85G[Ns(B)
+/*! @brief 親の評価ボードを返す
+ @param[in] index 親のインデックス(0か1)
+ @param[out] evalBoard 評価ボード(int型1次元配列)
 */
 void GeneticAlgorithmforReversi::getEvaluateFunctionOfParent(int* evalBoard)
 {
@@ -39,16 +39,16 @@ void GeneticAlgorithmforReversi::getEvaluateFunctionOfParent(int* evalBoard)
     }
   }
 
-  // $B;M6y(B
+  // 四隅
   evalBoard[0] = 0;
   evalBoard[11] = 0;
   evalBoard[132] = 0;
   evalBoard[143] = 0;
 }
 
-/*! @brief $B;R$NI>2A%\!<%I$rJV$9(B
- @param[in] index $B;R$I$b$N%$%s%G%C%/%9(B
- @param[out] evalBoard $BI>2A%\!<%I(B(int$B7?(B1$B<!85G[Ns(B)
+/*! @brief 子の評価ボードを返す
+ @param[in] index 子どものインデックス
+ @param[out] evalBoard 評価ボード(int型1次元配列)
 */
 void GeneticAlgorithmforReversi::getEvaluateFunctionOfChild(int index, int* evalBoard)
 {
@@ -69,14 +69,14 @@ void GeneticAlgorithmforReversi::getEvaluateFunctionOfChild(int index, int* eval
     }
   }
 
-  // $B;M6y(B
+  // 四隅
   evalBoard[0] = 0;
   evalBoard[11] = 0;
   evalBoard[132] = 0;
   evalBoard[143] = 0;
 }
 
-/*! @brief $B;R%\!<%I$N@8@.(B
+/*! @brief 子ボードの生成
 */
 void GeneticAlgorithmforReversi::createChildren()
 {
@@ -85,16 +85,16 @@ void GeneticAlgorithmforReversi::createChildren()
   mutation();
 }
 
-/*! @brief $B;R6!$N>!?t$r%;%C%H(B
- @param[in] index $B;R6!$N%$%s%G%C%/%9(B
- @param[in] wins $B>!?t(B
+/*! @brief 子供の勝数をセット
+ @param[in] index 子供のインデックス
+ @param[in] wins 勝数
 */
 void setNumberOfWins(int index, int wins)
 {
   numberOfWins[i] = wins;
 }
 
-/*! @brief $B?F$NA*Br(B
+/*! @brief 親の選択
 */
 void GeneticAlgorithmforReversi::choiceParent()
 {
@@ -126,7 +126,7 @@ void GeneticAlgorithmforReversi::choiceParent()
   initNumberOfWins();
 }
 
-/*! @brief $B8r:5(B
+/*! @brief 交叉
 */
 GeneticAlgorithmforReversi::crossParent()
 {
@@ -143,7 +143,7 @@ GeneticAlgorithmforReversi::crossParent()
 >>>>>>> bc80acb6bea91b80d3545ba28806c8b5d9331e83
 }
 
-/*! @brief $BFMA3JQ0[(B
+/*! @brief 突然変異
 */
 GeneticAlgorithmforReversi::mutation()
 {
@@ -157,7 +157,7 @@ GeneticAlgorithmforReversi::mutation()
   }
 }
 
-/*! @brief $B;R%\!<%I$N=i4|2=(B
+/*! @brief 子ボードの初期化
 */
 void GeneticAlgorithmforReversi::initChildren()
 {
@@ -171,7 +171,7 @@ void GeneticAlgorithmforReversi::initChildren()
   }
 }
 
-/*! @brief numberOfWins$B$N=i4|2=(B
+/*! @brief numberOfWinsの初期化
 */
 void GeneticAlgorithmforReversi::initNumberOfWins()
 {
