@@ -2,7 +2,7 @@
 
 int main(){
   char ip_addr[80]={"160.12.172.212"};
-  int port = 30000;
+  int port = 20000;
   char teamname[8] = "Alpha O";
  int teamcolor;
   char moveout[4];
@@ -12,7 +12,6 @@ int main(){
   int flagout;
   int flagin;
   Point mymove;
-  struct sockaddr_in dstSockaddr;
 
   if(set_socket_accept(ip_addr, port) == false){
     cout << "socket accept miss" << endl;

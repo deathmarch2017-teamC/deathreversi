@@ -16,7 +16,6 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
-bool set_socket_connect(char* ip_addr, int port);
 bool set_socket_accept(char* ip_addr, int port);
 bool send_func(char* BUF);
 bool recv_func(char* BUF);

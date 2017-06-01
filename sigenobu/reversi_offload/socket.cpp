@@ -1,4 +1,5 @@
 #include"socket.h"
+#include<errno.h>
 #define BUFFER_SIZE 256
 
 // bool set_socket_connect(char* ip_addr, int port){
@@ -25,23 +26,32 @@
 int dstSock;
 
 bool set_socket_accept(char* ip_addr, int port){
-  struct sockaddr_in dstSockaddr;
-    dstSockaddr.sin_port = htons(port);
-    dstSockaddr.sin_family = AF_INET;
-    dstSockaddr.sin_addr.s_addr = htonl(INADDR_ANY);
+struct sockaddr_in dstSockaddr;
 
-    dstSock = socket(AF_INET, SOCK_STREAM, 0);
-    
-    bind(dstSock, (struct sockaddr *) &dstSockaddr, sizeof(dstSockaddr));
+  int sock0;
+  struct sockaddr_in addr;
+  struct sockaddr_in client;
+  int len;
 
-    listen(dstSock, 1);
-    std::cout << "port: " << port << " wait connection ..." << std::endl;
-    if(dstSock = accept(dstSock, (struct sockaddr *) &dstSockaddr, (socklen_t *)sizeof(dstSockaddr)) < -1){
-      std::cout << "not connect" << std::endl;
-      return false;
-    }
-    printf("connected %s\n", inet_ntoa(dstSockaddr.sin_addr));
-    return true;
+  //ソケットの作成
+  sock0 = socket(AF_INET, SOCK_STREAM, 0);
+
+  //ソケットの設定
+  addr.sin_family = AF_INET;
+  addr.sin_port = htons(port);
+  addr.sin_addr.s_addr = INADDR_ANY;
+  bind(sock0, (struct sockaddr *) &addr, sizeof(addr));
+
+  //TCPクライアントから接続要求を待機
+  listen(sock0, 5);
+
+  //TCPクライアントから接続要求を受ける
+  printf("wait accept...\n");
+  len = sizeof(client);
+  dstSock = accept(sock0, (struct sockaddr *) &client, (socklen_t *)&len);
+
+  printf("accept complete!\n");
+  return true;
 }
 
 //送信する関数

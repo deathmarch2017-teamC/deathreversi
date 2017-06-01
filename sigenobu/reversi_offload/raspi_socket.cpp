@@ -13,7 +13,7 @@ using namespace std;
 
 int serverSock[2];
 char ip_addr[2][80]={"160.12.172.6","160.12.172.91"};
-int port[2] = {30000,10000};
+int port[2] = {20000,10000};
 int dstSocket[2];
 struct sockaddr_in dstSockaddr[2];
 char move[4];
@@ -31,7 +31,7 @@ int main()
   inet_pton(AF_INET, ip_addr[OFFLOAD], &dstSockaddr[OFFLOAD].sin_addr.s_addr);
 
   //サーバに接続
-  if(connect(dstSocket[OFFLOAD], (struct sockaddr *) &dstSockaddr, (socklen_t)sizeof(dstSockaddr))<-1){
+  if(connect(dstSocket[OFFLOAD], (struct sockaddr *) &dstSockaddr[OFFLOAD], (socklen_t)sizeof(dstSockaddr[OFFLOAD]))<0){
     cout << "connect offload miss" << endl;
   }
   cout << "connect to offload PC !" << endl;
@@ -57,7 +57,7 @@ int main()
   inet_pton(AF_INET, ip_addr[SERVER], &dstSockaddr[SERVER].sin_addr.s_addr);
 
   //サーバに接続
-  if(connect(dstSocket[SERVER], (struct sockaddr *) &dstSockaddr, (socklen_t)sizeof(dstSockaddr))<-1){
+  if(connect(dstSocket[SERVER], (struct sockaddr *) &dstSockaddr[SERVER], (socklen_t)sizeof(dstSockaddr[SERVER]))<-1){
     cout << "connect server miss" << endl;
   }
   cout << "connect to server PC !" << endl;
